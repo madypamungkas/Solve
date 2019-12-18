@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchCode">
+    <LinearLayout
+        android:id="@+id/readyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
+            android:text="@string/search"
+            android:textColor="@color/dark_slate_gray"
+            android:textSize="@dimen/_28ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:fontFamily="@font/rubik_light"
+            android:text="@string/game_desc"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_13ssp" />
+
+        <ImageView
+            android:id="@+id/imgReady"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:src="@drawable/bg_ready" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilCode"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            app:errorTextAppearance="@style/ErrorText"
+            app:hintTextAppearance="@style/HintText"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_regular"
+                android:hint="@string/code"
+                android:inputType="text"
+                android:textAllCaps="true"
+                android:textColor="@color/gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/readyBtn"
+            android:enabled="true"
+            android:onClick="search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/btn_rounded_green"
+            android:paddingLeft="@dimen/_28sdp"
+            android:paddingRight="@dimen/_28sdp"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:visibility="visible" />
+
+    </LinearLayout>
+</LinearLayout>

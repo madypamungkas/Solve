@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:layout_marginEnd="@dimen/_1sdp"
+    android:layout_marginStart="@dimen/_1sdp"
+    app:cardCornerRadius="26dp"
+    app:cardElevation="@dimen/_6sdp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/layoutCard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@drawable/btn_hangeul"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:fontFamily="@font/rubik_regular"
+            android:text="Tebak"
+            android:visibility="gone"
+            android:textColor="#262626"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/titleMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Suku Kata"
+            android:textColor="#262626"
+            android:textSize="@dimen/_15ssp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">JST</string>
+    <string name="please_wait">Please wait. . .</string>
+    <string name="something_wrong">Terjadi Kesalahan, Coba Beberapa Saat Lagi</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="empty">Quiz Tidak Tersedia!</string>
+    <string name="email_address">Alamat Email</string>
+    <string name="password">Password</string>
+    <string name="show_password">Show Password</string>
+    <string name="forgot_password_u"><u>Lupa Password</u></string>
+    <string name="dont_have">Tidak Punya Akun?</string>
+    <string name="sign_up">Daftar</string>
+    <string name="username">Username</string>
+    <string name="profile_name">Nama Profil</string>
+    <string name="name">Nama Profil Anda</string>
+    <string name="birth_date">Tanggal Lahir</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="terms_conditions">By clicking Sign Up you agree all the Terms and Conditions.</string>
+    <string name="forgot_password">Lupa Password</string>
+    <string name="forgot_password_info">Masukan Email Yang Sudah Terdaftar Untuk Me-Reset Password Anda</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Username</string>
+    <string name="nav_header_subtitle">ruko@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="profile">Profil</string>
+    <string name="home">Beranda</string>
+    <string name="account">Akun</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="pembahasan">Pembahasan</string>
+    <string name="settings">Pengaturan</string>
+    <string name="change_password">Ganti Password</string>
+    <string name="languages">Bahasa</string>
+    <string name="logout">Keluar</string>
+    <string name="old_password">Password Lama</string>
+    <string name="new_password">Password Baru</string>
+    <string name="new_confirm_password">Konfirmasi Password Baru</string>
+    <string name="confirmation">Konfirmasi</string>
+    <string name="are_you_sure_logout">Apakah Anda Yakin Ingin Keluar?</string>
+    <string name="terms_condition">Terms and Conditions</string>
+    <string name="version">Versi</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="ready">Siap?</string>
+    <string name="konfirmasi_keluar">Apa Anda Yakin ?</string>
+    <string name="jawaban">Jawaban Anda Tidak Tersimpan.</string>
+    <string name="get_ready">Persiapan</string>
+    <string name="search">Cari Quiz</string>
+    <string name="code">Kode Quiz</string>
+    <string name="game_desc"> Terdapat Batasan Waktu Masing-masing Pertanyaan dan Tidak Dapat Menjeda Waktu Saat Permainan Dimulai</string>
+    <string name="start">Mulai Sekarang</string>
+    <string name="correct_answer">Jumlah Pertanyaan Benar</string>
+    <string name="total_score">Total Skor</string>
+    <string name="score">Skor</string>
+    <string name="dari">Dari</string>
+    <string name="play_again">Mulai Lagi</string>
+    <string name="answer">Pertanyaan</string>
+    <string name="question">Soal</string>
+    <string name="link">https://ruko.technow.id/api/storage/</string>
+    <string name="link2">http://192.168.43.91/master-ruko/ruko/public/storage/</string>
+    <string name="descHangeul">Tebak Hangeul ini akan membantumu untuk memahami bentuk dan pelafalan huruf Korea (Hangeul). Dalam permainan ini kamu akan diajak untuk menebak 40 huruf hangeul yang terdiri dari 10 vokal dasar,  11 vokal gabungan,  14 konsonan dasar dan 5 konsonan rangkap.</string>
+    <string name="descSukuKata">Tebak Suku Kata ini akan menguji kemampuan kamu dalam merangkai huruf-huruf hangeul dengan menebak gabungan huruf vokal dan konsonan. </string>
+    <string name="descKata">Tebak kata ini akan menambah kosa kota koreamu dengan menebak kata
+        yang mencangkup kehidupan dasar di Korea,  kehidupan sehari-hari dan hobi, lembaga pemerintahan,
+        serba-serbi Korea,  budaya kerja, kehidupan lingkungan kerja,  undang-undang dan aturan dan istilah di tempat kerja.</string>
+    <string name="descKalimat">Tebak Kalimat ini akan menguji kemampuanmu dalam merangkai kata-kata yang berkaitan dengan kehidupan dasar Korea,
+        Kehidupan sehari-hari dan hobi, lembaga pemerintah, serba-serbi Korea, budaya kerja Korea,
+        kehidupan di lingkungan kerja, istilah di tempat kerja Korea,  Undang-undang dan peraturan.</string>
+    <string name="descHallyu">Tebak Hallyu ini akan menguji pengetahuanmu tentang Korean Wave (hallyu) dengan menebak kuis tentang K-Pop,
+        Sejarah, Ekonomi, Politik, Agama, Wisata,  dan Kata Gaul Korea.</string>
+
+    <string name="descAngka">Tebak angka ini akan  mengajakmu bermain sambil mengenal angka sino Korea dan angka Korea asli.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+</resources>
