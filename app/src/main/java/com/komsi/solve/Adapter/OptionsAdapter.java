@@ -2,10 +2,12 @@ package com.komsi.solve.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.QuizActivity;
 import com.komsi.solve.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private ArrayList<OptionModel> optionModel;
     private Context mCtx;
     private QuestionModel question;
+    String link = "http://10.33.85.59/solve/solve-jst/public/storage/answer/";
 
     public OptionsAdapter(ArrayList<OptionModel> optionModel, Context mCtx, QuestionModel question) {
         this.optionModel = optionModel;
@@ -47,34 +51,46 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
     @Override
     public void onBindViewHolder(@NonNull OptionVH holder, int position) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("question", "question");
+        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
+
+
         final OptionModel option = optionModel.get(position);
+
+
+        Picasso.get().load(link + option.getId())
+                .into(holder.imgOption);
 
         holder.rbChoose.setChecked(position == mSelectedItem);
         holder.jawaban.setText(option.getContents() + " ");
-        
 
-       /* if(option.getChoosen() == 0){
-            holder.rbChoose.setChecked(false);
-        }
-        else {
+
+        if (option.getChoosen() == 1) {
             holder.rbChoose.setChecked(true);
-        }*/
-        if(!holder.rbChoose.isChecked()){
-            option.setChoosen(0);
-        }else {
-            option.setChoosen(1);
+        } else {
         }
+
+//        if (holder.rbChoose.isChecked()) {
+//            question.setUser_answer(option.getContents());
+//            option.setChoosen(1);
+//            SharedPreferences.Editor editorList = sharedPrefs.edit();
+//            gson = new Gson();
+//            json = gson.toJson(questionModels);
+//            editorList.putString("question", json);
+//            editorList.commit();
+//        } else {
+//            option.setChoosen(0);
+//            SharedPreferences.Editor editorList = sharedPrefs.edit();
+//            gson = new Gson();
+//            json = gson.toJson(questionModels);
+//            editorList.putString("question", json);
+//            editorList.commit();
+//        }
         if (holder.id == 1) {
-            QuestionModel questionModel = null;
-            question.setUser_answer(option.getContents());
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-            SharedPreferences.Editor editorList = sharedPrefs.edit();
-            Gson gson = new Gson();
-
-            String json = gson.toJson(questionModel);
-
-            editorList.putString("question", json);
-            editorList.commit();
 
         } else {
 
@@ -90,11 +106,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         TextView jawaban;
         RadioButton rbChoose;
         public int id;
+        ImageView imgOption;
 
         public OptionVH(@NonNull View itemView) {
             super(itemView);
             jawaban = itemView.findViewById(R.id.jawaban);
             rbChoose = itemView.findViewById(R.id.rbChoose);
+            imgOption = itemView.findViewById(R.id.imgOption);
 
             View.OnClickListener l = new View.OnClickListener() {
                 @Override

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class OptionModel {
     @SerializedName("id")
     @Expose
-    private int id_soal;
+    private int id;
 
     @SerializedName("question_id")
     @Expose
@@ -43,8 +43,8 @@ public class OptionModel {
     @Expose
     private int choosen;
 
-    public OptionModel(int id_soal, String question_id, String option, String content, String pic_url, String isTrue, String created_at, String updated_at, String deleted_at, int choosen) {
-        this.id_soal = id_soal;
+    public OptionModel(int id, String question_id, String option, String content, String pic_url, String isTrue, String created_at, String updated_at, String deleted_at, int choosen) {
+        this.id = id;
         this.question_id = question_id;
         this.option = option;
         this.content = content;
@@ -56,8 +56,8 @@ public class OptionModel {
         this.choosen = choosen;
     }
 
-    public int getId_soal() {
-        return id_soal;
+    public int getId() {
+        return id;
     }
 
     public String getQuestion_id() {

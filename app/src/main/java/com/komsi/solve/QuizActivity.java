@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Adapter.OptionsAdapter;
 import com.komsi.solve.Adapter.TypeQuizAdapter;
 import com.komsi.solve.Api.RetrofitClient;
@@ -37,6 +38,7 @@ import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class QuizActivity extends AppCompatActivity {
@@ -58,6 +60,7 @@ public class QuizActivity extends AppCompatActivity {
     FloatingActionButton fab;
     public static final String TAG = "bottom_sheet";
     String link = "http://10.33.85.59/solve/solve-jst/public/api/storage/question/";
+    Button submitBtn;
 
 
     @Override
@@ -80,6 +83,7 @@ public class QuizActivity extends AppCompatActivity {
         readyBtn = findViewById(R.id.readyBtn);
         optionRV = findViewById(R.id.optionRV);
         fab = findViewById(R.id.fab);
+        submitBtn = findViewById(R.id.submitBtn);
 
         gameName = findViewById(R.id.gameName);
         gameName.setText(getIntent().getStringExtra("namaSoal") + " ");
@@ -176,7 +180,7 @@ public class QuizActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(mCtx,
-                                "Quiz Tidak Dapat Diakses",
+                                "Quiz Tidak Dapat ddDiakses",
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -208,22 +212,29 @@ public class QuizActivity extends AppCompatActivity {
 
     public void nextSoal(View view) {
         prevSoal.setVisibility(View.VISIBLE);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("question", "question");
+        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json, type);
 
 
-        if (currentQusetionId +1 == questionModel.size()) {
+        if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
+            submitBtn.setVisibility(View.VISIBLE);
         }
 
-        if (currentQusetionId + 1 == questionModel.size()) {
+        if (currentQusetionId + 1 == questionSave.size()) {
             if (status == 1) {
             } else {
             }
 
         } else {
             currentQusetionId++;
-            final QuestionModel questions = questionModel.get(currentQusetionId);
+            final QuestionModel questions = questionSave.get(currentQusetionId);
 
-            if (currentQusetionId > questionModel.size()) {
+            if (currentQusetionId > questionSave.size()) {
 
             } else {
                 soal.setText(questions.getQuestion());
@@ -248,6 +259,16 @@ public class QuizActivity extends AppCompatActivity {
 
     public void prevSoal(View view) {
         nextSoal.setVisibility(View.VISIBLE);
+        prevSoal.setVisibility(View.VISIBLE);
+        submitBtn.setVisibility(View.GONE);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("question", "question");
+        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json, type);
+
+
         if (currentQusetionId == 0) {
         } else {
             if (currentQusetionId == 1) {
@@ -255,7 +276,7 @@ public class QuizActivity extends AppCompatActivity {
             }
             if (currentQusetionId > 0) {
                 currentQusetionId--;
-                final QuestionModel questions = questionModel.get(currentQusetionId);
+                final QuestionModel questions = questionSave.get(currentQusetionId);
                 soal.setText(questions.getQuestion());
                 number.setText(currentQusetionId + 1 + "");
                 optionModel = questions.getOption();

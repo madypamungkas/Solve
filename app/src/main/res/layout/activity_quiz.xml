@@ -251,18 +251,41 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/scrollOption"
                 android:layout_below="@+id/carousel"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_18sdp"
-
                 android:fillViewport="true">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/optionRV"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/optionRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                    <Button
+                        android:id="@+id/submitBtn"
+                        android:enabled="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/btn_rounded_green"
+                        android:paddingLeft="@dimen/_28sdp"
+                        android:paddingRight="@dimen/_28sdp"
+                        android:text="Submit"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/white"
+                        android:layout_below="@id/scrollOption"
+                        android:visibility="gone" />
+                </LinearLayout>
+
             </androidx.core.widget.NestedScrollView>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
