@@ -2,53 +2,60 @@ package com.komsi.solve;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.komsi.solve.Adapter.NavigationAdapter;
+import com.komsi.solve.Adapter.OptionsAdapter;
+import com.komsi.solve.Model.QuestionModel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NavigationFragment extends BottomSheetDialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
 
+    RecyclerView optionRV;
+    NavigationAdapter adapter;
 
-    public NavigationFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        //handleUserExit();
-    }
-
-    public static NavigationFragment newInstance(String param1, String param2) {
-        NavigationFragment fragment = new NavigationFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_navigation, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
+
+
+        optionRV = fragmentView.findViewById(R.id.optionRV);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("question", "question");
+        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
+
+
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
+        adapter = new NavigationAdapter(questionModels, getActivity());
+        optionRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        optionRV.setLayoutManager(staggeredGridLayoutManager);
+        optionRV.setAdapter(adapter);
+        return fragmentView;
     }
 
 

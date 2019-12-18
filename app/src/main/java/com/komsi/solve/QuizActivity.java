@@ -57,7 +57,7 @@ public class QuizActivity extends AppCompatActivity {
     OptionsAdapter adapter;
     FloatingActionButton fab;
     public static final String TAG = "bottom_sheet";
-    String link = "http://10.33.72.22/solve/solve-jst/public/api/storage/question/";
+    String link = "http://10.33.85.59/solve/solve-jst/public/api/storage/question/";
 
 
     @Override
@@ -208,6 +208,8 @@ public class QuizActivity extends AppCompatActivity {
 
     public void nextSoal(View view) {
         prevSoal.setVisibility(View.VISIBLE);
+
+
         if (currentQusetionId +1 == questionModel.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
         }
@@ -272,7 +274,6 @@ public class QuizActivity extends AppCompatActivity {
             } else {
                 prevSoal.setVisibility(View.INVISIBLE);
             }
-
         }
     }
 
