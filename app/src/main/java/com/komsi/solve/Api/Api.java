@@ -15,8 +15,11 @@ import com.komsi.solve.Model.ResponseTypeList;
 import com.komsi.solve.Model.ResponseSignUp;
 import com.komsi.solve.Model.ResponseVersion;
 
+import java.util.ArrayList;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -51,7 +54,15 @@ public interface Api {
             @Path("id") int idSoal
     );
 
+    //@FormUrlEncoded
+    @POST("collager/question/{id}")
+    Call<ResponseQuestion> postQuestion(
+            @Header("Accept") String accept,
+            @Header("Authorization") String token,
+            @Path("id") int idSoal,
+            @Body ResponseQuestion responseQuestion
 
+    );
 
 
     @GET("collager/detail")
@@ -130,12 +141,14 @@ public interface Api {
             @Header("Accept") String accept,
             @Path("category_id") int idQuiz
     );
+
     @GET("collager/quiztype/{category_id}")
     Call<ResponseCategory> typeList(
             @Header("Authorization") String token,
             @Header("Accept") String accept,
             @Path("category_id") int idQuiz
     );
+
     @GET("collager/quiz/{category_id}")
     Call<ResponseTypeList> quiz(
             @Header("Authorization") String token,

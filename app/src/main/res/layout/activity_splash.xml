@@ -48,7 +48,7 @@
         android:layout_marginTop="@dimen/_7sdp"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="R U M A H  K O R E A"
+        android:text="S O L V E "
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/_21ssp" />
 

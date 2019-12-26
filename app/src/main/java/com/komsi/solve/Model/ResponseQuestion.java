@@ -35,4 +35,12 @@ public class ResponseQuestion {
     public ArrayList<QuestionModel> getQuestion() {
         return question;
     }
+
+    public void setQuiz(TypeListModel quiz) {
+        this.quiz = quiz;
+    }
+
+    public void setQuestion(ArrayList<QuestionModel> question) {
+        this.question = question;
+    }
 }

@@ -45,6 +45,7 @@ public class NavigationFragment extends BottomSheetDialogFragment {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
+      //  String json = getArguments().getString("question");
         Type type = new TypeToken<ArrayList<QuestionModel>>() {
         }.getType();
         ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);

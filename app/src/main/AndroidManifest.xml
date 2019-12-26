@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchCode"></activity>
+        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".SearchCode" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".QuizChooseActivity" />
         <activity android:name=".WebViewsActivity" />

@@ -2,6 +2,7 @@ package com.komsi.solve.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Response;
 
@@ -34,6 +36,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private Context mCtx;
     private QuestionModel question;
     String link = "http://10.33.85.59/solve/solve-jst/public/storage/answer/";
+    String content;
 
     public OptionsAdapter(ArrayList<OptionModel> optionModel, Context mCtx, QuestionModel question) {
         this.optionModel = optionModel;
@@ -61,7 +64,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
         final OptionModel option = optionModel.get(position);
 
-
+        content = option.getContents();
         Picasso.get().load(link + option.getId())
                 .into(holder.imgOption);
 
@@ -70,30 +73,34 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
 
         if (option.getChoosen() == 1) {
-            holder.rbChoose.setChecked(true);
+        //    holder.rbChoose.setChecked(true);
         } else {
         }
 
-//        if (holder.rbChoose.isChecked()) {
-//            question.setUser_answer(option.getContents());
-//            option.setChoosen(1);
-//            SharedPreferences.Editor editorList = sharedPrefs.edit();
-//            gson = new Gson();
-//            json = gson.toJson(questionModels);
-//            editorList.putString("question", json);
-//            editorList.commit();
-//        } else {
-//            option.setChoosen(0);
-//            SharedPreferences.Editor editorList = sharedPrefs.edit();
-//            gson = new Gson();
-//            json = gson.toJson(questionModels);
-//            editorList.putString("question", json);
-//            editorList.commit();
-//        }
+        int num = sharedPrefs.getInt("num", 0);
+        if (holder.rbChoose.isChecked()) {
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+
+            questionModels.get(num).setUser_answer(option.getContents());
+            option.setChoosen(num);
+            SharedPreferences.Editor editorList = sharedPrefs.edit();
+            gson = new Gson();
+            json = gson.toJson(questionModels);
+            editorList.putString("question", json);
+            editorList.commit();
+        } else {
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
         if (holder.id == 1) {
 
         } else {
-
+            // questionModels.get(num).setUser_answer(option.getContents());
+            /*option.setChoosen(0);
+            SharedPreferences.Editor editorList = sharedPrefs.edit();
+            gson = new Gson();
+            json = gson.toJson(questionModels);
+            editorList.putString("question", json);
+            editorList.commit();*/
         }
     }
 
@@ -106,6 +113,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         TextView jawaban;
         RadioButton rbChoose;
         public int id;
+        CardView placeA;
         ImageView imgOption;
 
         public OptionVH(@NonNull View itemView) {
@@ -113,6 +121,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             jawaban = itemView.findViewById(R.id.jawaban);
             rbChoose = itemView.findViewById(R.id.rbChoose);
             imgOption = itemView.findViewById(R.id.imgOption);
+            placeA = itemView.findViewById(R.id.placeA);
 
             View.OnClickListener l = new View.OnClickListener() {
                 @Override
