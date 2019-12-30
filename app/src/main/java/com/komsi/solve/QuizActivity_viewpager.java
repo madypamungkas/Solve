@@ -9,10 +9,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +38,19 @@ import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -116,10 +132,9 @@ public class QuizActivity_viewpager extends AppCompatActivity {
                         String responseQuiz = gson.toJson(response.body());
                         editorList.putString("response", responseQuiz);
 
-                        String json = gson.toJson(questionModel);
+                        String json = gson.toJson(response.body().getQuestion());
                         editorList.putString("question", json);
                         editorList.commit();
-
 
                         progress.dismiss();
                         questionModel = response.body().getQuestion();
@@ -213,16 +228,104 @@ public class QuizActivity_viewpager extends AppCompatActivity {
                 int minutes = (int) ((l / 1000) / 60 % 60);
                 int seconds = (int) ((l / 1000) % 60);
                 String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-                timer.setText( //etMilis + "\n"+ calMilis +
+                timer.setText(
                         limitFormat);
             }
 
             @Override
             public void onFinish() {
-               // storeAnswer();
+               storeAnswer();
             }
         }.start();
 
     }
+    public void saveInternal(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+        /*try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput( "answer2.json", Context.MODE_PRIVATE));
+            outputStreamWriter.write(json);
+            outputStreamWriter.close();
+
+            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "Report.pdf");
+        Uri path = Uri.fromFile(file);
+        */
+    }
+    public void storeAnswer() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+        progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
+        UserModel user = SharedPrefManager.getInstance(this).getUser();
+
+        token = "Bearer " + user.getToken();
+        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
+                responseQuestion);
+        call.enqueue(new Callback<ResponseQuestion>() {
+            @Override
+            public void onResponse(Call<ResponseQuestion> call, final Response<ResponseQuestion> response) {
+                ResponseQuestion questionResponse = response.body();
+                if (response.isSuccessful()) {
+                    Toast.makeText(mCtx,
+                            "Sukses",
+                            Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+
+                } else {
+                    progress.dismiss();
+                    Log.i("debug", "Failed "+response.errorBody()+" ");
+
+                    Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
+                            //R.string.something_wrong,
+                            Toast.LENGTH_LONG).show();
+                    readyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(mCtx,
+                                    "Quiz Tidak Dapat Diakses",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseQuestion> call, Throwable t) {
+                Log.i("debug", "onResponse : FAILED");
+                progress.dismiss();
+                Toast.makeText(mCtx,
+                        t.toString() +
+                                "Quiz Tidak Dapat Diakses",
+                        //R.string.something_wrong + t.toString(),
+                        Toast.LENGTH_LONG).show();
+                readyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(mCtx,
+                                "Quiz Tidak Dapat Diakses",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+
 
 }

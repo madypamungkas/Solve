@@ -22,10 +22,6 @@ public class QuestionModel {
     @Expose
     private String duration;
 
-    @SerializedName("option")
-    @Expose
-    private List<OptionModel> option = null;
-
     @SerializedName("trueAnswer")
     @Expose
     private String trueAnswer;
@@ -38,16 +34,19 @@ public class QuestionModel {
     @Expose
     private String user_answer;
 
+    @SerializedName("option")
+    @Expose
+    private List<OptionModel> option = null;
 
-    public QuestionModel(int id_soal, String question, String pic_question, String duration, List<OptionModel> option, String trueAnswer, String trueAnswerPic, String user_answer) {
+    public QuestionModel(int id_soal, String question, String pic_question, String duration, String trueAnswer, String trueAnswerPic, String user_answer, List<OptionModel> option) {
         this.id_soal = id_soal;
         this.question = question;
         this.pic_question = pic_question;
         this.duration = duration;
-        this.option = option;
         this.trueAnswer = trueAnswer;
         this.trueAnswerPic = trueAnswerPic;
         this.user_answer = user_answer;
+        this.option = option;
     }
 
     public int getId_soal() {
@@ -66,10 +65,6 @@ public class QuestionModel {
         return duration;
     }
 
-    public List<OptionModel> getOption() {
-        return option;
-    }
-
     public String getTrueAnswer() {
         return trueAnswer;
     }
@@ -82,7 +77,8 @@ public class QuestionModel {
         return user_answer;
     }
 
-    public void setUser_answer(String user_answer) {
-        this.user_answer = user_answer;
+    public List<OptionModel> getOption() {
+        return option;
     }
+
 }

@@ -424,19 +424,6 @@ public class QuizActivity extends AppCompatActivity {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
 
-      /*  try {
-            Writer output = null;
-            File file = new File("response.json");
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(responseQuestion.toString());
-            output.close();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        finish();*/
-
-
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
 
@@ -451,53 +438,10 @@ public class QuizActivity extends AppCompatActivity {
                     Toast.makeText(mCtx,
                             "Sukses",
                             Toast.LENGTH_LONG).show();
-                   /* if (response.body().getQuestion().size() != 0) {
 
-
-                        questionModel = response.body().getQuestion();
-                        progress.dismiss();
-                        sum.setText("/" + questionModel.size());
-                        sumQues = questionModel.size();
-                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
-                        SharedPreferences.Editor editorList = sharedPrefs.edit();
-                        Gson gson = new Gson();
-
-                        String responseQuiz = gson.toJson(response.body());
-                        editorList.putString("response", responseQuiz);
-
-                        String json = gson.toJson(questionModel);
-                        editorList.putString("question", json);
-                        editorList.commit();
-
-                        SharedPreferences.Editor editor = sharedPrefs.edit();
-                        editor.putInt("num", currentQusetionId);
-                        editor.commit();
-
-                        readyBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                readyLayout.setVisibility(View.GONE);
-                                soalLayout.setVisibility(view.VISIBLE);
-                            }
-                        });
-
-                        showQuestion();
-                        //timerA();
-                    } else {
-                        readyBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(mCtx,
-                                        R.string.empty,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        progress.dismiss();
-                    }*/
                 } else {
                     progress.dismiss();
                     Log.i("debug", "Failed "+response.errorBody()+" ");
-
 
                     Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
                             //R.string.something_wrong,
@@ -518,7 +462,8 @@ public class QuizActivity extends AppCompatActivity {
                 Log.i("debug", "onResponse : FAILED");
                 progress.dismiss();
                 Toast.makeText(mCtx,
-                        t.toString() + " ",
+                        t.toString() +
+                                "Quiz Tidak Dapat Diakses",
                         //R.string.something_wrong + t.toString(),
                         Toast.LENGTH_LONG).show();
                 readyBtn.setOnClickListener(new View.OnClickListener() {
@@ -551,9 +496,7 @@ public class QuizActivity extends AppCompatActivity {
         final long etMilis = cal.getTimeInMillis() + (90 * 60000);
 
 
-//        String localTime = date.format(currentLocalTime);
 
-        //timer.setText(localTime);
         final long diff = etMilis - calMilis;
 
         new CountDownTimer(diff, 1000) {

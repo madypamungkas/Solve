@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,7 +50,8 @@ public class QuizViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(mCtx);
         View view = layoutInflater.inflate(R.layout.viewpager_quiz, container, false);
-        final TextView soal, gameName,sum,number, timer;
+        Button submitBtn;
+        final TextView soal, gameName, sum, number, timer;
         ImageView nextSoal, prevSoal, imgSoal;
         RecyclerView optionRV;
 
@@ -62,6 +64,7 @@ public class QuizViewPagerAdapter extends PagerAdapter {
         nextSoal = view.findViewById(R.id.nextSoal);
         prevSoal = view.findViewById(R.id.prevSoal);
         imgSoal = view.findViewById(R.id.imgSoal);
+        submitBtn = view.findViewById(R.id.submitBtn);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         adapter = new OptionsAdapter(question.get(position).getOption(), mCtx, question.get(position));
@@ -69,24 +72,32 @@ public class QuizViewPagerAdapter extends PagerAdapter {
         optionRV.setLayoutManager(staggeredGridLayoutManager);
         optionRV.setAdapter(adapter);
 
-        int num = position+1;
+        int num = position + 1;
         soal.setText(question.get(position).getQuestion());
         //gameName.setText(question.get(position).get());
-        number.setText(num+"/");
-        sum.setText(question.size()+" ");
+        number.setText(num + "/");
+        sum.setText(question.size() + " ");
 
-
-        if(position == 0){
+        if (position == 0) {
             prevSoal.setVisibility(View.GONE);
         }
-        if (position == question.size()-1){
+        if (position == question.size() - 1) {
             nextSoal.setVisibility(View.GONE);
+            submitBtn.setVisibility(View.VISIBLE);
+            submitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mCtx instanceof QuizActivity_viewpager) {
+                        ((QuizActivity_viewpager) mCtx).storeAnswer();
+                    }
+                }
+            });
         }
         nextSoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager)mCtx).viewPager.setCurrentItem(position+1);
+                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position + 1);
                 }
             }
         });
@@ -94,10 +105,11 @@ public class QuizViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager)mCtx).viewPager.setCurrentItem(position-1);
+                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position - 1);
                 }
             }
         });
+
 
         container.addView(view, 0);
         return view;
@@ -105,6 +117,6 @@ public class QuizViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 }

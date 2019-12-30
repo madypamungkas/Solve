@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.komsi.solve.Model.OptionModel;
 import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.SelectedItem;
 import com.komsi.solve.QuizActivity;
@@ -45,22 +47,29 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     public void onBindViewHolder(@NonNull NavVH holder, final int position) {
         final QuestionModel questionModel = question.get(position);
 
-        // holder.rbChoose.setChecked(position == mSelectedItem);
         holder.jawaban.setText(questionModel.getId_soal() + "");
-       /* if (questionModel.getUser_answer() == null) {
 
-        } else {
-            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
-        }*/
         holder.placeA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager)mCtx).viewPager.setCurrentItem(position);
+                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position);
                 }
             }
         });
 
+        if (holder.rbChoose.isChecked()) {
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+
+
+        } else {
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if (holder.id == 1) {
+
+        } else {
+
+        }
     }
 
     @Override
@@ -71,19 +80,35 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     class NavVH extends RecyclerView.ViewHolder {
         TextView jawaban;
         CardView placeA;
-//        RadioButton rbChoose;
+        RadioButton rbChoose;
 
         public int id;
 
         public NavVH(@NonNull final View itemView) {
             super(itemView);
             jawaban = itemView.findViewById(R.id.jawaban);
-            //rbChoose = itemView.findViewById(R.id.rbChoose);
+            rbChoose = itemView.findViewById(R.id.rbChoose);
             placeA = itemView.findViewById(R.id.placeA);
 
+            View.OnClickListener l = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSelectedItem = getAdapterPosition();
+                    notifyItemRangeChanged(0, question.size());
+
+                }
+            };
+
+           // itemView.setOnClickListener(l);
+            rbChoose.setOnClickListener(l);
 
         }
     }
 
-
+    public QuestionModel getSelectedNav() {
+        if (mSelectedItem != -1) {
+            return question.get(mSelectedItem);
+        }
+        return null;
+    }
 }

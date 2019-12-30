@@ -29,20 +29,20 @@ public class ResponseQuestion {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public TypeListModel getQuiz() {
         return quiz;
     }
 
-    public void setQuiz(TypeListModel quiz) {
-        this.quiz = quiz;
-    }
-
     public List<QuestionModel> getQuestion() {
         return question;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setQuiz(TypeListModel quiz) {
+        this.quiz = quiz;
     }
 
     public void setQuestion(List<QuestionModel> question) {
