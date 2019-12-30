@@ -32,13 +32,13 @@ import okhttp3.Response;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH> {
     private int mSelectedItem = -1;
-    private ArrayList<OptionModel> optionModel;
+    private List<OptionModel> optionModel;
     private Context mCtx;
     private QuestionModel question;
     String link = "http://10.33.85.59/solve/solve-jst/public/storage/answer/";
     String content;
 
-    public OptionsAdapter(ArrayList<OptionModel> optionModel, Context mCtx, QuestionModel question) {
+    public OptionsAdapter(List<OptionModel> optionModel, Context mCtx, QuestionModel question) {
         this.optionModel = optionModel;
         this.mCtx = mCtx;
         this.question = question;
@@ -54,13 +54,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
     @Override
     public void onBindViewHolder(@NonNull OptionVH holder, int position) {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        Gson gson = new Gson();
-        String json = sharedPrefs.getString("question", "question");
-        Type type = new TypeToken<ArrayList<QuestionModel>>() {
-        }.getType();
-        ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
-
+//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+//        Gson gson = new Gson();
+//        String json = sharedPrefs.getString("question", "question");
+//        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+//        }.getType();
+//        ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
+//
 
         final OptionModel option = optionModel.get(position);
 
@@ -77,30 +77,18 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         } else {
         }
 
-        int num = sharedPrefs.getInt("num", 0);
+       // int num = sharedPrefs.getInt("num", 0);
         if (holder.rbChoose.isChecked()) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
 
-            questionModels.get(num).setUser_answer(option.getContents());
-            option.setChoosen(num);
-            SharedPreferences.Editor editorList = sharedPrefs.edit();
-            gson = new Gson();
-            json = gson.toJson(questionModels);
-            editorList.putString("question", json);
-            editorList.commit();
+
         } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
         }
         if (holder.id == 1) {
 
         } else {
-            // questionModels.get(num).setUser_answer(option.getContents());
-            /*option.setChoosen(0);
-            SharedPreferences.Editor editorList = sharedPrefs.edit();
-            gson = new Gson();
-            json = gson.toJson(questionModels);
-            editorList.putString("question", json);
-            editorList.commit();*/
+
         }
     }
 

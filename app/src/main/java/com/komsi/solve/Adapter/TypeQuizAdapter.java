@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.komsi.solve.Model.TypeListModel;
 import com.komsi.solve.QuizActivity;
+import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
         holder.layoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mCtx, QuizActivity.class);
+                Intent i = new Intent(mCtx, QuizActivity_viewpager.class);
                 i.putExtra("idCategory", types.getId());
                 i.putExtra("Type", types.getPic_url());
 

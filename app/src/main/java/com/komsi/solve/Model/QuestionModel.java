@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuestionModel {
     @SerializedName("id")
@@ -23,7 +24,7 @@ public class QuestionModel {
 
     @SerializedName("option")
     @Expose
-    private ArrayList<OptionModel> option = null;
+    private List<OptionModel> option = null;
 
     @SerializedName("trueAnswer")
     @Expose
@@ -38,7 +39,7 @@ public class QuestionModel {
     private String user_answer;
 
 
-    public QuestionModel(int id_soal, String question, String pic_question, String duration, ArrayList<OptionModel> option, String trueAnswer, String trueAnswerPic, String user_answer) {
+    public QuestionModel(int id_soal, String question, String pic_question, String duration, List<OptionModel> option, String trueAnswer, String trueAnswerPic, String user_answer) {
         this.id_soal = id_soal;
         this.question = question;
         this.pic_question = pic_question;
@@ -65,7 +66,7 @@ public class QuestionModel {
         return duration;
     }
 
-    public ArrayList<OptionModel> getOption() {
+    public List<OptionModel> getOption() {
         return option;
     }
 

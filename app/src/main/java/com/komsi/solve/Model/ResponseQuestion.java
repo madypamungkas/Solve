@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseQuestion {
     @SerializedName("status")
@@ -16,9 +17,9 @@ public class ResponseQuestion {
 
     @SerializedName("question")
     @Expose
-    private ArrayList<QuestionModel> question = null;
+    private List<QuestionModel> question = null;
 
-    public ResponseQuestion(String status, TypeListModel quiz, ArrayList<QuestionModel> question) {
+    public ResponseQuestion(String status, TypeListModel quiz, List<QuestionModel> question) {
         this.status = status;
         this.quiz = quiz;
         this.question = question;
@@ -28,19 +29,23 @@ public class ResponseQuestion {
         return status;
     }
 
-    public TypeListModel getQuiz() {
-        return quiz;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public ArrayList<QuestionModel> getQuestion() {
-        return question;
+    public TypeListModel getQuiz() {
+        return quiz;
     }
 
     public void setQuiz(TypeListModel quiz) {
         this.quiz = quiz;
     }
 
-    public void setQuestion(ArrayList<QuestionModel> question) {
+    public List<QuestionModel> getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(List<QuestionModel> question) {
         this.question = question;
     }
 }

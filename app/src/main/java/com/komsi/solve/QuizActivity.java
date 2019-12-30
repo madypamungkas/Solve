@@ -5,6 +5,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,12 +47,18 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -57,8 +67,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView timer, soal, number, sum, points, gameName;
     ProgressDialog progress;
     CountDownTimer cd;
-    private ArrayList<QuestionModel> questionModel;
-    private ArrayList<OptionModel> optionModel;
+    private List<QuestionModel> questionModel;
+    private List<OptionModel> optionModel;
     private int currentQusetionId = 0;
     int idsoal, sumQues;
     String token;
@@ -119,7 +129,7 @@ public class QuizActivity extends AppCompatActivity {
                 Type type = new TypeToken<ArrayList<QuestionModel>>() {
                 }.getType();
                 ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
-               // checkOption();
+                // checkOption();
 
                 //navigationSoal();
                 bundle.putString("question", json);
@@ -132,9 +142,9 @@ public class QuizActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // storeAnswer();
-                Intent intent = new Intent(QuizActivity.this, ReviewActivity.class);
-                startActivity(intent);
+                storeAnswer();
+                /*Intent intent = new Intent(QuizActivity.this, ReviewActivity.class);
+                startActivity(intent);*/
             }
         });
 
@@ -360,12 +370,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
     }
-    public int num(int num){
-        num =nAdapter.getSelectedItem();
-        currentQusetionId = num;
-        navigationSoal();
-        return currentQusetionId;
-    }
+
 
     public void navigationSoal() {
 
@@ -418,6 +423,19 @@ public class QuizActivity extends AppCompatActivity {
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+      /*  try {
+            Writer output = null;
+            File file = new File("response.json");
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(responseQuestion.toString());
+            output.close();
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        finish();*/
+
 
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
@@ -478,8 +496,10 @@ public class QuizActivity extends AppCompatActivity {
                     }*/
                 } else {
                     progress.dismiss();
-                    Log.i("debug", "onResponse : FAILED");
-                    Toast.makeText(mCtx, response.code() + " ",
+                    Log.i("debug", "Failed "+response.errorBody()+" ");
+
+
+                    Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
                             //R.string.something_wrong,
                             Toast.LENGTH_LONG).show();
                     readyBtn.setOnClickListener(new View.OnClickListener() {
@@ -512,7 +532,8 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
     }
-    private void getCurrentTime(){
+
+    private void getCurrentTime() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
         Calendar et = cal;
         et.add(Calendar.MINUTE, 90);
@@ -527,21 +548,21 @@ public class QuizActivity extends AppCompatActivity {
         dateEnd.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
 
         final long calMilis = cal.getTimeInMillis();
-        final long etMilis = cal.getTimeInMillis()+ (90*60000);
+        final long etMilis = cal.getTimeInMillis() + (90 * 60000);
 
 
 //        String localTime = date.format(currentLocalTime);
 
-       //timer.setText(localTime);
+        //timer.setText(localTime);
         final long diff = etMilis - calMilis;
 
         new CountDownTimer(diff, 1000) {
             @Override
             public void onTick(long l) {
                 int hours = (int) (((l / 1000) / 3600) % 24);
-                int minutes = (int) ((l / 1000) / 60 %60);
+                int minutes = (int) ((l / 1000) / 60 % 60);
                 int seconds = (int) ((l / 1000) % 60);
-                String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d",hours, minutes, seconds);
+                String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
                 timer.setText( //etMilis + "\n"+ calMilis +
                         limitFormat);
             }

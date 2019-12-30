@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white_smoke"
+    tools:context=".ChangeProfile">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar_settings_profile" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="#71ADA7" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_13sdp"
+                android:layout_marginStart="@dimen/_23sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.4"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@string/profile_name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.6"
+                android:singleLine="true"
+                android:text="Name"
+                android:textAlignment="textEnd"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp"
+                app:backgroundTint="@android:color/transparent" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_23sdp"
+            android:background="#4d4f9a94" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_13sdp"
+                android:layout_marginStart="@dimen/_23sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.4"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@string/email"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.6"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text="email@email.com"
+                android:textAlignment="textEnd"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp"
+                app:backgroundTint="@android:color/transparent" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_23sdp"
+            android:background="#4d4f9a94" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_13sdp"
+                android:layout_marginStart="@dimen/_23sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.4"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@string/username"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etSUsername"
+                android:layout_width="0dp"
+                android:editable="false"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_weight="0.6"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text="username"
+                android:textAlignment="textEnd"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp"
+                app:backgroundTint="@android:color/transparent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15ssp"
+        android:theme="@style/PrimaryDarkButton" />
+</LinearLayout>
