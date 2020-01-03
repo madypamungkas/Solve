@@ -3,6 +3,7 @@ package com.komsi.solve;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -39,12 +41,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NavigationFragment extends BottomSheetDialogFragment {
+public class NavigationFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
     RecyclerView optionRV;
     NavigationAdapter adapter;
+    Button readyBtn;
 
     List<QuestionModel> questionModels;
+
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +56,10 @@ public class NavigationFragment extends BottomSheetDialogFragment {
         View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
 
 
+        readyBtn = fragmentView.findViewById(R.id.readyBtn);
         optionRV = fragmentView.findViewById(R.id.optionRV);
 
+        readyBtn.setOnClickListener(this);
         loadSoal();
         return fragmentView;
     }
@@ -94,4 +100,13 @@ public class NavigationFragment extends BottomSheetDialogFragment {
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.readyBtn:
+                Intent readyBtn = new Intent(getActivity(), ReviewActivity.class);
+                startActivity(readyBtn);
+                break;
+        }
+    }
 }

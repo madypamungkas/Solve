@@ -81,4 +81,11 @@ public class QuestionModel {
         return option;
     }
 
+    public void setUser_answer(String user_answer) {
+        this.user_answer = user_answer;
+    }
+
+    public void setOption(List<OptionModel> option) {
+        this.option = option;
+    }
 }

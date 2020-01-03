@@ -44,23 +44,23 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NavVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final NavVH holder, final int position) {
         final QuestionModel questionModel = question.get(position);
 
-        holder.jawaban.setText(questionModel.getId_soal() + "");
 
+        holder.rbChoose.setChecked(position == mSelectedItem);
+        holder.jawaban.setText(questionModel.getId_soal() + "");
         holder.placeA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position);
+                holder.rbChoose.setChecked(true);
+                if (mCtx instanceof QuizActivity) {
+                    ((QuizActivity) mCtx).navigationSoal(position);
                 }
             }
         });
-
         if (holder.rbChoose.isChecked()) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
-
 
         } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));

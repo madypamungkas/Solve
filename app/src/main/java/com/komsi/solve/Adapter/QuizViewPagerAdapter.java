@@ -1,13 +1,16 @@
 package com.komsi.solve.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.QuizActivity;
@@ -25,12 +28,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.PagerAdapter;
 
 public class QuizViewPagerAdapter extends PagerAdapter {
-    private List<QuestionModel> question;
+    private ArrayList<QuestionModel> question;
     private Context mCtx;
     private LayoutInflater layoutInflater;
     OptionsAdapter adapter;
+    public int questionPosition;
 
-    public QuizViewPagerAdapter(List<QuestionModel> question, Context mCtx) {
+    public QuizViewPagerAdapter(ArrayList<QuestionModel> question, Context mCtx) {
         this.question = question;
         this.mCtx = mCtx;
     }
@@ -47,8 +51,14 @@ public class QuizViewPagerAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = LayoutInflater.from(mCtx);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+        editorList.putInt("position", position );
+        editorList.commit();
+
+        questionPosition = position;
         View view = layoutInflater.inflate(R.layout.viewpager_quiz, container, false);
         Button submitBtn;
         final TextView soal, gameName, sum, number, timer;
@@ -72,11 +82,14 @@ public class QuizViewPagerAdapter extends PagerAdapter {
         optionRV.setLayoutManager(staggeredGridLayoutManager);
         optionRV.setAdapter(adapter);
 
-        int num = position + 1;
+        final int num = position + 1;
         soal.setText(question.get(position).getQuestion());
-        //gameName.setText(question.get(position).get());
         number.setText(num + "/");
         sum.setText(question.size() + " ");
+//        Toast.makeText(mCtx,
+//                num+"",
+//                Toast.LENGTH_LONG).show();
+
 
         if (position == 0) {
             prevSoal.setVisibility(View.GONE);
@@ -97,7 +110,7 @@ public class QuizViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position + 1);
+                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(num );
                 }
             }
         });
@@ -105,7 +118,7 @@ public class QuizViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mCtx instanceof QuizActivity_viewpager) {
-                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(position - 1);
+                    ((QuizActivity_viewpager) mCtx).viewPager.setCurrentItem(num - 2);
                 }
             }
         });
@@ -119,4 +132,8 @@ public class QuizViewPagerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
+
+
+
+
 }

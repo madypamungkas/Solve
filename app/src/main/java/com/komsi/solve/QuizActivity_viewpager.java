@@ -11,6 +11,7 @@ import retrofit2.Response;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.komsi.solve.Adapter.QuizViewPagerAdapter;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.OptionModel;
 import com.komsi.solve.Model.QuestionModel;
+import com.komsi.solve.Model.ResponsePostAnswer;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
@@ -63,35 +65,24 @@ import java.util.TimeZone;
 
 public class QuizActivity_viewpager extends AppCompatActivity {
     LinearLayout soalLayout, readyLayout;
-    private TextView timer, soal, number, sum, points, gameName;
+    private TextView timer;
     ProgressDialog progress;
-    CountDownTimer cd;
-    private List<QuestionModel> questionModel;
-    private List<OptionModel> optionModel;
-    private int currentQusetionId = 0;
-    int idsoal, sumQues;
+    private ArrayList<QuestionModel> questionModel;
     String token;
-    ImageView prevSoal, nextSoal, imgSoal;
     Context mCtx = QuizActivity_viewpager.this;
     Button readyBtn;
-    int status = 0;
-    RecyclerView optionRV;
-    OptionsAdapter adapter;
     FloatingActionButton fab;
     public static final String TAG = "bottom_sheet";
     String link = "http://10.33.85.59/solve/solve-jst/public/api/storage/question/";
-    Button submitBtn;
-    Runnable runnable;
-    NavigationAdapter nAdapter;
     QuizViewPagerAdapter vpAdapter;
     public String limitFormat;
     public ViewPager viewPager;
-    public long diff;
+    public int time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_viewpager);
-
         soalLayout = findViewById(R.id.soalLayout);
         readyLayout = findViewById(R.id.readyLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -105,7 +96,6 @@ public class QuizActivity_viewpager extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
 
-
                 NavigationFragment fragment = new NavigationFragment();
                 fragment.setArguments(bundle);
                 fragment.show(((FragmentActivity) QuizActivity_viewpager.this).getSupportFragmentManager(), TAG);
@@ -113,6 +103,7 @@ public class QuizActivity_viewpager extends AppCompatActivity {
             }
         });
     }
+
     public void loadSoal() {
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
@@ -125,6 +116,8 @@ public class QuizActivity_viewpager extends AppCompatActivity {
                 ResponseQuestion questionResponse = response.body();
                 if (response.isSuccessful()) {
                     if (response.body().getQuestion().size() != 0) {
+
+                        time = Integer.parseInt(questionResponse.getQuiz().getTime());
                         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity_viewpager.this);
                         SharedPreferences.Editor editorList = sharedPrefs.edit();
                         Gson gson = new Gson();
@@ -149,8 +142,6 @@ public class QuizActivity_viewpager extends AppCompatActivity {
                                 getCurrentTime();
                             }
                         });
-
-
                     } else {
                         readyBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -201,24 +192,13 @@ public class QuizActivity_viewpager extends AppCompatActivity {
     private void getCurrentTime() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
         Calendar et = cal;
-        et.add(Calendar.MINUTE, 90);
+        et.add(Calendar.MINUTE, time);
         Calendar endTime = et;
 
-        Date currentLocalTime = cal.getTime();
-        DateFormat date = new SimpleDateFormat("HH:mm:ss");
-        date.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
-
-        Date endLocalTime = endTime.getTime();
-        DateFormat dateEnd = new SimpleDateFormat("HH:mm:ss");
-        dateEnd.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
-
         final long calMilis = cal.getTimeInMillis();
-        final long etMilis = cal.getTimeInMillis() + (90 * 60000);
+        final long etMilis = cal.getTimeInMillis() + (time * 60000);
 
 
-//        String localTime = date.format(currentLocalTime);
-
-        //timer.setText(localTime);
         final long diff = etMilis - calMilis;
 
         new CountDownTimer(diff, 1000) {
@@ -234,64 +214,78 @@ public class QuizActivity_viewpager extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-               storeAnswer();
+                storeAnswer();
             }
         }.start();
 
     }
-    public void saveInternal(){
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+
+    public void saveInternal() {
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity_viewpager.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("response", "response");
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
-        /*try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput( "answer2.json", Context.MODE_PRIVATE));
+        ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
+
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("answer2.json", Context.MODE_PRIVATE));
             outputStreamWriter.write(json);
             outputStreamWriter.close();
 
             Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             Log.e("Exception", "File write failed: " + e.toString());
-        }
+        }    }
 
-        File file = new File(Environment.getExternalStorageDirectory(),
-                "Report.pdf");
-        Uri path = Uri.fromFile(file);
-        */
-    }
     public void storeAnswer() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity_viewpager.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("response", "response");
+        //  String json = getArguments().getString("question");
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
+        ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
+
 
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
 
         token = "Bearer " + user.getToken();
-        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
+        Call<ResponsePostAnswer> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
                 responseQuestion);
-        call.enqueue(new Callback<ResponseQuestion>() {
+        call.enqueue(new Callback<ResponsePostAnswer>() {
             @Override
-            public void onResponse(Call<ResponseQuestion> call, final Response<ResponseQuestion> response) {
-                ResponseQuestion questionResponse = response.body();
+            public void onResponse(Call<ResponsePostAnswer> call, final Response<ResponsePostAnswer> response) {
+                ResponsePostAnswer questionResponse = response.body();
                 if (response.isSuccessful()) {
+
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity_viewpager.this);
+                    SharedPreferences.Editor editorList = sharedPrefs.edit();
+                    Gson gson = new Gson();
+
+                    String responsePost = gson.toJson(response.body());
+                    editorList.putString("answerPost", responsePost);
+                    editorList.commit();
+
                     Toast.makeText(mCtx,
                             "Sukses",
                             Toast.LENGTH_LONG).show();
+                    //saveInternal();
                     progress.dismiss();
+
+                    Intent intent = new Intent(QuizActivity_viewpager.this, ResultQuizActivity.class);
+                    startActivity(intent);
 
                 } else {
                     progress.dismiss();
-                    Log.i("debug", "Failed "+response.errorBody()+" ");
+                    Log.i("debug", "Failed " + response.errorBody() + " ");
 
-                    Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
+                    Toast.makeText(mCtx, response.code() + " " + response.message() + response.errorBody(),
                             //R.string.something_wrong,
                             Toast.LENGTH_LONG).show();
                     readyBtn.setOnClickListener(new View.OnClickListener() {
@@ -306,7 +300,7 @@ public class QuizActivity_viewpager extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseQuestion> call, Throwable t) {
+            public void onFailure(Call<ResponsePostAnswer> call, Throwable t) {
                 Log.i("debug", "onResponse : FAILED");
                 progress.dismiss();
                 Toast.makeText(mCtx,

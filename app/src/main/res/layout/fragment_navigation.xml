@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context=".NavigationFragment">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
         android:fontFamily="@font/rubik_light"
         android:text="Navigasi Soal"
         android:textAlignment="center"
-        android:layout_margin="@dimen/_20sdp"
         android:textColor="@color/dark_slate_gray"
         android:textSize="@dimen/_20ssp" />
 
@@ -40,4 +41,19 @@
         </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/readyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="@drawable/btn_rounded_green"
+        android:enabled="true"
+        android:paddingLeft="@dimen/_28sdp"
+        android:paddingRight="@dimen/_28sdp"
+        android:text="Selesai"
+        android:textColor="@color/white"
+        android:visibility="visible" />
 </LinearLayout>

@@ -80,19 +80,11 @@ public class TypeChooseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
         load();
     }
-
     public void load() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
@@ -103,23 +95,13 @@ public class TypeChooseActivity extends AppCompatActivity {
                 ResponseCategory category__response = response.body();
                 if (response.isSuccessful()) {
                     int size = category__response.getResult().size();
-
-
-  /*                  SharedPreferences sharedPref = getSharedPreferences("Leaderboard", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putInt("idKonsonan", response.body().getResult().get(0).getId());
-                    editor.apply();
-  */
                     categories = response.body().getResult();
                     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
                     SharedPreferences.Editor editorList = sharedPrefs.edit();
                     Gson gson = new Gson();
-
                     String json = gson.toJson(categories);
-
                     editorList.putString("Hangeul", json);
                     editorList.commit();
-
                     adapter = new TypeGameAdapter(mCtx, categories);
                     typeRV.setAdapter(adapter);
                 } else {
@@ -130,11 +112,9 @@ public class TypeChooseActivity extends AppCompatActivity {
                     }.getType();
                     ArrayList<CategoryModel> categories = gson.fromJson(json, type);
                     if (categories.size() != 0) {
-                        adapter = new TypeGameAdapter(mCtx, categories);
-                        typeRV.setAdapter(adapter);
+                        adapter = new TypeGameAdapter(mCtx, categories);  typeRV.setAdapter(adapter);
                     } else {
                         Toast.makeText(mCtx, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
                     }
                 }
             }

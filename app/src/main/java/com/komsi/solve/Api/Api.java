@@ -7,6 +7,7 @@ import com.komsi.solve.Model.ResponseForgotPassword;
 import com.komsi.solve.Model.ResponseLeaderboard;
 import com.komsi.solve.Model.ResponseLogin;
 import com.komsi.solve.Model.ResponsePassword;
+import com.komsi.solve.Model.ResponsePostAnswer;
 import com.komsi.solve.Model.ResponseProfile;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.ResponseListSoal;
@@ -60,7 +61,7 @@ public interface Api {
     //@FormUrlEncoded
     //@Multipart
     @POST("collager/question/{id}")
-    Call<ResponseQuestion> postQuestion(
+    Call<ResponsePostAnswer> postQuestion(
             @Header("Accept") String accept,
             @Header("Authorization") String token,
             @Path("id") int idSoal,

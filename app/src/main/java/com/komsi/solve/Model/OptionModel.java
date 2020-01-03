@@ -41,9 +41,9 @@ public class OptionModel {
     private String deleted_at;
     @SerializedName("choosen")
     @Expose
-    private int choosen;
+    private String choosen;
 
-    public OptionModel(int id, String question_id, String option, String content, String pic_url, String isTrue, String created_at, String updated_at, String deleted_at, int choosen) {
+    public OptionModel(int id, String question_id, String option, String content, String pic_url, String isTrue, String created_at, String updated_at, String deleted_at, String choosen) {
         this.id = id;
         this.question_id = question_id;
         this.option = option;
@@ -92,11 +92,11 @@ public class OptionModel {
         return deleted_at;
     }
 
-    public int getChoosen() {
+    public String getChoosen() {
         return choosen;
     }
 
-    public void setChoosen(int choosen) {
+    public void setChoosen(String choosen) {
         this.choosen = choosen;
     }
 }

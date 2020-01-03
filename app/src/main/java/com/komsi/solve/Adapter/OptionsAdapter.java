@@ -18,6 +18,7 @@ import com.komsi.solve.Model.OptionModel;
 import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.QuizActivity;
+import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +36,8 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private List<OptionModel> optionModel;
     private Context mCtx;
     private QuestionModel question;
-    String link = "http://10.33.85.59/solve/solve-jst/public/storage/answer/";
+    QuizViewPagerAdapter adapter;
+    String link = "http://10.33.77.214/solve/solve-jst/public/storage/answer/";
     String content;
 
     public OptionsAdapter(List<OptionModel> optionModel, Context mCtx, QuestionModel question) {
@@ -54,15 +56,11 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
     @Override
     public void onBindViewHolder(@NonNull OptionVH holder, int position) {
-//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-//        Gson gson = new Gson();
-//        String json = sharedPrefs.getString("question", "question");
-//        Type type = new TypeToken<ArrayList<QuestionModel>>() {
-//        }.getType();
-//        ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
-//
-
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
         final OptionModel option = optionModel.get(position);
+
 
         content = option.getContents();
         Picasso.get().load(link + option.getId())
@@ -72,24 +70,97 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         holder.jawaban.setText(option.getContents() + " ");
 
 
-        if (option.getChoosen() == 1) {
-        //    holder.rbChoose.setChecked(true);
-        } else {
-        }
-
-       // int num = sharedPrefs.getInt("num", 0);
         if (holder.rbChoose.isChecked()) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
 
+            String json = sharedPrefs.getString("response", "response");
+            Type type = new TypeToken<ResponseQuestion>() {
+            }.getType();
+            ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+            String json2 = sharedPrefs.getString("question", "question");
+            Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+            }.getType();
+            ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+          /*  ArrayList<QuestionModel> que = questionSave;
+
+            int questionPosition = sharedPrefs.getInt("position", 0);
+            if (que.size()== questionPosition) {
+                que.get(questionPosition+1).setUser_answer(option.getOption());
+                option.setChoosen(1);
+            }else {
+                que.get(questionPosition).setUser_answer(option.getOption());
+                option.setChoosen(1);
+            }*/
+            option.setChoosen("yes");
+
+            editorList.putString("userAnswer", option.getOption());
+
+            String questionSt = gson.toJson(questionSave);
+            editorList.putString("question", questionSt);
+
+            responseQuestion.setQuestion(questionSave);
+            String responseQuiz = gson.toJson(responseQuestion);
+            editorList.putString("response", responseQuiz);
+
+            editorList.commit();
 
         } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
         }
-        if (holder.id == 1) {
 
-        } else {
+       /* if (mCtx instanceof QuizActivity) {
+            if (((QuizActivity) mCtx).checkUserAnswer() != "**"){
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            else {
+                holder.rbChoose.setChecked(true);
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+            }
+        }*/
+        if (holder.id == 1) {
+           /* holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+
+            String json = sharedPrefs.getString("response", "response");
+            Type type = new TypeToken<ResponseQuestion>() {
+            }.getType();
+            ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+            String json2 = sharedPrefs.getString("question", "question");
+            Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+            }.getType();
+            ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+          *//*  ArrayList<QuestionModel> que = questionSave;
+
+            int questionPosition = sharedPrefs.getInt("position", 0);
+            if (que.size()== questionPosition) {
+                que.get(questionPosition+1).setUser_answer(option.getOption());
+                option.setChoosen(1);
+            }else {
+                que.get(questionPosition).setUser_answer(option.getOption());
+                option.setChoosen(1);
+            }*//*
+            List<OptionModel> ops = optionModel;
+            //option.setChoosen("yes");
+
+
+
+            editorList.putString("userAnswer", option.getOption());
+
+            String questionSt = gson.toJson(questionSave);
+            editorList.putString("question", questionSt);
+
+            responseQuestion.setQuestion(questionSave);
+            String responseQuiz = gson.toJson(responseQuestion);
+            editorList.putString("response", responseQuiz);
+
+            editorList.commit();
+*/        } else {
 
         }
+
     }
 
     @Override
@@ -133,3 +204,14 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         return null;
     }
 }
+/*
+        String resQS = sharedPrefs.getString("response", "response");
+        Type resQT = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQue = gson.fromJson(resQS, resQT);
+
+        String queS = sharedPrefs.getString("question", "question");
+        Type queT = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> queModel = gson.fromJson(queS, queT);
+        */

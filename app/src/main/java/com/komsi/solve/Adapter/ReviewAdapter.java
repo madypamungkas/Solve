@@ -22,7 +22,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
         this.question = question;
         this.mCtx = mCtx;
     }
-
     @NonNull
     @Override
     public ReviewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,7 +34,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
     public void onBindViewHolder(@NonNull ReviewVH holder, int position) {
         final QuestionModel questionModel = question.get(position);
         holder.tvSoal.setText(questionModel.getQuestion());
-        holder.tvAns.setText("| "+ questionModel.getUser_answer());
+        if(questionModel.getUser_answer().equals("**")){
+            holder.tvAns.setText("| -");
+        }
+        else {
+            holder.tvAns.setText("| "+ questionModel.getUser_answer());
+
+        }
         int number = position +1;
         holder.tvNum.setText(number+"");
 

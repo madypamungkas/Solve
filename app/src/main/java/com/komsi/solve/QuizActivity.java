@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.OptionModel;
 import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.ResponseLogin;
+import com.komsi.solve.Model.ResponsePostAnswer;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.TypeListModel;
 import com.komsi.solve.Model.UserModel;
@@ -78,9 +80,10 @@ public class QuizActivity extends AppCompatActivity {
     int status = 0;
     RecyclerView optionRV;
     OptionsAdapter adapter;
-    FloatingActionButton fab;
+    public int time;
+    FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
-    String link = "http://10.33.85.59/solve/solve-jst/public/api/storage/question/";
+    String link = "http://10.33.77.214/solve/solve-jst/public/api/storage/question/";
     Button submitBtn;
     Runnable runnable;
     NavigationAdapter nAdapter;
@@ -106,6 +109,7 @@ public class QuizActivity extends AppCompatActivity {
         readyBtn = findViewById(R.id.readyBtn);
         optionRV = findViewById(R.id.optionRV);
         fab = findViewById(R.id.fab);
+         fab2 = findViewById(R.id.fab2);
         submitBtn = findViewById(R.id.submitBtn);
 
 
@@ -129,7 +133,7 @@ public class QuizActivity extends AppCompatActivity {
                 Type type = new TypeToken<ArrayList<QuestionModel>>() {
                 }.getType();
                 ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
-                // checkOption();
+                saveOption();
 
                 //navigationSoal();
                 bundle.putString("question", json);
@@ -139,12 +143,13 @@ public class QuizActivity extends AppCompatActivity {
 
             }
         });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storeAnswer();
-                /*Intent intent = new Intent(QuizActivity.this, ReviewActivity.class);
-                startActivity(intent);*/
+                //storeAnswer();
+                Intent readyBtn = new Intent(QuizActivity.this, ReviewActivity.class);
+                startActivity(readyBtn);
+
             }
         });
 
@@ -163,7 +168,7 @@ public class QuizActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().getQuestion().size() != 0) {
 
-
+                        time = Integer.parseInt(questionResponse.getQuiz().getTime());
                         questionModel = response.body().getQuestion();
                         progress.dismiss();
                         sum.setText("/" + questionModel.size());
@@ -186,9 +191,10 @@ public class QuizActivity extends AppCompatActivity {
                         readyBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                getCurrentTime();
                                 readyLayout.setVisibility(View.GONE);
                                 soalLayout.setVisibility(view.VISIBLE);
-                                getCurrentTime();
+
                             }
                         });
 
@@ -260,24 +266,112 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    public void checkOption() {
-       /* if (adapter.getSelected().getId() == 1) {
-            questionModel.get(currentQusetionId).setUser_answer(adapter.getSelected().getContents());
+    public void saveOption() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
 
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-            SharedPreferences.Editor editorList = sharedPrefs.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(questionModel);
-            editorList.putString("question", json);
-            editorList.commit();
-        } else {
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
 
-        }*/
+        String json2 = sharedPrefs.getString("question", "question");
+        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+
+        ArrayList<QuestionModel> que = questionSave;
+        String userAnswer = sharedPrefs.getString("userAnswer", "**");
+        int questionPosition = sharedPrefs.getInt("position", 0);
+
+        List<OptionModel> ops = que.get(currentQusetionId).getOption();
+
+        que.get(currentQusetionId).setUser_answer(userAnswer);
+
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+        // editorList.putString("userAnswer", option.getOption());
+
+        String questionSt = gson.toJson(questionSave);
+        editorList.putString("question", questionSt);
+
+        responseQuestion.setQuestion(questionSave);
+        String responseQuiz = gson.toJson(responseQuestion);
+        editorList.putString("response", responseQuiz);
+
+        editorList.commit();
+    }
+    public void checkAnswer(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+        String json2 = sharedPrefs.getString("question", "question");
+        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+
+        ArrayList<QuestionModel> que = questionSave;
+       /* String userAnswer = sharedPrefs.getString("userAnswer", "**");
+        int questionPosition = sharedPrefs.getInt("position", 0);*/
+
+       // que.get(currentQusetionId).setUser_answer(userAnswer);
+
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+        // editorList.putString("userAnswer", option.getOption());
+
+        String questionSt = gson.toJson(questionSave);
+        editorList.putString("question", questionSt);
+
+        responseQuestion.setQuestion(questionSave);
+        String responseQuiz = gson.toJson(responseQuestion);
+        editorList.putString("response", responseQuiz);
+
+        editorList.commit();
     }
 
+
+    public String checkUserAnswer(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+        String json2 = sharedPrefs.getString("question", "question");
+        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+
+
+        /*SharedPreferences.Editor editorList = sharedPrefs.edit();
+        // editorList.putString("userAnswer", option.getOption());
+
+        String questionSt = gson.toJson(questionSave);
+        editorList.putString("question", questionSt);
+
+        responseQuestion.setQuestion(questionSave);
+        String responseQuiz = gson.toJson(responseQuestion);
+        editorList.putString("response", responseQuiz);
+
+        editorList.commit();*/
+
+        return questionSave.get(currentQusetionId).getUser_answer();
+
+    }
+
+    @SuppressLint("RestrictedApi")
     public void nextSoal(View view) {
         prevSoal.setVisibility(View.VISIBLE);
-        checkOption();
+        saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -291,7 +385,8 @@ public class QuizActivity extends AppCompatActivity {
 
         if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
-            submitBtn.setVisibility(View.VISIBLE);
+           // submitBtn.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.VISIBLE);
         }
 
         if (currentQusetionId + 1 == questionSave.size()) {
@@ -330,7 +425,7 @@ public class QuizActivity extends AppCompatActivity {
         nextSoal.setVisibility(View.VISIBLE);
         prevSoal.setVisibility(View.VISIBLE);
         submitBtn.setVisibility(View.GONE);
-        checkOption();
+        saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -372,12 +467,10 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
-    public void navigationSoal() {
-
-        nextSoal.setVisibility(View.VISIBLE);
-        prevSoal.setVisibility(View.VISIBLE);
-        submitBtn.setVisibility(View.GONE);
-//        checkOption();
+    @SuppressLint("RestrictedApi")
+    public void navigationSoal(int num) {
+        saveOption();
+        currentQusetionId = num;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -385,16 +478,47 @@ public class QuizActivity extends AppCompatActivity {
         }.getType();
         ArrayList<QuestionModel> questionSave = gson.fromJson(json, type);
 
-       /* SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putInt("num", currentQusetionId);
-        editor.commit();*/
+        nextSoal.setVisibility(View.VISIBLE);
+        prevSoal.setVisibility(View.VISIBLE);
 
-
-        if (currentQusetionId == 1) {
-            prevSoal.setVisibility(View.INVISIBLE);
+        final QuestionModel questions = questionSave.get(currentQusetionId);
+        soal.setText(questions.getQuestion());
+        number.setText(currentQusetionId + 1 + "");
+        optionModel = questions.getOption();
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+        adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+        optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+        optionRV.setLayoutManager(staggeredGridLayoutManager);
+        optionRV.setAdapter(adapter);
+        if (questions.getPic_question().isEmpty()) {
+            imgSoal.setVisibility(View.GONE);
+        } else {
+            imgSoal.setVisibility(View.VISIBLE);
+            Picasso.get().load(link + questions.getPic_question())
+                    .into(imgSoal);
         }
-        if (currentQusetionId > 0) {
-            currentQusetionId--;
+        if(currentQusetionId == 0){
+            prevSoal.setVisibility(View.INVISIBLE);
+
+        }else if(currentQusetionId + 1 == questionSave.size()){
+            nextSoal.setVisibility(View.INVISIBLE);
+            fab2.setVisibility(View.VISIBLE);
+
+        }
+
+
+/*
+
+        if (currentQusetionId < 0) {
+
+        } else if (currentQusetionId == 1) {
+            prevSoal.setVisibility(View.INVISIBLE);
+
+        } else if (currentQusetionId + 1 == questionSave.size()) {
+            prevSoal.setVisibility(View.VISIBLE);
+            nextSoal.setVisibility(View.INVISIBLE);
+            submitBtn.setVisibility(View.VISIBLE);
+
             final QuestionModel questions = questionSave.get(currentQusetionId);
             soal.setText(questions.getQuestion());
             number.setText(currentQusetionId + 1 + "");
@@ -411,39 +535,56 @@ public class QuizActivity extends AppCompatActivity {
                 Picasso.get().load(link + questions.getPic_question())
                         .into(imgSoal);
             }
-        } else {
-            prevSoal.setVisibility(View.INVISIBLE);
+
         }
+*/
+
     }
 
     public void storeAnswer() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("response", "response");
+        //  String json = getArguments().getString("question");
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
+        ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
+
 
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
 
         token = "Bearer " + user.getToken();
-        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
+        Call<ResponsePostAnswer> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
                 responseQuestion);
-        call.enqueue(new Callback<ResponseQuestion>() {
+        call.enqueue(new Callback<ResponsePostAnswer>() {
             @Override
-            public void onResponse(Call<ResponseQuestion> call, final Response<ResponseQuestion> response) {
-                ResponseQuestion questionResponse = response.body();
+            public void onResponse(Call<ResponsePostAnswer> call, final Response<ResponsePostAnswer> response) {
+                ResponsePostAnswer questionResponse = response.body();
                 if (response.isSuccessful()) {
+
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+                    SharedPreferences.Editor editorList = sharedPrefs.edit();
+                    Gson gson = new Gson();
+
+                    String responsePost = gson.toJson(response.body());
+                    editorList.putString("answerPost", responsePost);
+                    editorList.commit();
+
                     Toast.makeText(mCtx,
                             "Sukses",
                             Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+
+                    Intent intent = new Intent(QuizActivity.this, ResultQuizActivity.class);
+                    startActivity(intent);
 
                 } else {
                     progress.dismiss();
-                    Log.i("debug", "Failed "+response.errorBody()+" ");
+                    Log.i("debug", "Failed " + response.errorBody() + " ");
 
-                    Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
+                    Toast.makeText(mCtx, response.code() + " " + response.message() + response.errorBody(),
                             //R.string.something_wrong,
                             Toast.LENGTH_LONG).show();
                     readyBtn.setOnClickListener(new View.OnClickListener() {
@@ -458,7 +599,7 @@ public class QuizActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseQuestion> call, Throwable t) {
+            public void onFailure(Call<ResponsePostAnswer> call, Throwable t) {
                 Log.i("debug", "onResponse : FAILED");
                 progress.dismiss();
                 Toast.makeText(mCtx,
@@ -478,23 +619,14 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+
     private void getCurrentTime() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
         Calendar et = cal;
-        et.add(Calendar.MINUTE, 90);
+        et.add(Calendar.MINUTE, time);
         Calendar endTime = et;
-
-        Date currentLocalTime = cal.getTime();
-        DateFormat date = new SimpleDateFormat("HH:mm:ss");
-        date.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
-
-        Date endLocalTime = endTime.getTime();
-        DateFormat dateEnd = new SimpleDateFormat("HH:mm:ss");
-        dateEnd.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
-
         final long calMilis = cal.getTimeInMillis();
-        final long etMilis = cal.getTimeInMillis() + (90 * 60000);
-
+        final long etMilis = cal.getTimeInMillis() + (time * 60000);
 
 
         final long diff = etMilis - calMilis;
@@ -506,8 +638,7 @@ public class QuizActivity extends AppCompatActivity {
                 int minutes = (int) ((l / 1000) / 60 % 60);
                 int seconds = (int) ((l / 1000) % 60);
                 String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-                timer.setText( //etMilis + "\n"+ calMilis +
-                        limitFormat);
+                timer.setText(limitFormat);
             }
 
             @Override
@@ -515,7 +646,5 @@ public class QuizActivity extends AppCompatActivity {
                 storeAnswer();
             }
         }.start();
-
     }
-
 }
