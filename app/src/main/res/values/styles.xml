@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -27,14 +27,24 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="HintText" parent="Widget.Design.TextInputLayout">
-        <item name="android:textSize">@dimen/_13ssp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="HintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="ErrorText" parent="Widget.Design.TextInputLayout">
-        <item name="android:textSize">@dimen/_11ssp</item>
-        <item name="android:textColor">@color/red</item>
+    <style name="ErrorText" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textColor">#CF6679</item>
+    </style>
+
+    <style name="TextInputLayoutWhite" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/white_smoke</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="colorControlNormal">@color/white_smoke</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeWidth">@dimen/_2sdp</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
     </style>
 
     <style name="RubikRegularTextViewStyle" parent="android:Widget.TextView">

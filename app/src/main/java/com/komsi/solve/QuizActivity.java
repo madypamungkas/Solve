@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -76,7 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     String token;
     ImageView prevSoal, nextSoal, imgSoal;
     Context mCtx = QuizActivity.this;
-    Button readyBtn;
+    MaterialButton readyBtn;
     int status = 0;
     RecyclerView optionRV;
     OptionsAdapter adapter;

@@ -31,9 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/imgQuiz"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="@dimen/_18sdp">
 
@@ -62,8 +62,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
                             android:layout_below="@+id/txtQuestion"
+                            android:layout_alignParentStart="true"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:orientation="horizontal">
 
@@ -108,18 +108,18 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:text="00"
-                            android:visibility="gone"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_18ssp" />
+                            android:textSize="@dimen/_18ssp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/txtScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
                             android:fontFamily="@font/rubik_light"
                             android:text="waktu"
                             android:textAlignment="center"
@@ -130,8 +130,8 @@
                             android:id="@+id/timer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_below="@+id/txtScore"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:fontFamily="@font/rubik_medium"
                             android:text="0"
@@ -140,11 +140,13 @@
                             android:textSize="@dimen/_16ssp" />
 
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/imgLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/layoutTop">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -166,72 +168,76 @@
                         android:id="@+id/textLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_below="@+id/imgLayout"
                         android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:layout_below="@+id/imgLayout">
+                        android:layout_centerVertical="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="5"
-                            android:gravity="center"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/_12sdp"
-                            android:orientation="horizontal">
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
+
                             <ImageView
                                 android:id="@+id/prevSoal"
-                                android:foreground="?attr/selectableItemBackground"
                                 android:layout_width="0dp"
-                                android:visibility="visible"
                                 android:layout_height="@dimen/_48sdp"
                                 android:layout_weight="0.5"
+                                android:foreground="?attr/selectableItemBackground"
                                 android:onClick="prevSoal"
-                                android:src="@drawable/ic_keyboard_arrow_left_white_24dp"/>
+                                android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+                                android:visibility="visible" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
                                 android:layout_weight="4"
-                                >
+                                android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/soal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:text="Soal"
-                                    android:padding="@dimen/_2sdp"
                                     android:layout_gravity="center"
+                                    android:padding="@dimen/_2sdp"
+                                    android:text="Soal"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_17ssp" />
+
                                 <RelativeLayout
                                     android:id="@+id/imgLayout2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/layoutTop">
+
                                     <ImageView
-                                        android:layout_centerInParent="true"
                                         android:id="@+id/imgSoal"
-                                        android:visibility="visible"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@color/colorPrimary"
-                                        android:maxHeight="@dimen/_110sdp"
+                                        android:layout_centerInParent="true"
                                         android:maxWidth="@dimen/_200sdp"
-                                        >
-                                    </ImageView>
+                                        android:maxHeight="@dimen/_110sdp"
+                                        android:src="@color/colorPrimary"
+                                        android:visibility="visible"></ImageView>
 
                                 </RelativeLayout>
 
                             </LinearLayout>
+
                             <ImageView
-                                android:foreground="?attr/selectableItemBackground"
-                                android:layout_width="0dp"
                                 android:id="@+id/nextSoal"
-                                android:visibility="visible"
-                                android:onClick="nextSoal"
+                                android:layout_width="0dp"
                                 android:layout_height="@dimen/_48sdp"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_keyboard_arrow_right_white_24dp"/>
+                                android:foreground="?attr/selectableItemBackground"
+                                android:onClick="nextSoal"
+                                android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+                                android:visibility="visible" />
                         </LinearLayout>
 
                     </RelativeLayout>
@@ -249,13 +255,14 @@
             android:orientation="vertical">
 
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollOption"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scrollOption"
                 android:layout_below="@+id/carousel"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:fillViewport="true">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -266,38 +273,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false" />
+
                     <Button
                         android:id="@+id/submitBtn"
-                        android:enabled="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/scrollOption"
+                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/_6sdp"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
                         android:background="@drawable/btn_rounded_green"
+                        android:enabled="true"
                         android:paddingLeft="@dimen/_28sdp"
                         android:paddingRight="@dimen/_28sdp"
                         android:text="Submit"
-                        android:layout_centerHorizontal="true"
                         android:textColor="@color/white"
-                        android:layout_below="@id/scrollOption"
                         android:visibility="gone" />
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab2"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@id/fab"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="false"
                 android:layout_gravity="bottom|end"
-                android:layout_above="@id/fab"
                 android:layout_marginEnd="@dimen/fab_margin"
-                android:visibility="gone"
                 android:layout_marginBottom="@dimen/fab_margin"
                 android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_check_black_24dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -321,52 +330,49 @@
         android:id="@+id/readyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/rubik_light"
-            android:text="@string/get_ready"
-            android:textColor="@color/dark_slate_gray"
-            android:textSize="@dimen/_28ssp" />
+        <ImageView
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_160sdp"
+            android:src="@drawable/img_get_ready" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:fontFamily="@font/rubik_light"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/get_ready"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_25ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:fontFamily="@font/roboto_regular"
             android:text="@string/game_desc"
             android:textAlignment="center"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_13ssp" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/_12ssp" />
 
-        <ImageView
-            android:id="@+id/imgReady"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_160sdp"
-            android:src="@drawable/bg_ready" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/readyBtn"
-            android:enabled="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/btn_rounded_green"
-            android:paddingLeft="@dimen/_28sdp"
-            android:paddingRight="@dimen/_28sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/start"
-            android:textColor="@color/white"
-            android:visibility="visible" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:backgroundTint="@color/colorAccent" />
 
     </LinearLayout>
-
 
 </LinearLayout>

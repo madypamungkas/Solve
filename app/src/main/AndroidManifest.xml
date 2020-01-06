@@ -25,6 +25,9 @@
         <activity android:name=".QuizActivity_viewpager" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".SearchCode" />
+        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".LoginRegisterActivity" />
+        <activity android:name=".SearchCode" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".QuizChooseActivity" />
         <activity android:name=".WebViewsActivity" />

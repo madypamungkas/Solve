@@ -114,14 +114,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
         View header = navigationView.getHeaderView(0);
-        navUsername = (TextView) header.findViewById(R.id.navUsername);
-        navImage = header.findViewById(R.id.navImage);
+        //navUsername = (TextView) header.findViewById(R.id.navUsername);
+        //navImage = header.findViewById(R.id.navImage);
 
         String defaultLink = getResources().getString(R.string.link);
         String link = defaultLink + "user/";
         DetailUser detailUser = SharedPrefManager.getInstance(this).detailUser();
 
-        navEmail = header.findViewById(R.id.navEmail);
+        //navEmail = header.findViewById(R.id.navEmail);
 
         getListCategory();
 
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity
 
                     View header = navigationView.getHeaderView(0);
 
-                    navImage = header.findViewById(R.id.navImage);
+                    //navImage = header.findViewById(R.id.navImage);
                     String defaultLink = getResources().getString(R.string.link);
                     String link = defaultLink + "user/";
 
@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
 
-        navImage = header.findViewById(R.id.navImage);
+        //navImage = header.findViewById(R.id.navImage);
 
         //   String link = "http://10.33.77.95/master-ruko/ruko/public/storage/user/";
         String defaultLink = getResources().getString(R.string.link);
