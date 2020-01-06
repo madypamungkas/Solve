@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -37,8 +39,10 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private Context mCtx;
     private QuestionModel question;
     QuizViewPagerAdapter adapter;
-    String link = "http://10.33.77.214/solve/solve-jst/public/storage/answer/";
+    String link = "http://10.33.74.105/solve/solve-jst/public/storage/answer/";
     String content;
+    String[] strings;
+    private boolean onBind;
 
     public OptionsAdapter(List<OptionModel> optionModel, Context mCtx, QuestionModel question) {
         this.optionModel = optionModel;
@@ -55,20 +59,55 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OptionVH holder, int position) {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        Gson gson = new Gson();
-        SharedPreferences.Editor editorList = sharedPrefs.edit();
+    public void onBindViewHolder(@NonNull final OptionVH holder, int position) {
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        final Gson gson = new Gson();
+        final SharedPreferences.Editor editorList = sharedPrefs.edit();
         final OptionModel option = optionModel.get(position);
-
-
+        holder.id = option.getId();
         content = option.getContents();
         Picasso.get().load(link + option.getId())
                 .into(holder.imgOption);
-
         holder.rbChoose.setChecked(position == mSelectedItem);
         holder.jawaban.setText(option.getContents() + " ");
+        String choosen = sharedPrefs.getString("id-" + option.getQuestion_id(), "question");
+        if(position == mSelectedItem){
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+            if (!choosen.equals("question")) {
+                if (choosen.equals(option.getOption())) {
+                    holder.rbChoose.setChecked(true);
+                } else {
+                    editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                    holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+            } else {
 
+            }
+        }
+        else{
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            if (!choosen.equals("question")) {
+                if (choosen.equals(option.getOption())) {
+                    holder.rbChoose.setChecked(true);
+                } else {
+                    editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                    holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+            } else {
+
+            }
+        }
+
+      /*  if (!choosen.equals("question")) {
+            if (choosen.equals(option.getOption())) {
+                holder.rbChoose.setChecked(true);
+            } else {
+                editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                 holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+        } else {
+
+        }*/
 
         if (holder.rbChoose.isChecked()) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
@@ -83,19 +122,11 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             }.getType();
             ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
 
-          /*  ArrayList<QuestionModel> que = questionSave;
 
-            int questionPosition = sharedPrefs.getInt("position", 0);
-            if (que.size()== questionPosition) {
-                que.get(questionPosition+1).setUser_answer(option.getOption());
-                option.setChoosen(1);
-            }else {
-                que.get(questionPosition).setUser_answer(option.getOption());
-                option.setChoosen(1);
-            }*/
             option.setChoosen("yes");
 
             editorList.putString("userAnswer", option.getOption());
+            editorList.putString("id-" + option.getQuestion_id(), option.getOption());
 
             String questionSt = gson.toJson(questionSave);
             editorList.putString("question", questionSt);
@@ -105,61 +136,53 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             editorList.putString("response", responseQuiz);
 
             editorList.commit();
+            if (!choosen.equals("question")) {
+                if (choosen.equals(option.getOption())) {
+                    holder.rbChoose.setChecked(true);
+                } else {
+                    editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                    holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+            } else {
+
+            }
+            //mSelectedItem = position;
+            /*if (position == mSelectedItem) {
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+                if (!choosen.equals("question")) {
+                    if (choosen.equals(option.getOption())) {
+                        holder.rbChoose.setChecked(true);
+                    } else {
+                        editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                        holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    }
+                } else {
+
+                }
+            } else {
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                if (!choosen.equals("question")) {
+                    if (choosen.equals(option.getOption())) {
+                        holder.rbChoose.setChecked(true);
+                    } else {
+                        editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+                        holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    }
+                } else {
+
+                }
+            }*/
 
         } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+
         }
 
-       /* if (mCtx instanceof QuizActivity) {
-            if (((QuizActivity) mCtx).checkUserAnswer() != "**"){
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-            }
-            else {
-                holder.rbChoose.setChecked(true);
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
-            }
+       /* if (holder.id == 1) {
+
+        } else {
+
         }*/
-        if (holder.id == 1) {
-           /* holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
-
-            String json = sharedPrefs.getString("response", "response");
-            Type type = new TypeToken<ResponseQuestion>() {
-            }.getType();
-            ResponseQuestion responseQuestion = gson.fromJson(json, type);
-
-            String json2 = sharedPrefs.getString("question", "question");
-            Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
-            }.getType();
-            ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
-
-          *//*  ArrayList<QuestionModel> que = questionSave;
-
-            int questionPosition = sharedPrefs.getInt("position", 0);
-            if (que.size()== questionPosition) {
-                que.get(questionPosition+1).setUser_answer(option.getOption());
-                option.setChoosen(1);
-            }else {
-                que.get(questionPosition).setUser_answer(option.getOption());
-                option.setChoosen(1);
-            }*//*
-            List<OptionModel> ops = optionModel;
-            //option.setChoosen("yes");
-
-
-
-            editorList.putString("userAnswer", option.getOption());
-
-            String questionSt = gson.toJson(questionSave);
-            editorList.putString("question", questionSt);
-
-            responseQuestion.setQuestion(questionSave);
-            String responseQuiz = gson.toJson(responseQuestion);
-            editorList.putString("response", responseQuiz);
-
-            editorList.commit();
-*/        } else {
-
-        }
 
     }
 
@@ -168,7 +191,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         return optionModel.size();
     }
 
-    class OptionVH extends RecyclerView.ViewHolder {
+     class OptionVH extends RecyclerView.ViewHolder {
         TextView jawaban;
         RadioButton rbChoose;
         public int id;
@@ -182,36 +205,23 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             imgOption = itemView.findViewById(R.id.imgOption);
             placeA = itemView.findViewById(R.id.placeA);
 
+
             View.OnClickListener l = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mSelectedItem = getAdapterPosition();
                     notifyItemRangeChanged(0, optionModel.size());
+                    notifyDataSetChanged();
 
                 }
             };
 
             itemView.setOnClickListener(l);
             rbChoose.setOnClickListener(l);
+            placeA.setOnClickListener(l);
 
         }
     }
 
-    public OptionModel getSelected() {
-        if (mSelectedItem != -1) {
-            return optionModel.get(mSelectedItem);
-        }
-        return null;
-    }
+
 }
-/*
-        String resQS = sharedPrefs.getString("response", "response");
-        Type resQT = new TypeToken<ResponseQuestion>() {
-        }.getType();
-        ResponseQuestion responseQue = gson.fromJson(resQS, resQT);
-
-        String queS = sharedPrefs.getString("question", "question");
-        Type queT = new TypeToken<ArrayList<QuestionModel>>() {
-        }.getType();
-        ArrayList<QuestionModel> queModel = gson.fromJson(queS, queT);
-        */

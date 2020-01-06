@@ -28,6 +28,8 @@ import com.komsi.solve.Model.ResponseTypeList;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +73,21 @@ public class SearchCode extends AppCompatActivity {
                 ResponseTypeList model = response.body();
                 loading.dismiss();
                 if (response.isSuccessful()) {
-                    //  int size = model.getResult().size();
-                    Intent i = new Intent(SearchCode.this, QuizActivity.class);
-                    i.putExtra("idCategory", response.body().getResult().get(0).getId());
-                    i.putExtra("Type", response.body().getResult().get(0).getPic_url());
-                    startActivity(i);
+                    if(response.body().getStatus()!="failed"){
+                        Intent i = new Intent(SearchCode.this, QuizActivity.class);
+                        i.putExtra("idCategory", response.body().getResult().get(0).getId());
+                        i.putExtra("Type", response.body().getResult().get(0).getPic_url());
+                        startActivity(i);
+                    }
+                   else{
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Toast.makeText(SearchCode.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(SearchCode.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
                 } else {
                     Toast.makeText(SearchCode.this, "eror "+ response.code(), Toast.LENGTH_SHORT).show();
                 }

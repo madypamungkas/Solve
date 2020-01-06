@@ -95,7 +95,6 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
             public void onFailure(Call<ResponseQuestion> call, Throwable t) {
                 Log.i("debug", "onResponse : FAILED");
                 Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
-
             }
         });
     }

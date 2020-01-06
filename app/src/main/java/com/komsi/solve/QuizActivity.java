@@ -83,7 +83,7 @@ public class QuizActivity extends AppCompatActivity {
     public int time;
     FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
-    String link = "http://10.33.77.214/solve/solve-jst/public/api/storage/question/";
+    String link = "http://10.33.74.105/solve/solve-jst/public/api/storage/question/";
     Button submitBtn;
     Runnable runnable;
     NavigationAdapter nAdapter;
@@ -109,7 +109,7 @@ public class QuizActivity extends AppCompatActivity {
         readyBtn = findViewById(R.id.readyBtn);
         optionRV = findViewById(R.id.optionRV);
         fab = findViewById(R.id.fab);
-         fab2 = findViewById(R.id.fab2);
+        fab2 = findViewById(R.id.fab2);
         submitBtn = findViewById(R.id.submitBtn);
 
 
@@ -301,7 +301,8 @@ public class QuizActivity extends AppCompatActivity {
 
         editorList.commit();
     }
-    public void checkAnswer(){
+
+    public void checkAnswer() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
         Gson gson = new Gson();
 
@@ -320,7 +321,7 @@ public class QuizActivity extends AppCompatActivity {
        /* String userAnswer = sharedPrefs.getString("userAnswer", "**");
         int questionPosition = sharedPrefs.getInt("position", 0);*/
 
-       // que.get(currentQusetionId).setUser_answer(userAnswer);
+        // que.get(currentQusetionId).setUser_answer(userAnswer);
 
         SharedPreferences.Editor editorList = sharedPrefs.edit();
         // editorList.putString("userAnswer", option.getOption());
@@ -336,7 +337,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
-    public String checkUserAnswer(){
+    public String checkUserAnswer() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
         Gson gson = new Gson();
 
@@ -385,7 +386,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
-           // submitBtn.setVisibility(View.VISIBLE);
+            // submitBtn.setVisibility(View.VISIBLE);
             fab2.setVisibility(View.VISIBLE);
         }
 
@@ -497,10 +498,10 @@ public class QuizActivity extends AppCompatActivity {
             Picasso.get().load(link + questions.getPic_question())
                     .into(imgSoal);
         }
-        if(currentQusetionId == 0){
+        if (currentQusetionId == 0) {
             prevSoal.setVisibility(View.INVISIBLE);
 
-        }else if(currentQusetionId + 1 == questionSave.size()){
+        } else if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
             fab2.setVisibility(View.VISIBLE);
 
@@ -646,5 +647,14 @@ public class QuizActivity extends AppCompatActivity {
                 storeAnswer();
             }
         }.start();
+    }
+
+    public void refreshRV(){
+        QuestionModel questions = questionModel.get(currentQusetionId);
+       // soal.setText(questions.getQuestion());
+        optionModel = questions.getOption();
+        adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+        optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+        optionRV.setAdapter(adapter);
     }
 }

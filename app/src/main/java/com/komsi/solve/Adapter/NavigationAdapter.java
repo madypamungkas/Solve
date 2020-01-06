@@ -1,20 +1,25 @@
 package com.komsi.solve.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.komsi.solve.Model.OptionModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Model.QuestionModel;
+import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.SelectedItem;
 import com.komsi.solve.QuizActivity;
-import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +51,22 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     @Override
     public void onBindViewHolder(@NonNull final NavVH holder, final int position) {
         final QuestionModel questionModel = question.get(position);
-
-
         holder.rbChoose.setChecked(position == mSelectedItem);
+
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        final Gson gson = new Gson();
+        final SharedPreferences.Editor editorList = sharedPrefs.edit();
         holder.jawaban.setText(questionModel.getId_soal() + "");
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+        String json2 = sharedPrefs.getString("question", "question");
+        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
         holder.placeA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,16 +76,32 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                 }
             }
         });
+
+
+       /* if (questionSave.get(position).getUser_answer()!= "**"){
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+        }
+*/
+        if(position == mSelectedItem){
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+        }
+        else{
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
         if (holder.rbChoose.isChecked()) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+            Toast.makeText(mCtx, "Check", Toast.LENGTH_LONG).show();
+
 
         } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
         }
         if (holder.id == 1) {
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
 
         } else {
-
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
         }
     }
 
@@ -95,11 +128,11 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                 public void onClick(View v) {
                     mSelectedItem = getAdapterPosition();
                     notifyItemRangeChanged(0, question.size());
-
+                    notifyDataSetChanged();
                 }
             };
 
-           // itemView.setOnClickListener(l);
+            itemView.setOnClickListener(l);
             rbChoose.setOnClickListener(l);
 
         }
