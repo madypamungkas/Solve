@@ -147,7 +147,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -156,9 +156,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:fontFamily="@font/roboto_medium"
-                android:text="New Stock"
+                android:text="Jawaban Salah"
                 android:textColor="@color/dark_slate_gray"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -170,7 +170,7 @@
                 android:textSize="@dimen/_12ssp" />
 
             <TextView
-                android:id="@+id/txtNewStock"
+                android:id="@+id/txtFalse"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.55"

@@ -35,9 +35,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     ArrayList<SchoolsModel> items = new ArrayList<>();
     public TextView txtSchools;
 
-    final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-    final Gson gson = new Gson();
-    final SharedPreferences.Editor editorList = sharedPrefs.edit();
+
     private PageViewModel pageViewModel;
 
     public RegisterFragment() {
@@ -63,6 +61,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
+
         final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final Gson gson = new Gson();
         final SharedPreferences.Editor editorList = sharedPrefs.edit();
@@ -120,6 +119,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         return view;
     }
     public void register(){
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final Gson gson = new Gson();
+        final SharedPreferences.Editor editorList = sharedPrefs.edit();
         editorList.clear();
         editorList.commit();
     }

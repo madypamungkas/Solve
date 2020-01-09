@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class ResponseHistory {
+
     @SerializedName("status")
     @Expose
     private String status;
@@ -13,7 +14,6 @@ public class ResponseHistory {
     @SerializedName("result")
     @Expose
     private ArrayList<HistoryModel> result;
-
     public ResponseHistory(String status, ArrayList<HistoryModel> result) {
         this.status = status;
         this.result = result;

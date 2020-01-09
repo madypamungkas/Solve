@@ -39,9 +39,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.quizName.setText(history.getQuiz().getTitle());
         holder.txtDateTime.setText(history.getCreated_at());
         holder.txtScore.setText(history.getTotal_score()+" ");
-        holder.txtTrueAns.setText("-");
+        holder.txtTrueAns.setText(history.getTrue_sum()+" ");
         holder.txtSumQues.setText(history.getQuiz().getSum_question()+" ");
-
+        holder.txtFalse.setText(history.getFalse_sum()+" ");
 
     }
 
@@ -53,7 +53,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
 
     class HistoryVH extends RecyclerView.ViewHolder {
-        private TextView quizName, txtDateTime, txtScore,  txtTrueAns, txtSumQues;
+        private TextView quizName, txtDateTime, txtScore,  txtTrueAns, txtSumQues, txtFalse;
         private ImageView imgLiveReport;
         public HistoryVH(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +63,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             txtTrueAns = itemView.findViewById(R.id.txtTrueAns);
             txtSumQues = itemView.findViewById(R.id.txtSumQues);
             imgLiveReport = itemView.findViewById(R.id.imgLiveReport);
+            txtFalse = itemView.findViewById(R.id.txtFalse);
         }
 
     }
