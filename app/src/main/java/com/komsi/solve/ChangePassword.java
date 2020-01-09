@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponsePassword;
 import com.komsi.solve.Model.UserModel;
@@ -26,7 +27,7 @@ import java.util.Iterator;
 
 public class ChangePassword extends AppCompatActivity {
     private AppCompatEditText etOldPass, etNewPass, etNewConfirmPass;
-    private Button btnConfirm;
+    private MaterialButton btnConfirm;
     UserModel user;
     ProgressDialog loading;
     @Override

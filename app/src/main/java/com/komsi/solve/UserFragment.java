@@ -269,8 +269,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(i);
                 break;
             case R.id.btnChangePass:
-                Intent store = new Intent(getActivity(), ChangePassword.class);
-                startActivity(store);
+                Intent i2 = new Intent(getActivity(), ChangePassword.class);
+                startActivity(i2);
                 break;
         }
     }

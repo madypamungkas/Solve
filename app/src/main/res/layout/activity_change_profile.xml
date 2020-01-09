@@ -4,150 +4,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
-    android:background="@color/white_smoke"
     tools:context=".ChangeProfile">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/toolbar_settings_profile" />
-
-    <View
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
-        android:background="#71ADA7" />
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_settings_profile" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_marginStart="@dimen/_23sdp"
-                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_weight="0.4"
-                android:fontFamily="@font/rubik_medium"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/profile_name"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_13sdp"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_medium"
                 android:singleLine="true"
                 android:text="Name"
                 android:textAlignment="textEnd"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_13ssp"
                 app:backgroundTint="@android:color/transparent" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_marginStart="@dimen/_23sdp"
-            android:background="#4d4f9a94" />
+            android:background="@color/light_grey" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_marginStart="@dimen/_23sdp"
-                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_weight="0.4"
-                android:fontFamily="@font/rubik_medium"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/email"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_13sdp"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_medium"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:text="email@email.com"
                 android:textAlignment="textEnd"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_13ssp"
                 app:backgroundTint="@android:color/transparent" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_marginStart="@dimen/_23sdp"
-            android:background="#4d4f9a94" />
+            android:background="@color/light_grey" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_marginStart="@dimen/_23sdp"
-                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_13sdp"
                 android:layout_weight="0.4"
-                android:fontFamily="@font/rubik_medium"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/username"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/etSUsername"
                 android:layout_width="0dp"
-                android:editable="false"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_13sdp"
                 android:layout_weight="0.6"
-                android:inputType="textEmailAddress"
+                android:editable="false"
+                android:fontFamily="@font/roboto_medium"
+                android:inputType="text"
                 android:singleLine="true"
                 android:text="username"
                 android:textAlignment="textEnd"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_13ssp"
                 app:backgroundTint="@android:color/transparent" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/light_grey" />
     </LinearLayout>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirm"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_6sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/confirm"
+        android:gravity="center"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:text="@string/confirmation"
         android:textColor="@color/white"
-        android:textSize="@dimen/_15ssp"
-        android:theme="@style/PrimaryDarkButton" />
+        android:textSize="@dimen/_13sdp"
+        app:backgroundTint="@color/colorAccent" />
+
 </LinearLayout>

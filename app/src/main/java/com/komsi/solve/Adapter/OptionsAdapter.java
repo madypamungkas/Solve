@@ -72,7 +72,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         holder.jawaban.setText(option.getContents() + " ");
         String choosen = sharedPrefs.getString("id-" + option.getQuestion_id(), "question");
         if(position == mSelectedItem){
-            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             if (!choosen.equals("question")) {
                 if (choosen.equals(option.getOption())) {
                     holder.rbChoose.setChecked(true);
@@ -110,7 +110,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         }*/
 
         if (holder.rbChoose.isChecked()) {
-            holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
 
             String json = sharedPrefs.getString("response", "response");
             Type type = new TypeToken<ResponseQuestion>() {
@@ -141,32 +141,32 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
                     holder.rbChoose.setChecked(true);
                 } else {
                     editorList.putString("id-" + option.getQuestion_id(), option.getOption());
-                    holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                 }
             } else {
 
             }
             //mSelectedItem = position;
             /*if (position == mSelectedItem) {
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#4f9a94"));
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
                 if (!choosen.equals("question")) {
                     if (choosen.equals(option.getOption())) {
                         holder.rbChoose.setChecked(true);
                     } else {
                         editorList.putString("id-" + option.getQuestion_id(), option.getOption());
-                        holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                        holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                     }
                 } else {
 
                 }
             } else {
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                 if (!choosen.equals("question")) {
                     if (choosen.equals(option.getOption())) {
                         holder.rbChoose.setChecked(true);
                     } else {
                         editorList.putString("id-" + option.getQuestion_id(), option.getOption());
-                        holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                        holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                     }
                 } else {
 
@@ -174,7 +174,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             }*/
 
         } else {
-            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
 
         }
 

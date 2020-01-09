@@ -27,6 +27,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Pengaturan</string>
     <string name="profile">Profil</string>
+    <string name="review_answer">Review Jawaban</string>
+    <string name="choose_quiz">Pilih Quiz</string>
+    <string name="discussion">Pembahasan</string>
+    <string name="navigation_quiz">Navigasi Soal</string>
+    <string name="done">Selesai</string>
     <string name="home">Beranda</string>
     <string name="account">Akun</string>
     <string name="leaderboard">Leaderboard</string>
@@ -61,6 +66,7 @@
     <string name="start">Mulai Sekarang</string>
     <string name="correct_answer">Jumlah Pertanyaan Benar</string>
     <string name="total_score">Total Skor</string>
+    <string name="value">Nilai</string>
     <string name="score">Skor</string>
     <string name="dari">Dari</string>
     <string name="play_again">Mulai Lagi</string>

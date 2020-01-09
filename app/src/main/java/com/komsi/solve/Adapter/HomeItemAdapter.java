@@ -2,6 +2,10 @@ package com.komsi.solve.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,8 @@ import android.widget.TextView;
 import com.komsi.solve.Model.MenuHomeModel;
 import com.komsi.solve.R;
 import com.komsi.solve.TypeChooseActivity;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -36,7 +42,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final MenuHomeModel menu = models.get(position);
         //holder.layoutCard.setBackgroundResource(menu.getImage());
         // holder.params.height = menu.getMinHeight();
@@ -52,6 +58,30 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
             }
         });
+        String link = "http://10.33.74.105/solve/solve-jst/public/storage/quiz_category/";
+        Picasso.get().load(link + menu.getId()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                holder.layoutCard.setBackground(new BitmapDrawable(bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+
+        holder.textTitle = models.get(position).getName();
+        if (holder.textTitle.length() > 7) {
+            holder.titleMenu.setTextSize(TypedValue.COMPLEX_UNIT_PX , mCtx.getResources().getDimension(R.dimen._12ssp));
+        } else if (holder.textTitle.length() > 8) {
+            holder.titleMenu.setTextSize(TypedValue.COMPLEX_UNIT_PX , mCtx.getResources().getDimension(R.dimen._11ssp));
+        }
     }
 
     @Override
@@ -64,6 +94,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         TextView titleMenu;
         LinearLayout layoutCard;
         FrameLayout.LayoutParams params;
+        String textTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,7 +102,6 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
             layoutCard = itemView.findViewById(R.id.layoutCard);
             // layoutCard = new LinearLayout(mCtx);
             params = (FrameLayout.LayoutParams) layoutCard.getLayoutParams();
-
         }
     }
 }

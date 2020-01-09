@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.ResponseProfile;
@@ -28,12 +29,12 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class ChangeProfile extends AppCompatActivity {
-    private AppCompatEditText etSName, etSEmail ;
-    private AppCompatTextView etSUsername ;
-
-    Button btnConfirm;
+    private AppCompatEditText etSName, etSEmail;
+    private AppCompatTextView etSUsername;
+    MaterialButton btnConfirm;
     UserModel user;
     ProgressDialog loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,13 +125,13 @@ public class ChangeProfile extends AppCompatActivity {
 
     public void loadData() {
         String token = "Bearer " + user.getToken();
-        Call<ResponseDetails> call = RetrofitClient.getInstance().getApi().detail("application/json",token);
+        Call<ResponseDetails> call = RetrofitClient.getInstance().getApi().detail("application/json", token);
         call.enqueue(new Callback<ResponseDetails>() {
             @Override
             public void onResponse(Call<ResponseDetails> call, Response<ResponseDetails> response) {
                 if (response.isSuccessful()) {
                     //   SharedPrefManager.getInstance(ProfileActivity.this).saveUser(ResponseBody.getUser());
-                    Intent intent = new Intent(ChangeProfile.this, MainActivity.class);
+                    Intent intent = new Intent(ChangeProfile.this, Main2Activity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(ChangeProfile.this, R.string.something_wrong, Toast.LENGTH_LONG).show();

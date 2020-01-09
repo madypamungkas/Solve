@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigationHistory"
-        android:icon="@drawable/ic_effort"
+        android:icon="@android:drawable/ic_menu_recent_history"
         android:title="History" />
 
     <item

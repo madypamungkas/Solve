@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Model.QuestionModel;
@@ -28,11 +29,10 @@ import java.util.ArrayList;
 
 public class ResultQuizActivity extends AppCompatActivity {
     TextView point, textCorrect, textSumQues;
-    Button play, btn_home, btn_leaderboard, btn_pembahasan;
+    MaterialButton play, btn_home, btn_pembahasan;
     UserModel user = SharedPrefManager.getInstance(this).getUser();
     int total_score, idquiz;
     String namaSoal, category;
-    CircularProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,24 +70,14 @@ public class ResultQuizActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btn_leaderboard = findViewById(R.id.btn_leaderboard);
-        btn_leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        progress_bar = findViewById(R.id.progress_bar);
 
         btn_home = findViewById(R.id.btn_home);
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent play = new Intent(ResultQuizActivity.this, Main2Activity.class);
-                play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(play);
-                finish();
+                Intent i = new Intent(ResultQuizActivity.this, Main2Activity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             }
         });
         play = findViewById(R.id.btn_play);
