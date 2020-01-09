@@ -16,6 +16,7 @@ import com.komsi.solve.QuizActivity;
 import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -23,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH> {
 
-    private List<TypeListModel> type;
+    private ArrayList<TypeListModel> type;
     private Context mCtx;
 
-    public TypeQuizAdapter(List<TypeListModel> type, Context mCtx) {
+    public TypeQuizAdapter(ArrayList<TypeListModel> type, Context mCtx) {
         this.type = type;
         this.mCtx = mCtx;
     }

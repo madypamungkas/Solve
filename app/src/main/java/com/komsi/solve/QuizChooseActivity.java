@@ -8,7 +8,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.komsi.solve.Adapter.TypeQuizAdapter;
@@ -25,12 +28,22 @@ public class QuizChooseActivity extends AppCompatActivity {
     ArrayList<TypeListModel> models;
     RecyclerView RVmain;
     TypeQuizAdapter adapter;
+    LinearLayout leaderBoard;
     int idType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_choose);
         RVmain = findViewById(R.id.RVmain);
+        leaderBoard = findViewById(R.id.leaderBoard);
+        leaderBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuizChooseActivity.this, LeaderboardChoose.class);
+                startActivity(intent);
+            }
+        });
+
         getListCategory();
     }
 

@@ -54,15 +54,7 @@ public class TypeChooseActivity extends AppCompatActivity {
         TextView tvQuizType = findViewById(R.id.tvQuizType);
         tvQuizType.setText(getIntent().getStringExtra("Type"));
         txtDesc.setText(R.string.descHangeul);
-        leaderBoard = findViewById(R.id.leaderBoard);
-        leaderBoard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Intent intent = new Intent(mCtx, NoFragment.class);
-                intent.putExtra("idtype", idCategory);
-                startActivity(intent);*/
-            }
-        });
+
 
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {

@@ -66,7 +66,7 @@ public class ReviewActivity extends AppCompatActivity {
         reviewRV.setLayoutManager(new LinearLayoutManager(ReviewActivity.this));
         reviewRV.setLayoutManager(staggeredGridLayoutManager);
         reviewRV.setAdapter(adapter);
-        saveInternal();
+       // saveInternal();
     }
 
     public void saveInternal() {
@@ -138,6 +138,8 @@ public class ReviewActivity extends AppCompatActivity {
                     progress.dismiss();
 
                     Intent intent = new Intent(ReviewActivity.this, ResultQuizActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                     startActivity(intent);
 
                 } else {

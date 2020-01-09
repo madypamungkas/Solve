@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PembahasanQuizActivity"></activity>
+        <activity android:name=".PembahasanQuizActivity" />
         <activity android:name=".ResultQuizActivity" />
         <activity android:name=".LeaderboardChooseType" />
         <activity android:name=".LeaderboardActivity" />
@@ -25,9 +25,8 @@
         <activity android:name=".QuizActivity_viewpager" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".SearchCode" />
-        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".Main2Activity" />
         <activity android:name=".LoginRegisterActivity" />
-        <activity android:name=".SearchCode" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".QuizChooseActivity" />
         <activity android:name=".WebViewsActivity" />

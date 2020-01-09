@@ -55,10 +55,9 @@ public class ResultQuizActivity extends AppCompatActivity {
         total_score = getIntent().getIntExtra("points", 0);
         textSumQues = findViewById(R.id.textSumQues);
         textCorrect = findViewById(R.id.textCorrect);
-        String sumQuest = String.valueOf(getIntent().getStringExtra("sumQues"));
-        String correct = String.valueOf(getIntent().getStringExtra("trueAns"));
+        String correct = String.valueOf(responseAnswer.getResult().getTrue_sum());
         int sum = getIntent().getIntExtra("sum", 10);
-      //  textCorrect.setText(responseAnswer.getResult().getAnswer_save().size()+" ");
+        textCorrect.setText(correct+" ");
         category = getIntent().getStringExtra("category");
         textSumQues.setText(responseAnswer.getResult().getAnswer_save().size() + " Pertanyaan");
         btn_pembahasan = findViewById(R.id.btn_pembahasan);
@@ -85,7 +84,8 @@ public class ResultQuizActivity extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent play = new Intent(ResultQuizActivity.this, MainActivity.class);
+                Intent play = new Intent(ResultQuizActivity.this, Main2Activity.class);
+                play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(play);
                 finish();
             }
@@ -94,8 +94,8 @@ public class ResultQuizActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(ResultQuizActivity.this, QuizActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("category", category);
                 intent.putExtra("namaSoal", getIntent().getStringExtra("namaSoal") + " ");
                 intent.putExtra("idsoal", idquiz);
@@ -135,7 +135,6 @@ public class ResultQuizActivity extends AppCompatActivity {
                 Intent play = new Intent(ResultQuizActivity.this, TypeChooseActivity.class);
                 startActivity(play);
                 finish();
-
                 dialog.dismiss();
             }
         });

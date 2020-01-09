@@ -1,9 +1,12 @@
 package com.komsi.solve.Api;
 
+import com.komsi.solve.HistoryFragment;
+import com.komsi.solve.Model.HistoryModel;
 import com.komsi.solve.Model.ResponseBanner;
 import com.komsi.solve.Model.ResponseCategory;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.ResponseForgotPassword;
+import com.komsi.solve.Model.ResponseHistory;
 import com.komsi.solve.Model.ResponseLeaderboard;
 import com.komsi.solve.Model.ResponseLogin;
 import com.komsi.solve.Model.ResponsePassword;
@@ -12,9 +15,11 @@ import com.komsi.solve.Model.ResponseProfile;
 import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.ResponseListSoal;
 import com.komsi.solve.Model.ResponseMenuHome;
+import com.komsi.solve.Model.ResponseSchools;
 import com.komsi.solve.Model.ResponseTypeList;
 import com.komsi.solve.Model.ResponseSignUp;
 import com.komsi.solve.Model.ResponseVersion;
+import com.komsi.solve.Model.SchoolsModel;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Api {
     @FormUrlEncoded
@@ -192,6 +198,25 @@ public interface Api {
             @Header("Accept") String accept,
             @Header("Authorization") String token
     );
+
+    @GET("collager/history")
+    Call<ResponseHistory> history(
+            @Header("Accept") String accept,
+            @Header("Authorization") String token
+    );
+    @GET("collager/school")
+    Call<ResponseSchools> schools(
+            @Header("Accept") String accept,
+            @Header("Authorization") String token
+    );
+
+    @GET("collager/school")
+    Call<ResponseSchools> schools2(
+            @Header("Accept") String accept,
+            @Header("Authorization") String token,
+            @Query("term") String term
+    );
+
 
 
 }

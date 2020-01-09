@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    /*   sourceSets {
+        main.java.srcDirs += 'src/main/java'
+    }*/
 }
 
 dependencies {
@@ -57,5 +60,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:2.0'
 }

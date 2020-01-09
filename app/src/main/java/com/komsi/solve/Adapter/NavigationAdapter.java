@@ -2,7 +2,10 @@ package com.komsi.solve.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,8 @@ import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.SelectedItem;
 import com.komsi.solve.QuizActivity;
 import com.komsi.solve.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

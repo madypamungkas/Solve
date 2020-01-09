@@ -55,7 +55,6 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-
         readyBtn = fragmentView.findViewById(R.id.readyBtn);
         optionRV = fragmentView.findViewById(R.id.optionRV);
 

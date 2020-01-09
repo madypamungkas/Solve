@@ -56,6 +56,7 @@
     <string name="search">Cari Quiz</string>
     <string name="search_desc">Anda dapat mencari menggunakan kode quiz\nyang telah diberikan</string>
     <string name="code">Kode Quiz</string>
+    <string name="schoolSearch">Cari Nama Sekolah</string>
     <string name="game_desc">Terdapat batasan waktu untuk soal yang akan dikerjakan dan waktu tidak dapat dihentikan saat soal telah diberikan</string>
     <string name="start">Mulai Sekarang</string>
     <string name="correct_answer">Jumlah Pertanyaan Benar</string>

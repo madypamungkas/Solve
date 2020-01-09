@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.komsi.solve.LeaderboardActivity;
 import com.komsi.solve.LeaderboardChooseType;
 import com.komsi.solve.Model.MenuHomeModel;
+import com.komsi.solve.Model.TypeListModel;
 import com.komsi.solve.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -27,12 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LeaderboardChooseAdapter  extends RecyclerView.Adapter<LeaderboardChooseAdapter.ViewHolder>{
+public class LeaderboardChooseAdapter extends RecyclerView.Adapter<LeaderboardChooseAdapter.ViewHolder> {
     Context mCtx;
-    ArrayList<MenuHomeModel> categories;
+    ArrayList<TypeListModel> categories;
     List<String> colors;
 
-    public LeaderboardChooseAdapter(Context mCtx, ArrayList<MenuHomeModel> categories) {
+    public LeaderboardChooseAdapter(Context mCtx, ArrayList<TypeListModel> categories) {
         this.mCtx = mCtx;
         this.categories = categories;
     }
@@ -46,7 +48,7 @@ public class LeaderboardChooseAdapter  extends RecyclerView.Adapter<LeaderboardC
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final MenuHomeModel category = categories.get(position);
+        final TypeListModel category = categories.get(position);
 
         holder.typeGame.setText(category.getName());
         holder.desc.setText(category.getDescription());
@@ -95,41 +97,18 @@ public class LeaderboardChooseAdapter  extends RecyclerView.Adapter<LeaderboardC
         holder.btnQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (category.getId() == 1) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 1);
-                    mCtx.startActivity(intent);
-                } else if (category.getId() == 2) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 2);
-                    mCtx.startActivity(intent);
 
-                } else if (category.getId() == 3) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 3);
-                    mCtx.startActivity(intent);
+                Intent intent = new Intent(mCtx, LeaderboardActivity.class);
+                intent.putExtra("idtype", 1);
+                mCtx.startActivity(intent);
 
-                } else if (category.getId() == 4) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 4);
-                    mCtx.startActivity(intent);
-
-                } else if ((category.getId() == 5)) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 5);
-                    mCtx.startActivity(intent);
-                } else if ((category.getId() == 6)) {
-                    Intent intent = new Intent(mCtx, LeaderboardChooseType.class);
-                    intent.putExtra("idtype", 6);
-                    mCtx.startActivity(intent);
-                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return categories.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
