@@ -117,7 +117,6 @@ public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH
                             if (listSoal.size() != 0) {
                                 ListSoalModel model = listSoal.get(0);
                                 int idSoal = model.getId();
-
                                 Intent intent = new Intent(mCtx, QuizChooseActivity.class);
                                 intent.putExtra("category", type.getQuiz_category_id() + "");
                                 intent.putExtra("idType", type.getId());

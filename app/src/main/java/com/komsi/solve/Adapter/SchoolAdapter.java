@@ -21,10 +21,14 @@ import com.komsi.solve.R;
 import com.komsi.solve.RegisterFragment;
 import com.komsi.solve.SchoolsSearchFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH>  {
@@ -32,11 +36,15 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
     private List<SchoolsModel> schoolsModels;
     private Context mCtx;
     SchoolsSearchFragment schoolsSearchFragment;
+    RegisterFragment registerFragment;
 
-    public SchoolAdapter(List<SchoolsModel> schoolsModels, Context mCtx, SchoolsSearchFragment schoolsSearchFragment) {
+    private static final String TAG = "Register";
+
+    public SchoolAdapter(List<SchoolsModel> schoolsModels, Context mCtx, SchoolsSearchFragment schoolsSearchFragment, RegisterFragment registerFragment) {
         this.schoolsModels = schoolsModels;
         this.mCtx = mCtx;
         this.schoolsSearchFragment = schoolsSearchFragment;
+        this.registerFragment = registerFragment;
     }
 
     @NonNull
@@ -48,7 +56,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SchoolVH holder, int position) {
+    public void onBindViewHolder(@NonNull final SchoolVH holder, int position) {
         final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
         final Gson gson = new Gson();
         final SharedPreferences.Editor editorList = sharedPrefs.edit();
@@ -62,7 +70,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
                 editorList.putString("schoolId", schools.getId());
                 editorList.commit();
 
-
+              //  registerFragment.setTextSch();
             }
         });
     }
@@ -75,6 +83,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
         TextView jawaban;
         RadioButton rbChoose;
         public int id;
+        public String school;
         CardView placeA;
         ImageView imgOption;
 
@@ -85,6 +94,17 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
             imgOption = itemView.findViewById(R.id.imgOption);
             placeA = itemView.findViewById(R.id.placeA);
 
+            View.OnClickListener l = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            };
+
+            itemView.setOnClickListener(l);
+            placeA.setOnClickListener(l);
         }
     }
+
+
 }

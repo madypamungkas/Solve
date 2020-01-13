@@ -36,10 +36,12 @@ public class QuizChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_choose);
         RVmain = findViewById(R.id.RVmain);
         leaderBoard = findViewById(R.id.leaderBoard);
+        idType = getIntent().getIntExtra("idType",1);
         leaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizChooseActivity.this, LeaderboardChoose.class);
+                intent.putExtra("idType", 1);
                 startActivity(intent);
             }
         });
@@ -51,7 +53,7 @@ public class QuizChooseActivity extends AppCompatActivity {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
 
-        Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().quiz(token, "application/json", 1);
+        Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().quiz(token, "application/json", idType);
         call.enqueue(new Callback<ResponseTypeList>() {
             @Override
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
@@ -73,7 +75,6 @@ public class QuizChooseActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 Toast.makeText(QuizChooseActivity.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
             }
         });
     }

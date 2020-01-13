@@ -46,7 +46,8 @@ public interface Api {
             @Field("name") String name,
             @Field("email") String email,
             @Field("username") String username,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("school_id") String school_id
     );
 
 

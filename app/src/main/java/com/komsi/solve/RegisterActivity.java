@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //       SignUp.this.finish();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginRegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, name, email, username, password);
+                .registerUser(accept, name, email, username, password, password);
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override
@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.i("debug", "onResponse: SUCCESS");
                         loading.dismiss();
                         Toast.makeText(mContext, "Registration Success!", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(mContext, LoginActivity.class));
+                        startActivity(new Intent(mContext, LoginRegisterActivity.class));
                     }
                 } else {
                     loading.dismiss();

@@ -1,9 +1,13 @@
 package com.komsi.solve;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -11,12 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.UserModel;
@@ -29,6 +36,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +49,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     SwipeRefreshLayout swipeRefresh;
     CircleImageView imgProfile;
     Context mContext;
+    ProgressDialog loading;
+
     private ShimmerFrameLayout shimmerFrameLayout;
 
     public UserFragment() {
@@ -65,12 +75,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
         String version = pInfo.versionName;
         txtVersion.setText(version);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //confirmLogOut();
-            }
-        });
+
         btnChangePass = view.findViewById(R.id.btnChangePass);
         btnTermCondition = view.findViewById(R.id.btnTermCondition);
         btnProfile = view.findViewById(R.id.btnProfile);
@@ -78,6 +83,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         btnTermCondition.setOnClickListener(this);
         btnChangePass.setOnClickListener(this);
         btnProfile.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
         shimmerFrameLayout = view.findViewById(R.id.shimmerContainer);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setEnabled(true);
@@ -137,7 +143,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         Toast.makeText(getActivity(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                         if (jObjError.getString("message").equals("Unauthenticated.")) {
                             SharedPrefManager.getInstance(getActivity()).clear();
-                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
@@ -272,7 +278,75 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 Intent i2 = new Intent(getActivity(), ChangePassword.class);
                 startActivity(i2);
                 break;
+            case R.id.btnLogout:
+                confirmLogOut();
+                break;
         }
     }
+
+    public void confirmLogOut() {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_logout_dialog);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    private void logOut() {
+        loading = ProgressDialog.show(mContext, null, getString(R.string.please_wait), true, false);
+
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+        String token = "Bearer " + user.getToken();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().logout(token);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loading.dismiss();
+                if (response.isSuccessful()) {
+                    SharedPrefManager.getInstance(getActivity()).clear();
+                    SharedPreferences sharedPreferences = (getActivity().getSharedPreferences(SharedPrefManager.SHARED_PREF_NAME, Context.MODE_PRIVATE));
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loading.dismiss();
+                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 
 }

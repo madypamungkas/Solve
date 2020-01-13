@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -131,7 +132,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
                 if (response.isSuccessful()) {
                     schoolsModels = questionResponse.getResult();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                    adapter = new SchoolAdapter(schoolsModels, getActivity(), SchoolsSearchFragment.this);
+                    adapter = new SchoolAdapter(schoolsModels, getActivity(), SchoolsSearchFragment.this, null);
                     schoolsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
                     schoolsRV.setLayoutManager(staggeredGridLayoutManager);
                     schoolsRV.setAdapter(adapter);
@@ -176,14 +177,13 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
                 if (response.isSuccessful()) {
                     schoolsModels = questionResponse.getResult();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                    adapter = new SchoolAdapter(schoolsModels, getActivity(),SchoolsSearchFragment.this);
+                    adapter = new SchoolAdapter(schoolsModels, getActivity(),SchoolsSearchFragment.this, null);
                     schoolsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
                     schoolsRV.setLayoutManager(staggeredGridLayoutManager);
                     schoolsRV.setAdapter(adapter);
                 } else {
                     Log.i("debug", "onResponse : FAILED");
                     Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
-
                 }
             }
 
@@ -199,9 +199,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
-
     }
-
 
 
     @Override
@@ -210,4 +208,6 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
 
         }
     }
+
+
 }

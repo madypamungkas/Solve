@@ -8,16 +8,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Adapter.NavigationAdapter;
@@ -66,7 +70,7 @@ public class ReviewActivity extends AppCompatActivity {
         reviewRV.setLayoutManager(new LinearLayoutManager(ReviewActivity.this));
         reviewRV.setLayoutManager(staggeredGridLayoutManager);
         reviewRV.setAdapter(adapter);
-       // saveInternal();
+        // saveInternal();
     }
 
     public void saveInternal() {
@@ -90,15 +94,13 @@ public class ReviewActivity extends AppCompatActivity {
             Log.e("Exception", "File write failed: " + e.toString());
         }
 
-/*        File file = new File(Environment.getExternalStorageDirectory(),
-                "Report.pdf");
-        Uri path = Uri.fromFile(file);*/
     }
 
     public void Submit(View view) {
-        storeAnswer();
-
+        // storeAnswer();
+        confirmStore();
     }
+
     public void storeAnswer() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ReviewActivity.this);
         Gson gson = new Gson();
@@ -108,7 +110,6 @@ public class ReviewActivity extends AppCompatActivity {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
         ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
-
 
 
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
@@ -144,9 +145,9 @@ public class ReviewActivity extends AppCompatActivity {
 
                 } else {
                     progress.dismiss();
-                    Log.i("debug", "Failed "+response.errorBody()+" ");
+                    Log.i("debug", "Failed " + response.errorBody() + " ");
 
-                    Toast.makeText(mCtx, response.code() + " "+ response.message() + response.errorBody(),
+                    Toast.makeText(mCtx, response.code() + " " + response.message() + response.errorBody(),
                             //R.string.something_wrong,
                             Toast.LENGTH_LONG).show();
 
@@ -167,4 +168,37 @@ public class ReviewActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void confirmStore() {
+
+        final Dialog dialog = new Dialog(ReviewActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_store_quiz);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                storeAnswer();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 }

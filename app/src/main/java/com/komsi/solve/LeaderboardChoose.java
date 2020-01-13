@@ -33,6 +33,7 @@ public class LeaderboardChoose extends AppCompatActivity {
     private  ArrayList<TypeListModel> categories;
     private RecyclerView typeRV;
     LeaderboardChooseAdapter adapter;
+    int idType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LeaderboardChoose extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard_choose);
         typeRV = findViewById(R.id.typeRV);
         typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChoose.this));
-
+        idType = getIntent().getIntExtra("idType",1);
         getListCategory();
 
         ImageButton btnBack = findViewById(R.id.btnBack);
@@ -55,7 +56,7 @@ public class LeaderboardChoose extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(LeaderboardChoose.this, MainActivity.class);
+        Intent intent = new Intent(LeaderboardChoose.this, Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -91,7 +92,7 @@ public class LeaderboardChoose extends AppCompatActivity {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
 
-        Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().quiz(token, "application/json", 1);
+        Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().quiz(token, "application/json", idType);
         call.enqueue(new Callback<ResponseTypeList>() {
             @Override
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {

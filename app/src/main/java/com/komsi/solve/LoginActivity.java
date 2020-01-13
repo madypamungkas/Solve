@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Main2Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPrefManager.getInstance(LoginActivity.this).saveUser(response.body().getUser());
                         //  Toast.makeText(mContext, "Login successfully" + " - " + loginResponse.getUser().getToken(), Toast.LENGTH_LONG).show();
                         getDetails();
-                       /* Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                       /* Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);*/
                     } else {
@@ -223,7 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(retrofit2.Call<ResponseDetails> call, Response<ResponseDetails> response) {
                     if (response.isSuccessful()) {
                         SharedPrefManager.getInstance(LoginActivity.this).saveDetail(response.body().getUser());
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {

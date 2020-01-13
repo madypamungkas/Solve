@@ -65,10 +65,10 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
 
 
         if(answer.getUser_answer().equals(answer.getTrueAnswer())){
-            holder.cardGame.setCardBackgroundColor(Color.parseColor("#006400"));
+            holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             holder.status.setText("Benar");
         }else {
-            holder.cardGame.setCardBackgroundColor(Color.parseColor("#DC143C"));
+            holder.cardGame.setCardBackgroundColor(Color.parseColor("#FF424242"));
             holder.status.setText("Salah");
 
         }

@@ -159,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 } else {
                     progress.dismiss();
-                    Toast.makeText(ProfileActivity.this, "Ukuran Foto Terlalu Besar", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, response.code() +"Ukuran Foto Terlalu Besar", Toast.LENGTH_LONG).show();
 
                     //        Toast.makeText(ProfileActivity.this, response.errorBody().toString(), Toast.LENGTH_LONG).show();
                 }
@@ -169,7 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onFailure(retrofit2.Call<ResponseProfile> call, Throwable t) {
                 progress.dismiss();
                 Toast.makeText(ProfileActivity.this, t.toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(ProfileActivity.this, "Ukuran Foto Terlalu Besar", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, "Ukuran Foto Terlalu Besar 2", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -225,7 +225,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(ProfileActivity.this, Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -256,7 +256,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         SharedPrefManager.getInstance(ProfileActivity.this).saveDetail(response.body().getUser());
-                        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                        Intent intent = new Intent(ProfileActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else {

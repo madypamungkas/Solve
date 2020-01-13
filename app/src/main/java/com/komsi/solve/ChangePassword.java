@@ -73,7 +73,7 @@ public class ChangePassword extends AppCompatActivity {
                         Log.i("debug", "onResponse: SUCCESS");
                         loading.dismiss();
                         Toast.makeText(ChangePassword.this, "Setting Success!", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(ChangePassword.this, MainActivity.class));
+                        startActivity(new Intent(ChangePassword.this, Main2Activity.class));
                     }
                     else{
                         loading.dismiss();

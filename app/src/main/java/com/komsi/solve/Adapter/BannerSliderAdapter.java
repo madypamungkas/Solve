@@ -35,7 +35,7 @@ public class BannerSliderAdapter  extends SliderViewAdapter<com.komsi.solve.Adap
     @Override
     public void onBindViewHolder(BannerVH viewHolder, int position) {
         final BannerModel banner = bannerModels.get(position);
-        String link = "https://ruko.technow.id/storage/";
+        String link = "http://10.33.74.105/solve/solve-jst/public/storage/";
         Picasso.get().load(link+"banner/"+banner.getId()).error(R.drawable.ic_userprofile)
                 .into(viewHolder.imageViewBackground);
         String linkTo = banner.getLinkTo();

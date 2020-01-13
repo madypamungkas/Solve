@@ -14,17 +14,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +71,7 @@ import java.util.TimeZone;
 
 public class QuizActivity extends AppCompatActivity {
     LinearLayout soalLayout, readyLayout;
-    private TextView timer, soal, number, sum, points, gameName;
+    private TextView timer, soal, number, sum, namaSoal, gameName;
     ProgressDialog progress;
     CountDownTimer cd;
     private List<QuestionModel> questionModel;
@@ -98,12 +102,13 @@ public class QuizActivity extends AppCompatActivity {
         soalLayout = findViewById(R.id.soalLayout);
         readyLayout = findViewById(R.id.readyLayout);
         idsoal = getIntent().getIntExtra("idsoal", 1);
-        String namaSoal = getIntent().getStringExtra("namaSoal");
+        String namaQuiz = getIntent().getStringExtra("namaSoal");
         //answerModels = new ArrayList<>();
         timer = findViewById(R.id.timer);
         number = findViewById(R.id.number);
         sum = findViewById(R.id.sum);
         soal = findViewById(R.id.soal);
+        namaSoal = findViewById(R.id.namaSoal);
         imgSoal = findViewById(R.id.imgSoal);
         nextSoal = findViewById(R.id.nextSoal);
         prevSoal = findViewById(R.id.prevSoal);
@@ -112,10 +117,7 @@ public class QuizActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         fab2 = findViewById(R.id.fab2);
         submitBtn = findViewById(R.id.submitBtn);
-
-
         gameName = findViewById(R.id.gameName);
-        gameName.setText("K1 T1 Q1");
         loadSoal();
 
 
@@ -168,6 +170,9 @@ public class QuizActivity extends AppCompatActivity {
                 ResponseQuestion questionResponse = response.body();
                 if (response.isSuccessful()) {
                     if (response.body().getQuestion().size() != 0) {
+
+                        gameName.setText(response.body().getQuiz().getTitle());
+                        namaSoal.setText(response.body().getQuiz().getTitle());
 
                         time = Integer.parseInt(questionResponse.getQuiz().getTime());
                         questionModel = response.body().getQuestion();
@@ -648,6 +653,40 @@ public class QuizActivity extends AppCompatActivity {
                 storeAnswer();
             }
         }.start();
+    }
+    @Override
+    public void onBackPressed() {
+        confirmOnBackPressed();
+    }
+
+    private void confirmOnBackPressed() {
+
+        final Dialog dialog = new Dialog(QuizActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_exit_quiz);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(QuizActivity.this, Main2Activity.class);
+                startActivity(i);
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public void refreshRV(){

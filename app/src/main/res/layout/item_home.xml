@@ -11,7 +11,7 @@
         android:id="@+id/layoutCard"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_55sdp"
-        android:background="@drawable/btn_hangeul"
+        android:background="@color/colorPrimary"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="vertical">

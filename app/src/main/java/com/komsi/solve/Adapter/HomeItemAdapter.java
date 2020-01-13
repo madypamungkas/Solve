@@ -53,7 +53,6 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
                 Intent i = new Intent(mCtx, TypeChooseActivity.class);
                 i.putExtra("idCategory", menu.getId());
                 i.putExtra("Type", menu.getName());
-
                 mCtx.startActivity(i);
 
             }

@@ -87,16 +87,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getDetails();
+       // getDetails();
 
         LinearLayout btnSearchCode = findViewById(R.id.btnSearchCode);
-        btnSearchCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SearchCode.class));
-            }
-        });
-
+        
         slider = findViewById(R.id.banner_slider2);
         loadBanner();
 
@@ -180,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
         loadfoto();
-        getDetails();
+      //  getDetails();
     }
 
     public void confirmBackpress() {
@@ -239,7 +233,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void confirmLogOut() {
+    public void confirmLogOut() {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -275,7 +269,7 @@ public class MainActivity extends AppCompatActivity
         window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
     }
 
-    private void getDetails() {
+   /* private void getDetails() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
         retrofit2.Call<ResponseDetails> call = RetrofitClient.getInstance().getApi().detail("application/json", token);
@@ -314,7 +308,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
     public void loadBanner() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
@@ -466,7 +460,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         getVersion();
-        getDetails();
+        //getDetails();
         loadfoto();
     }
 

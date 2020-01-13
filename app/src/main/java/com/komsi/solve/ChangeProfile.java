@@ -84,7 +84,7 @@ public class ChangeProfile extends AppCompatActivity {
                         loading.dismiss();
                         loadData();
                         Toast.makeText(ChangeProfile.this, "Setting Success!", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(ChangeProfile.this, MainActivity.class));
+                        startActivity(new Intent(ChangeProfile.this, Main2Activity.class));
                     } else {
                         Toast.makeText(ChangeProfile.this, response.body().getMessage() + "", Toast.LENGTH_LONG).show();
                     }

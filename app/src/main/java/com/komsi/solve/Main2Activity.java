@@ -1,27 +1,52 @@
 package com.komsi.solve;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatDelegate;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.komsi.solve.Api.RetrofitClient;
+import com.komsi.solve.Model.UserModel;
+import com.komsi.solve.Storage.SharedPrefManager;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bottomNavigationView;
+    ProgressDialog loading;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -31,7 +56,7 @@ public class Main2Activity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment = null;
             switch (item.getItemId()) {
-                case  R.id.navigationMenu:
+                case R.id.navigationMenu:
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.openDrawer(GravityCompat.START);
                     break;
@@ -41,7 +66,7 @@ public class Main2Activity extends AppCompatActivity
                 case R.id.navigationHome:
                     fragment = new HomeFragment();
                     break;
-                case  R.id.navigationSearch:
+                case R.id.navigationSearch:
                     fragment = new SearchFragment();
                     break;
                 case R.id.navigationUser:
@@ -100,39 +125,66 @@ public class Main2Activity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            confirmBackpress();
+
         }
+    }
+
+
+    public void confirmBackpress() {
+        final Dialog dialog = new Dialog(Main2Activity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_exit_dialog);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  finish();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
     }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        /*
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_dark_mode) {
-            //code for setting dark mode
-            //true for dark mode, false for day mode, currently toggling on each click
-            DarkModePrefManager darkModePrefManager = new DarkModePrefManager(this);
-            darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            recreate();
+        if (id == R.id.nav_account) {
+            Intent intent = new Intent(Main2Activity.this, ProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_leaderboard) {
+            Intent intent = new Intent(Main2Activity.this, LeaderboardChoose.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            loadFragment(new UserFragment());
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+            navigation.setSelectedItemId(R.id.navigationUser);
+        } else if (id == R.id.nav_sign_out) {
+            confirmLogOut();
         }
 
-         */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -148,4 +200,69 @@ public class Main2Activity extends AppCompatActivity
         }
         return false;
     }
+
+    public void confirmLogOut() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_logout_dialog);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    private void logOut() {
+        loading = ProgressDialog.show(Main2Activity.this, null, getString(R.string.please_wait), true, false);
+
+        UserModel user = SharedPrefManager.getInstance(this).getUser();
+        String token = "Bearer " + user.getToken();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().logout(token);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loading.dismiss();
+                if (response.isSuccessful()) {
+                    SharedPrefManager.getInstance(Main2Activity.this).clear();
+                    SharedPreferences sharedPreferences = (getSharedPreferences(SharedPrefManager.SHARED_PREF_NAME, Context.MODE_PRIVATE));
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    Intent intent = new Intent(Main2Activity.this, LoginRegisterActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Main2Activity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loading.dismiss();
+                Toast.makeText(Main2Activity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 }

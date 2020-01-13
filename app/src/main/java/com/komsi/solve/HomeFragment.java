@@ -1,16 +1,23 @@
 package com.komsi.solve;
 
+import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -23,7 +30,9 @@ import com.komsi.solve.Model.BannerModel;
 import com.komsi.solve.Model.MenuHomeModel;
 import com.komsi.solve.Model.ResponseBanner;
 import com.komsi.solve.Model.ResponseMenuHome;
+import com.komsi.solve.Model.ResponseVersion;
 import com.komsi.solve.Model.UserModel;
+import com.komsi.solve.Model.VersionModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -34,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,6 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listCategory = view.findViewById(R.id.listCategory);
         loadBanner();
         getListCategory();
+        getVersion();
 
         PackageInfo pInfo = null;
         try {
@@ -77,20 +89,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-        /*
-
-        shimmerFrameLayout = view.findViewById(R.id.shimmerContainer);
-        swipeRefresh = view.findViewById(R.id.swipeRefresh);
-        swipeRefresh.setEnabled(true);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                checkConnection();
-            }
-        });
-
-         */
 
         return view;
 
@@ -103,79 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void loadBanner() {
-        UserModel user = SharedPrefManager.getInstance(mContext).getUser();
-        String token = "Bearer " + user.getToken();
 
-        Call<ResponseBanner> call = RetrofitClient.getInstance().getApi().banner(token, "application/json");
-        call.enqueue(new Callback<ResponseBanner>() {
-            @Override
-            public void onResponse(Call<ResponseBanner> call, Response<ResponseBanner> response) {
-                if (response.isSuccessful()) {
-                    bannerModel = response.body().getResult();
-                    if (bannerModel.size() == 0) {
-                        bannerModel = new ArrayList<>();
-                        bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
-                    } else {
-                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-                        SharedPreferences.Editor editorList = sharedPrefs.edit();
-                        Gson gson = new Gson();
-
-                        String json = gson.toJson(bannerModel);
-
-                        editorList.putString("Banner", json);
-                        editorList.commit();
-
-                        sliderAdapter = new BannerSliderAdapter(mContext, bannerModel);
-                        slider.startAutoCycle();
-                        slider.setIndicatorAnimation(IndicatorAnimations.WORM);
-                        slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-                        slider.setScrollTimeInSec(6);
-                        slider.setSliderAdapter(sliderAdapter);
-                    }
-
-                } else {
-                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-                    Gson gson = new Gson();
-                    String json = sharedPrefs.getString("Banner", "Banner");
-                    Type type = new TypeToken<List<BannerModel>>() {
-                    }.getType();
-                    ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
-                    if (bannerModel.size() != 0) {
-                        sliderAdapter = new BannerSliderAdapter(mContext, bannerModel);
-                        slider.startAutoCycle();
-                        slider.setIndicatorAnimation(IndicatorAnimations.WORM);
-                        slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-                        slider.setScrollTimeInSec(6);
-                        slider.setSliderAdapter(sliderAdapter);
-                    } else {
-                        Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBanner> call, Throwable t) {
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-                Gson gson = new Gson();
-                String json = sharedPrefs.getString("Banner", "Banner");
-                Type type = new TypeToken<List<BannerModel>>() {
-                }.getType();
-                ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
-                if (bannerModel.size() != 0) {
-                    sliderAdapter = new BannerSliderAdapter(mContext, bannerModel);
-                    slider.startAutoCycle();
-                    slider.setIndicatorAnimation(IndicatorAnimations.WORM);
-                    slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-                    slider.setScrollTimeInSec(6);
-                    slider.setSliderAdapter(sliderAdapter);
-                } else {
-                    Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-    }
 
     public void getListCategory() {
         UserModel user = SharedPrefManager.getInstance(mContext).getUser();
@@ -392,6 +318,152 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
              */
         }
+    }
+
+    public void loadBanner() {
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+        String token = "Bearer " + user.getToken();
+
+        Call<ResponseBanner> call = RetrofitClient.getInstance().getApi().banner(token, "application/json");
+        call.enqueue(new Callback<ResponseBanner>() {
+            @Override
+            public void onResponse(Call<ResponseBanner> call, Response<ResponseBanner> response) {
+                if (response.isSuccessful()) {
+                    bannerModel = response.body().getResult();
+                    if (bannerModel.size() == 0) {
+                        bannerModel = new ArrayList<>();
+                        bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
+                    } else {
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editorList = sharedPrefs.edit();
+                        Gson gson = new Gson();
+
+                        String json = gson.toJson(bannerModel);
+
+                        editorList.putString("Banner", json);
+                        editorList.commit();
+
+                        sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
+                        slider.startAutoCycle();
+                        slider.setIndicatorAnimation(IndicatorAnimations.WORM);
+                        slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                        slider.setScrollTimeInSec(6);
+                        slider.setSliderAdapter(sliderAdapter);
+                    }
+
+                } else {
+                /*    bannerModel = new ArrayList<>();
+                    bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
+*/
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    Gson gson = new Gson();
+                    String json = sharedPrefs.getString("Banner", "Banner");
+                    Type type = new TypeToken<List<BannerModel>>() {
+                    }.getType();
+                    ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
+                    if (bannerModel.size() != 0) {
+                        sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
+                        slider.startAutoCycle();
+                        slider.setIndicatorAnimation(IndicatorAnimations.WORM);
+                        slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                        slider.setScrollTimeInSec(6);
+                        slider.setSliderAdapter(sliderAdapter);
+                    } else {
+                        Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBanner> call, Throwable t) {
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                Gson gson = new Gson();
+                String json = sharedPrefs.getString("Banner", "Banner");
+                Type type = new TypeToken<List<BannerModel>>() {
+                }.getType();
+                ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
+                if (bannerModel.size() != 0) {
+                    sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
+                    slider.startAutoCycle();
+                    slider.setIndicatorAnimation(IndicatorAnimations.WORM);
+                    slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                    slider.setScrollTimeInSec(6);
+                    slider.setSliderAdapter(sliderAdapter);
+                } else {
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
+    public void getVersion() {
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+        String token = "Bearer " + user.getToken();
+        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json", token);
+        call.enqueue(new Callback<ResponseVersion>() {
+            @Override
+            public void onResponse(Call<ResponseVersion> call, Response<ResponseVersion> response) {
+                if (response.isSuccessful()) {
+                    SharedPrefManager.getInstance(getActivity()).saveVersion(response.body().getResult());
+                    versionCheck();
+                } else {
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseVersion> call, Throwable t) {
+                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    public void versionCheck() {
+        VersionModel versionModel = SharedPrefManager.getInstance(getActivity()).versionModel();
+
+        String version = versionModel.getVersion() + "." + versionModel.getSub_version();
+
+        if (!version.equals(BuildConfig.VERSION_NAME)) {
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.custom_update_dialog);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
+            mDialogNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // finish();
+                    dialog.dismiss();
+                }
+            });
+
+            FrameLayout mDialogOk = dialog.findViewById(R.id.frmYes);
+            mDialogOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //finish();
+                    dialog.dismiss();
+                    final String appPackageName = mContext.getPackageName();
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
+
+                }
+            });
+
+            dialog.show();
+
+            Window window = dialog.getWindow();
+            window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        }
+
     }
 
 }
