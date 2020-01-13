@@ -16,7 +16,7 @@
         android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:text="S O L V E"
-        android:textColor="@color/colorAccentDark"
+        android:textColor="@color/white"
         android:textSize="@dimen/_30ssp" />
 
 </LinearLayout>

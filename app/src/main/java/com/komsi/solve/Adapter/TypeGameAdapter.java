@@ -39,7 +39,6 @@ import retrofit2.Response;
 public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH> {
     Context mCtx;
     ArrayList<CategoryModel> categories;
-    List<String> colors;
 
     public TypeGameAdapter(Context mCtx, ArrayList<CategoryModel> categories) {
         this.mCtx = mCtx;
@@ -60,7 +59,7 @@ public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH
         holder.typeGame.setText(type.getName());
         holder.desc.setText(type.getDescription());
 
-        String link = "https://ruko.technow.id/storage/quiz_type/";
+        String link = "http://10.33.74.105/solve/solve-jst/public/storage/quiz_type/";
         Picasso.get().load(link + type.getId()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -78,27 +77,22 @@ public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH
             }
         });
 
-        colors = new ArrayList<String>();
+        Picasso.get().load(link + type.getPic_url()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                holder.imgCategory.setImageDrawable(new BitmapDrawable(bitmap));
+            }
 
-        colors.add("#d32f2f");
-        colors.add("#d81b60");
-        colors.add("#ab47bc");
-        colors.add("#7e57c2");
-        colors.add("#5c6bc0");
-        colors.add("#1976d2");
-        colors.add("#00796b");
-        colors.add("#2e7d32");
-        colors.add("#ff6f00");
-        colors.add("#ff6d00");
-        colors.add("#8d6e63");
-        colors.add("#757575");
-        colors.add("#546e7a");
-        colors.add("#c0ca33");
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
-        Random r = new Random();
-        int i1 = r.nextInt(13 - 0) + 0;
+            }
 
-        holder.cardGame.setCardBackgroundColor(Color.parseColor(colors.get(i1)));
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
 
         holder.btnQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +143,8 @@ public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH
         TextView typeGame, desc;
         LinearLayout btnQuiz;
         CardView cardGame;
-        ImageView imgGame;
+        ImageView imgGame, imgCategory;
+
         public TypeVH(@NonNull View itemView) {
             super(itemView);
             cardGame = itemView.findViewById(R.id.cardGame);
@@ -157,6 +152,7 @@ public class TypeGameAdapter extends RecyclerView.Adapter<TypeGameAdapter.TypeVH
             desc = itemView.findViewById(R.id.desc);
             btnQuiz = itemView.findViewById(R.id.btnQuiz);
             imgGame = itemView.findViewById(R.id.imgGame);
+            imgCategory = itemView.findViewById(R.id.imgCategory);
         }
     }
 }
