@@ -4,11 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".QuizChooseActivity">
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/toolbar_choose_quiz" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_choose_quiz" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,33 +29,32 @@
 
             <TextView
                 android:id="@+id/tvQuizType"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
                 android:fontFamily="@font/brandon_grotesque_medium"
                 android:text="Type Quiz"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_25ssp" />
+                android:textSize="@dimen/_25ssp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
                 android:fontFamily="@font/rubik_regular"
                 android:lineSpacingExtra="@dimen/_1sdp"
-                android:visibility="gone"
                 android:text="Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum, neque sem pretium metus. Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                android:visibility="gone" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/carousel"
-                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fillViewport="true">
 
                 <RelativeLayout
@@ -62,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
                         android:scrollbarThumbHorizontal="@null"
@@ -70,16 +76,13 @@
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardGame"
-
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_135sdp"
+                        android:layout_height="@dimen/_85sdp"
                         android:layout_below="@+id/RVmain"
                         android:layout_marginTop="@dimen/_1sdp"
-                        app:cardBackgroundColor="@color/colorPrimaryDark"
+                        app:cardBackgroundColor="@color/colorQuiz"
                         app:cardCornerRadius="@dimen/_8sdp"
                         app:cardElevation="@dimen/_6sdp"
                         app:cardUseCompatPadding="true">
@@ -107,10 +110,10 @@
                                     android:id="@+id/typeGame"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/rubik_regular"
+                                    android:fontFamily="@font/roboto_medium"
                                     android:text="@string/leaderboard"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_19ssp" />
+                                    android:textSize="@dimen/_17ssp" />
 
                             </LinearLayout>
 
@@ -124,10 +127,9 @@
 
                                 <ImageView
                                     android:id="@+id/imgGame"
-                                    android:layout_width="@dimen/_95sdp"
-                                    android:layout_height="@dimen/_95sdp"
-                                    />
-
+                                    android:layout_width="@dimen/_55sdp"
+                                    android:layout_height="@dimen/_55sdp"
+                                    android:src="@drawable/img_leaderboard" />
                             </LinearLayout>
 
                         </LinearLayout>

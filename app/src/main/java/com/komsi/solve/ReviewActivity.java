@@ -16,11 +16,14 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -174,26 +177,29 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void confirmStore() {
-
         final Dialog dialog = new Dialog(ReviewActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_store_quiz);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_confirm_save);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
-        mDialogNo.setOnClickListener(new View.OnClickListener() {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        dialog.getWindow().setLayout((9 * width) / 10, (2 * height) / 5);
+
+        MaterialButton btnNo = dialog.findViewById(R.id.btnNo);
+        btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-
-        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
-        mDialogOk.setOnClickListener(new View.OnClickListener() {
+        MaterialButton btnYes = dialog.findViewById(R.id.btnYes);
+        btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 storeAnswer();
                 dialog.dismiss();
             }

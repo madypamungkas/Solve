@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_2sdp"
-    android:background="@color/colorPrimary"
+    android:layout_marginStart="@dimen/_2sdp"
+    android:layout_marginBottom="@dimen/_1sdp"
     android:clickable="true"
     android:focusable="true"
-    android:layout_margin="@dimen/_5sdp"
     android:orientation="horizontal">
 
     <ImageView
@@ -35,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
         android:orientation="vertical">
 
         <TextView
@@ -44,6 +43,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="Nama Quiz"
+            android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp" />
 
@@ -54,7 +54,7 @@
             android:fontFamily="@font/roboto_regular"
             android:singleLine="false"
             android:text="Lorem ipsum"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/_11ssp" />
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
             android:text="Sum"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp" />
 

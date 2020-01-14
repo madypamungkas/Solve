@@ -89,7 +89,7 @@ public class SearchCode extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(SearchCode.this, "eror "+ response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchCode.this, "error "+ response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -97,7 +97,7 @@ public class SearchCode extends AppCompatActivity {
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 loading.dismiss();
 
-                Toast.makeText(SearchCode.this, "eror "+ t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchCode.this, "error "+ t, Toast.LENGTH_SHORT).show();
             }
         });
     }

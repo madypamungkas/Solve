@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">JST</string>
+    <string name="app_name">Solve</string>
     <string name="please_wait">Mohon tunggu . . .</string>
-    <string name="something_wrong">Terjadi kesalahan, coba beberapa saat lagi</string>
+    <string name="something_wrong_title">Terjadi Kesalahan</string>
+    <string name="something_wrong_desc">Silahkan coba beberapa saat lagi</string>
+    <string name="something_wrong">Terjadi kesalahan, silahkan coba beberapa saat lagi</string>
+    <string name="update_title">Pembaruan Tersedia</string>
+    <string name="update_desc">Perbarui aplikasi untuk versi yang lebih stabil dan pengalaman yang lebih baik</string>
+    <string name="update">Perbarui</string>
+    <string name="update_later">Perbarui Nanti</string>
+    <string name="no_internet_title">Tidak Ada Koneksi Internet</string>
+    <string name="no_internet_desc">Cek koneksi internetmu dan coba lagi</string>
+    <string name="try_again">Coba Lagi</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="empty">Quiz Tidak Tersedia!</string>
@@ -19,7 +28,7 @@
     <string name="confirm_password">Konfirmasi Password</string>
     <string name="terms_conditions">By clicking Sign Up you agree all the Terms and Conditions.</string>
     <string name="forgot_password">Lupa Password</string>
-    <string name="forgot_password_info">Masukan Email Yang Sudah Terdaftar Untuk Me-Reset Password Anda</string>
+    <string name="forgot_password_info">Masukan email yang telah terdaftar untuk mengatur ulang kata sandi kamu</string>
     <string name="reset_password">Reset Password</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -49,7 +58,9 @@
     <string name="new_password">Password Baru</string>
     <string name="new_confirm_password">Konfirmasi Password Baru</string>
     <string name="confirmation">Konfirmasi</string>
-    <string name="are_you_sure_logout">Apakah Anda Yakin Ingin Keluar?</string>
+    <string name="are_you_sure_save">Apakah kamu sudah yakin dengan jawabanmu?\nKamu masih bisa mengubah jawabanmu\nselama masih ada sisa waktu</string>
+    <string name="are_you_sure_logout">Apakah kamu yakin ingin keluar?</string>
+    <string name="are_you_sure_exit_quiz">Apakah kamu yakin ingin keluar dari quiz?\nSemua pekerjaanmu pada quiz ini akan hilang</string>
     <string name="terms_condition">Syarat dan Ketentuan</string>
     <string name="version">Versi</string>
     <string name="yes">Ya</string>
@@ -60,7 +71,7 @@
     <string name="jawaban">Jawaban Anda Tidak Tersimpan.</string>
     <string name="get_ready">Persiapan</string>
     <string name="search">Cari Quiz</string>
-    <string name="search_desc">Anda dapat mencari menggunakan kode quiz\nyang telah diberikan</string>
+    <string name="search_desc">Kamu dapat mencari menggunakan kode quiz\nyang telah diberikan</string>
     <string name="code">Kode Quiz</string>
     <string name="schoolSearch">Cari Nama Sekolah</string>
     <string name="game_desc">Terdapat batasan waktu untuk soal yang akan dikerjakan dan waktu tidak dapat dihentikan saat soal telah diberikan</string>

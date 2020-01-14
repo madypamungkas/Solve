@@ -30,13 +30,14 @@ public class QuizChooseActivity extends AppCompatActivity {
     TypeQuizAdapter adapter;
     LinearLayout leaderBoard;
     int idType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_choose);
         RVmain = findViewById(R.id.RVmain);
         leaderBoard = findViewById(R.id.leaderBoard);
-        idType = getIntent().getIntExtra("idType",1);
+        idType = getIntent().getIntExtra("idType", 1);
         leaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,11 +60,11 @@ public class QuizChooseActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
                 ResponseTypeList model = response.body();
                 if (response.isSuccessful()) {
-                  //  int size = model.getResult().size();
+                    //  int size = model.getResult().size();
                     models = response.body().getResult();
-                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
                     adapter = new TypeQuizAdapter(models, QuizChooseActivity.this);
-                   // Toast.makeText(QuizChooseActivity.this, models.size()+" ", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(QuizChooseActivity.this, models.size()+" ", Toast.LENGTH_SHORT).show();
                     RVmain.setLayoutManager(new LinearLayoutManager(QuizChooseActivity.this));
                     RVmain.setLayoutManager(staggeredGridLayoutManager);
                     RVmain.setAdapter(adapter);

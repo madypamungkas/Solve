@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseDetails;
@@ -92,12 +94,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                detailUser();
+                checkConnection();
             }
         });
         Picasso.get().load("https://solve.technow.id/storage/user/"+user.getId()).error(R.drawable.ic_user).into(imgProfile);
-
-        detailUser();
 
         return view;
 
@@ -169,7 +169,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    /*
     private void checkConnection() {
         if (isNetworkAvailable()) {
             detailUser();
@@ -186,7 +185,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
             dialog.getWindow().setLayout((9 * width) / 10, height);
 
-            Button btnRetry = dialog.findViewById(R.id.btnRetry);
+            MaterialButton btnRetry = dialog.findViewById(R.id.btnRetry);
             btnRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -196,13 +195,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             });
             dialog.show();
         }
-    }
-
-    private void logOut() {
-        SharedPrefManager.getInstance(getActivity()).clear();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 
     private void confirmLogOut() {
@@ -218,14 +210,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
         dialog.getWindow().setLayout((9 * width) / 10, (2 * height) / 5);
 
-        Button btnNo = dialog.findViewById(R.id.btnNo);
+        MaterialButton btnNo = dialog.findViewById(R.id.btnNo);
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        Button btnYes = dialog.findViewById(R.id.btnYes);
+        MaterialButton btnYes = dialog.findViewById(R.id.btnYes);
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,25 +230,24 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void logoutUser() {
-        User user = SharedPrefManager.getInstance(getActivity()).getUser();
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = user.getToken();
-        Call<LogoutResponse> call = RetrofitClient
+        Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .logoutUser("Bearer " + token);
+                .logout("Bearer " + token);
 
-        call.enqueue(new Callback<LogoutResponse>() {
+        call.enqueue(new Callback<ResponseBody>() {
 
             @Override
-            public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    LogoutResponse logoutResponse = response.body();
                     Toast.makeText(getActivity(), "Logout Successfully", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<LogoutResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getActivity(), "Something wrong. Try again later", Toast.LENGTH_LONG).show();
                 Log.d("TAG", "Response = " + t.toString());
             }
@@ -268,7 +259,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         checkConnection();
     }
-    */
 
     @Override
     public void onClick(View view) {
@@ -285,37 +275,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 confirmLogOut();
                 break;
         }
-    }
-
-    public void confirmLogOut() {
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_logout_dialog);
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
-        mDialogNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
-        mDialogOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logOut();
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
-        Window window = dialog.getWindow();
-        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
     }
 
     private void logOut() {
