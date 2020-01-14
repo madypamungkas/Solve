@@ -108,7 +108,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         model1 = leaModelPodium.get(0);
                         name1.setText(model1.getUsername());
                         score1.setText(model1.getTotal_score());
-                        String linkdefault = getResources().getString(R.string.link);
+                        String linkdefault = "https://solve.technow.id/storage/";
                         String link1 = linkdefault + "user/" + model1.getPicture();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
                                 .into(avatar1);
@@ -122,7 +122,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         name2.setText(model2.getUsername());
                         score1.setText(model1.getTotal_score());
                         score2.setText(model2.getTotal_score());
-                        String linkdefault = getResources().getString(R.string.link);
+                        String linkdefault = "https://solve.technow.id/storage/";
                         String link1 = linkdefault + "user/" + model1.getPicture();
                         String link2 = linkdefault + "user/" + model2.getPicture();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
@@ -142,7 +142,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         score1.setText(model1.getTotal_score());
                         score2.setText(model2.getTotal_score());
                         score3.setText(model3.getTotal_score());
-                        String linkdefault = getResources().getString(R.string.link);
+                        String linkdefault = "https://solve.technow.id/storage/";
                         String link1 = linkdefault + "user/" + model1.getPicture();
                         String link2 = linkdefault + "user/" + model2.getPicture();
                         String link3 = linkdefault + "user/" + model3.getPicture();

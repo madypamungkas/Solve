@@ -33,7 +33,7 @@ public class SliderViewAdapter extends com.smarteist.autoimageslider.SliderViewA
     @Override
     public void onBindViewHolder(SliderVH viewHolder, int position) {
         final BannerModel banner = bannerModels.get(position);
-        String link = "https://ruko.technow.id/storage/";
+        String link = "https://solve.technow.id/storage/";
         Picasso.get().load(link+"banner/"+banner.getId()).error(R.drawable.ic_userprofile)
                 .into(viewHolder.imageViewBackground);
         String linkTo = banner.getLinkTo();

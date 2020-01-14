@@ -51,6 +51,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     Context mContext;
     ProgressDialog loading;
 
+    String link = "https://solve.technow.id/storage/user/";
     private ShimmerFrameLayout shimmerFrameLayout;
 
     public UserFragment() {
@@ -61,6 +62,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user, container, false);
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
 
         mContext = getActivity().getWindow().getContext();
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -93,6 +95,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 detailUser();
             }
         });
+        Picasso.get().load("https://solve.technow.id/storage/user/"+user.getId()).error(R.drawable.ic_user).into(imgProfile);
 
         detailUser();
 
@@ -112,7 +115,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         shimmerFrameLayout.startShimmer();
         txtEmail.setVisibility(View.GONE);
         txtUsername.setVisibility(View.GONE);
-        imgProfile.setVisibility(View.GONE);
+        //imgProfile.setVisibility(View.GONE);
         String accept = "application/json";
 
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
@@ -134,7 +137,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         imgProfile.setVisibility(View.VISIBLE);
                         txtEmail.setText(responseDetails.getUser().getEmail());
                         txtUsername.setText(responseDetails.getUser().getName());
-                        Picasso.get().load(responseDetails.getUser().getPicture()).error(R.drawable.ic_user).into(imgProfile);
+                        Picasso.get().load(link+response.body().getUser().getId()).error(R.drawable.ic_user).into(imgProfile);
                         shimmerFrameLayout.setVisibility(View.GONE);
                     }
                 } else {
@@ -143,7 +146,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         Toast.makeText(getActivity(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                         if (jObjError.getString("message").equals("Unauthenticated.")) {
                             SharedPrefManager.getInstance(getActivity()).clear();
-                            Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
@@ -331,7 +334,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-                    Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {

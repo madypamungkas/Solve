@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.komsi.solve.Model.TypeListModel;
 import com.komsi.solve.QuizActivity;
 import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +49,11 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
     @Override
     public void onBindViewHolder(@NonNull QuizVH holder, int position) {
         final TypeListModel types = type.get(position);
-
+        String link = "";
+        Picasso.get().load(link+ types.getPic_url()).into(holder.imgLoc);
         holder.titleMenu.setText(types.getTitle());
         holder.tvDesc.setText(types.getDescription());
-        holder.tvSum.setText("Jumlah Soal : " + types.getSum_question());
+        holder.tvSum.setText("Jumlah Soal :" +types.getSum_question());
         holder.layoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +63,9 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
                 editor.commit();
 
                 Intent i = new Intent(mCtx, QuizActivity.class);
-                i.putExtra("idCategory", types.getId());
-                i.putExtra("Type", types.getPic_url());
-
+                i.putExtra("idsoal", types.getId());
+                i.putExtra("namaSoal", types.getName());
+                i.putExtra("codeSoal", types.getCode());
                 mCtx.startActivity(i);
 
             }
@@ -70,6 +73,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
 
         holder.tvLetter.setText(types.getTitle().substring(0, 1));
 
+        colors = new ArrayList<String>();
         colors.add("#e51c23");
         colors.add("#e91e63");
         colors.add("#9c27b0");
@@ -106,6 +110,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
     class QuizVH extends RecyclerView.ViewHolder {
         TextView titleMenu, tvDesc, tvSum, tvLetter;
         LinearLayout layoutCard;
+        ImageView imgLoc;
         FrameLayout.LayoutParams params;
 
         public QuizVH(@NonNull View itemView) {
@@ -115,6 +120,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
             tvLetter = itemView.findViewById(R.id.tvLetter);
             tvSum = itemView.findViewById(R.id.tvSum);
             tvDesc = itemView.findViewById(R.id.tvDesc);
+            imgLoc = itemView.findViewById(R.id.imgLoc);
             layoutCard = itemView.findViewById(R.id.layoutCard);
 //            params = (FrameLayout.LayoutParams) layoutCard.getLayoutParams();
 

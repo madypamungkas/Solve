@@ -44,8 +44,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final MenuHomeModel menu = models.get(position);
-        //holder.layoutCard.setBackgroundResource(menu.getImage());
-        // holder.params.height = menu.getMinHeight();
+
         holder.titleMenu.setText(menu.getName());
         holder.layoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +56,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
             }
         });
-        String link = "http://10.33.74.105/solve/solve-jst/public/storage/quiz_category/";
+        String link = "https://solve.technow.id/storage/quiz_category/";
         Picasso.get().load(link + menu.getId()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

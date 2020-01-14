@@ -248,7 +248,7 @@ public class Main2Activity extends AppCompatActivity
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-                    Intent intent = new Intent(Main2Activity.this, LoginRegisterActivity.class);
+                    Intent intent = new Intent(Main2Activity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {

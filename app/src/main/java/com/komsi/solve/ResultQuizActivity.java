@@ -38,7 +38,7 @@ public class ResultQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_quiz);
-        idquiz = getIntent().getIntExtra("idquiz", 1);
+        idquiz = getIntent().getIntExtra("idSoal", 1);
         point = findViewById(R.id.point);
         namaSoal = getIntent().getStringExtra("namaSoal");
 

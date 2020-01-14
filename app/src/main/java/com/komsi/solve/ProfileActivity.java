@@ -277,9 +277,9 @@ public class ProfileActivity extends AppCompatActivity {
         detailUser = SharedPrefManager.getInstance(this).detailUser();
         username.setText(detailUser.getUsername());
         email.setText(detailUser.getEmail());
-        String defaultLink = getResources().getString(R.string.link);
+        String defaultLink = "https://solve.technow.id/storage/";
         String link = defaultLink + "user/";
-        Picasso.get().load(link + detailUser.getPicture()).error(R.drawable.ic_userprofile)
+        Picasso.get().load(link + detailUser.getId()).error(R.drawable.ic_userprofile)
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

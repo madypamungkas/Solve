@@ -88,10 +88,11 @@ public class QuizActivity extends AppCompatActivity {
     public int time;
     FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
-    String link = "http://10.33.74.105/solve/solve-jst/public/api/storage/question/";
+    String link = "https://solve.technow.id/storage/question/";
     Button submitBtn;
     Runnable runnable;
     NavigationAdapter nAdapter;
+    String namaQuiz, codeQuiz;
 
 
     @Override
@@ -102,7 +103,8 @@ public class QuizActivity extends AppCompatActivity {
         soalLayout = findViewById(R.id.soalLayout);
         readyLayout = findViewById(R.id.readyLayout);
         idsoal = getIntent().getIntExtra("idsoal", 1);
-        String namaQuiz = getIntent().getStringExtra("namaSoal");
+        namaQuiz = getIntent().getStringExtra("namaSoal");
+        codeQuiz = getIntent().getStringExtra("codeSoal");
         //answerModels = new ArrayList<>();
         timer = findViewById(R.id.timer);
         number = findViewById(R.id.number);
@@ -125,11 +127,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                /*bundle.putString("productId", id);
-                bundle.putString("productName", productName);
-                bundle.putInt("productPrice", productPrice);
-                bundle.putString("productPic", productPic);
-                bundle.putInt("productStock", productStock);*/
+                bundle.putInt("idSoal", idsoal);
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
                 Gson gson = new Gson();
                 String json = sharedPrefs.getString("question", "question");
@@ -163,7 +161,7 @@ public class QuizActivity extends AppCompatActivity {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
 
         token = "Bearer " + user.getToken();
-        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().question("application/json", token, 1);
+        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().question("application/json", token, idsoal);
         call.enqueue(new Callback<ResponseQuestion>() {
             @Override
             public void onResponse(Call<ResponseQuestion> call, final Response<ResponseQuestion> response) {
@@ -259,11 +257,11 @@ public class QuizActivity extends AppCompatActivity {
         optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         optionRV.setLayoutManager(staggeredGridLayoutManager);
         optionRV.setAdapter(adapter);
-        if (questions.getPic_question().isEmpty()) {
+        if (questions.getPic_question() == null) {
             imgSoal.setVisibility(View.GONE);
         } else {
             imgSoal.setVisibility(View.VISIBLE);
-            Picasso.get().load(link + questions.getPic_question())
+            Picasso.get().load(link + questions.getId_soal())
                     .into(imgSoal);
         }
 
@@ -416,11 +414,63 @@ public class QuizActivity extends AppCompatActivity {
                 optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
                 optionRV.setLayoutManager(staggeredGridLayoutManager);
                 optionRV.setAdapter(adapter);
-                if (questions.getPic_question().isEmpty()) {
+                if (questions.getPic_question() == null) {
                     imgSoal.setVisibility(View.GONE);
                 } else {
                     imgSoal.setVisibility(View.VISIBLE);
-                    Picasso.get().load(link + questions.getPic_question())
+                    Picasso.get().load(link + questions.getId_soal())
+                            .into(imgSoal);
+                }
+            }
+
+        }
+    }
+
+    public void nextSoalAuto(){
+        prevSoal.setVisibility(View.VISIBLE);
+        saveOption();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("question", "question");
+        Type type = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json, type);
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt("num", currentQusetionId);
+        editor.commit();
+
+        if (currentQusetionId + 1 == questionSave.size()) {
+            nextSoal.setVisibility(View.INVISIBLE);
+            // submitBtn.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.VISIBLE);
+        }
+
+        if (currentQusetionId + 1 == questionSave.size()) {
+            if (status == 1) {
+            } else {
+            }
+
+        } else {
+            currentQusetionId++;
+            final QuestionModel questions = questionSave.get(currentQusetionId);
+
+            if (currentQusetionId > questionSave.size()) {
+
+            } else {
+                soal.setText(questions.getQuestion());
+                number.setText(currentQusetionId + 1 + "");
+                optionModel = questions.getOption();
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+                optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+                optionRV.setLayoutManager(staggeredGridLayoutManager);
+                optionRV.setAdapter(adapter);
+                if (questions.getPic_question() == null) {
+                    imgSoal.setVisibility(View.GONE);
+                } else {
+                    imgSoal.setVisibility(View.VISIBLE);
+                    Picasso.get().load(link + questions.getId_soal())
                             .into(imgSoal);
                 }
             }
@@ -460,11 +510,11 @@ public class QuizActivity extends AppCompatActivity {
                 optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
                 optionRV.setLayoutManager(staggeredGridLayoutManager);
                 optionRV.setAdapter(adapter);
-                if (questions.getPic_question().isEmpty()) {
+                if (questions.getPic_question() == null) {
                     imgSoal.setVisibility(View.GONE);
                 } else {
                     imgSoal.setVisibility(View.VISIBLE);
-                    Picasso.get().load(link + questions.getPic_question())
+                    Picasso.get().load(link + questions.getId_soal())
                             .into(imgSoal);
                 }
             } else {
@@ -497,11 +547,11 @@ public class QuizActivity extends AppCompatActivity {
         optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         optionRV.setLayoutManager(staggeredGridLayoutManager);
         optionRV.setAdapter(adapter);
-        if (questions.getPic_question().isEmpty()) {
+        if (questions.getPic_question() == null) {
             imgSoal.setVisibility(View.GONE);
         } else {
             imgSoal.setVisibility(View.VISIBLE);
-            Picasso.get().load(link + questions.getPic_question())
+            Picasso.get().load(link + questions.getId_soal())
                     .into(imgSoal);
         }
         if (currentQusetionId == 0) {
@@ -535,11 +585,11 @@ public class QuizActivity extends AppCompatActivity {
             optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
             optionRV.setLayoutManager(staggeredGridLayoutManager);
             optionRV.setAdapter(adapter);
-            if (questions.getPic_question().isEmpty()) {
+            if (questions.getPic_question() == null) {
                 imgSoal.setVisibility(View.GONE);
             } else {
                 imgSoal.setVisibility(View.VISIBLE);
-                Picasso.get().load(link + questions.getPic_question())
+                Picasso.get().load(link + questions.getId_soal())
                         .into(imgSoal);
             }
 

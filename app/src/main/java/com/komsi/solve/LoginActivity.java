@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.komsi.solve.Api.RetrofitClient;
@@ -29,105 +30,94 @@ import com.komsi.solve.Storage.SharedPrefManager;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputLayout ilEmail, ilPassword;
-    TextInputEditText etEmail, etPassword;
-    TextView tvForgotPass;
+    TextInputLayout layoutEmail, layoutPass;
+    TextInputEditText inputEmail, inputPass;
+    TextView btnForgotPass, signUpLink;
     Context mContext;
     ProgressDialog loading;
+    private static final String TAG = "Login";
+    MaterialButton btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
-    ilEmail = findViewById(R.id.ilEmail);
-    ilPassword = findViewById(R.id.ilPassword);
+        layoutEmail = findViewById(R.id.layoutEmail);
+        layoutPass = findViewById(R.id.layoutPass);
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPass = findViewById(R.id.inputPass);
+        btnForgotPass = findViewById(R.id.btnForgotPass);
+        signUpLink = findViewById(R.id.signUpLink);
 
-    etEmail = findViewById(R.id.etEmail);
-    etPassword = findViewById(R.id.etPassword);
-
-
-        etEmail.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String email = etEmail.getText().toString();
-
-            if (email.isEmpty()) {
-                ilEmail.setError("Email is required");
-            } else if (!isValidEmail(email)) {
-                ilEmail.setError("Enter a valid address");
-            } else {
-                ilEmail.setError(null);
+        btnForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
+                startActivity(intent);
             }
-        }
-    });
-
-        etPassword.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String password = etPassword.getText().toString();
-
-            if (password.isEmpty()) {
-                ilPassword.setError("Password is required");
-            } else if (password.length() < 8) {
-                ilPassword.setError("Password should be at least 8 characters long");
-            } else {
-                ilPassword.setError(null);
+        });
+        signUpLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
-        }
-    });
-
-    TextView signUpText = findViewById(R.id.signUpLink);
-        signUpText.setOnClickListener(new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(i);
-        }
-    });
-
-    TextView forgotPassText = findViewById(R.id.tvForgotPass);
-        forgotPassText.setOnClickListener(new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(LoginActivity.this, ForgotPassword.class);
-            startActivity(i);
-        }
-    });
-
-    mContext = this;
-
-    Button btnLogin = findViewById(R.id.btnLogin);
+        });
+        btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-             loginUser();
-        }
-    });
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(getActivity(), Main2Activity.class));
+                loginUser();
+            }
+        });
 
-}
+        inputEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String email = inputEmail.getText().toString();
+
+                if (email.length() > 0) {
+                    layoutEmail.setError(null);
+                }
+            }
+        });
+
+        inputPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String pass = inputPass.getText().toString();
+
+                if (pass.length() > 0) {
+                    layoutPass.setError(null);
+                }
+            }
+        });
+
+
+    }
 
     public void onStart() {
         super.onStart();
@@ -147,21 +137,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        loading = ProgressDialog.show(mContext, null, getString(R.string.please_wait), true, false);
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        loading = ProgressDialog.show(LoginActivity.this, null, getString(R.string.please_wait), true, false);
+        String email = inputEmail.getText().toString().trim();
+        String password = inputPass.getText().toString().trim();
 
         if (email.isEmpty()) {
             loading.dismiss();
-            ilEmail.setError("Email is required");
-            etEmail.requestFocus();
+            layoutEmail.setError("Email is required");
+            inputEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            loading.dismiss();
+            layoutEmail.setError("Enter a valid Email");
+            inputEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
             loading.dismiss();
-            ilPassword.setError("Password is required");
-            etPassword.requestFocus();
+            layoutPass.setError("Password is required");
+            inputPass.requestFocus();
+            return;
+        }
+
+        if (password.length() < 8) {
+            loading.dismiss();
+            layoutPass.setError("Password should be at least 8 characters long");
+            inputPass.requestFocus();
             return;
         }
 
@@ -174,30 +178,28 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 ResponseLogin responseLogin = response.body();
-                //   Toast.makeText(mContext, "Login successfully" + " - " + response.code(), Toast.LENGTH_LONG).show();
-
                 if (response.isSuccessful()) {
                     if (responseLogin.getStatus().equals("success")) {
                         Log.i("debug", "onResponse: SUCCESS");
                         loading.dismiss();
                         SharedPrefManager.getInstance(LoginActivity.this).saveUser(response.body().getUser());
-                        //  Toast.makeText(mContext, "Login successfully" + " - " + loginResponse.getUser().getToken(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(LoginActivity.this, "Login successfully" + " - " + loginResponse.getUser().getToken(), Toast.LENGTH_LONG).show();
                         getDetails();
-                       /* Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                       /* Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);*/
                     } else {
                         Log.i("debug", "onResponse: FAILED");
                         loading.dismiss();
-                        //   Toast.makeText(mContext, loginResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        //   Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else {
                     loading.dismiss();
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(mContext, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -205,9 +207,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
                 Log.e("debug", "onFailure: ERROR > " + t.toString());
-
                 loading.dismiss();
-                Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }

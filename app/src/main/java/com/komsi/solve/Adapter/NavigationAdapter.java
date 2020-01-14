@@ -61,7 +61,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
         final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
         final Gson gson = new Gson();
         final SharedPreferences.Editor editorList = sharedPrefs.edit();
-        holder.jawaban.setText(questionModel.getId_soal() + "");
+        holder.jawaban.setText((position+1) + "");
         String json = sharedPrefs.getString("response", "response");
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();

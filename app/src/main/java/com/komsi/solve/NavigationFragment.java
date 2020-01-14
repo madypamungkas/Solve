@@ -33,7 +33,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
     RecyclerView optionRV;
     NavigationAdapter adapter;
     MaterialButton btnDone;
-
+    int idSoal;
     List<QuestionModel> questionModels;
 
     @Override
@@ -42,7 +42,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-
+        idSoal = getArguments().getInt("idSoal", 1);
         btnDone = fragmentView.findViewById(R.id.btnDone);
         optionRV = fragmentView.findViewById(R.id.optionRV);
 
@@ -56,7 +56,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
 
         String token = "Bearer " + user.getToken();
-        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().question("application/json", token, 1);
+        Call<ResponseQuestion> call = RetrofitClient.getInstance().getApi().question("application/json", token, idSoal);
         call.enqueue(new Callback<ResponseQuestion>() {
             @Override
             public void onResponse(Call<ResponseQuestion> call, final Response<ResponseQuestion> response) {
@@ -91,6 +91,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
         switch (view.getId()) {
             case R.id.btnDone:
                 Intent readyBtn = new Intent(getActivity(), ReviewActivity.class);
+                readyBtn.putExtra("idSoal", idSoal);
                 startActivity(readyBtn);
                 break;
         }

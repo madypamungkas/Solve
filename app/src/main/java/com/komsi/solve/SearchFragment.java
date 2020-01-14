@@ -130,29 +130,25 @@ public class SearchFragment extends Fragment {
                 ResponseTypeList model = response.body();
                 loading.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().getStatus() != "failed") {
-                        Intent i = new Intent(mContext, QuizActivity.class);
+                    if (response.body().getStatus().equals("failed") ) {
+                        Toast.makeText(getActivity(), response.body().getMessage() , Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent i = new Intent(getActivity(), QuizActivity.class);
                         i.putExtra("idCategory", response.body().getResult().get(0).getId());
                         i.putExtra("Type", response.body().getResult().get(0).getPic_url());
                         startActivity(i);
-                    } else {
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            Toast.makeText(mContext, jObjError.getString("message"), Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
                     }
 
                 } else {
-                    Toast.makeText(mContext, "eror " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "eror " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 loading.dismiss();
-                Toast.makeText(mContext, "Error " + t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Error ", Toast.LENGTH_SHORT).show();
             }
         });
     }

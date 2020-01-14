@@ -81,23 +81,24 @@
                 android:orientation="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>
-
+            <Button
+                android:onClick="Submit"
+                android:layout_below="@id/RVmain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="@drawable/btn_rounded_green"
+                android:enabled="true"
+                android:paddingLeft="@dimen/_28sdp"
+                android:paddingRight="@dimen/_28sdp"
+                android:text="Kirim Jawaban"
+                android:textColor="@color/white"
+                android:visibility="visible" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
-    <Button
-        android:onClick="Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
-        android:background="@drawable/btn_rounded_green"
-        android:enabled="true"
-        android:paddingLeft="@dimen/_28sdp"
-        android:paddingRight="@dimen/_28sdp"
-        android:text="Kirim Jawaban"
-        android:textColor="@color/white"
-        android:visibility="visible" />
+
 
 </LinearLayout>

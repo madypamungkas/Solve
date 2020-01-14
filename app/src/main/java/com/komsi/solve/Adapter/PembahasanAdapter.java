@@ -59,10 +59,8 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
         holder.typeGame.setText(responseQuestion.getQuiz().getTitle());
         holder.num.setText(num+" ");
         holder.desc.setText(answer.getQuestion());
-        holder.answer.setText(answer.getUser_answer());
-        holder.userAnswer.setText(answer.getTrueAnswer());
-
-
+        holder.answer.setText(answer.getTrueAnswer());
+        holder.userAnswer.setText(answer.getUser_answer());
 
         if(answer.getUser_answer().equals(answer.getTrueAnswer())){
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
@@ -70,7 +68,6 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
         }else {
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#FF424242"));
             holder.status.setText("Salah");
-
         }
 
     }

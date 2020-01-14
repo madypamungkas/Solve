@@ -53,7 +53,7 @@ public class LeaderboardChooseAdapter extends RecyclerView.Adapter<LeaderboardCh
         holder.typeGame.setText(category.getName());
         holder.desc.setText(category.getDescription());
 
-        String link = "https://ruko.technow.id/storage/quiz_category/";
+        String link = "https://solve.technow.id/storage/quiz_category/";
         Picasso.get().load(link + category.getId()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

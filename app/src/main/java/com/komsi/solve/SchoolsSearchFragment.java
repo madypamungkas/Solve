@@ -138,7 +138,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
                     schoolsRV.setAdapter(adapter);
                 } else {
                     Log.i("debug", "onResponse : FAILED");
-                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),  response.code()+" ", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -147,7 +147,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
             public void onFailure(Call<ResponseSchools> call, Throwable t) {
                 loading.dismiss();
                 Log.i("debug", "onResponse : FAILED");
-                Toast.makeText(getActivity(), t.toString() + R.string.something_wrong, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.toString() + R.string.something_wrong+ t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -183,7 +183,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
                     schoolsRV.setAdapter(adapter);
                 } else {
                     Log.i("debug", "onResponse : FAILED");
-                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.something_wrong+ response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -191,7 +191,7 @@ public class SchoolsSearchFragment extends BottomSheetDialogFragment implements 
             public void onFailure(Call<ResponseSchools> call, Throwable t) {
                 loading.dismiss();
                 Log.i("debug", "onResponse : FAILED");
-                Toast.makeText(getActivity(), t.toString() + R.string.something_wrong, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.toString() + R.string.something_wrong + t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,6 +1,8 @@
 package com.komsi.solve;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -8,69 +10,105 @@ import retrofit2.Response;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseSignUp;
+import com.komsi.solve.Model.SchoolsModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final String TAG = "Register";
+    MaterialButton btnRegister;
+    SpinnerDialog spinnerDialog;
+    ArrayList<SchoolsModel> items = new ArrayList<>();
+    public TextView txtSchools, loginLink;
     private EditText etUsername, etEmail, etName, etPassword, etConfirmPassword;
     Context mContext;
+    String idSchool, schoolName;
     ProgressDialog loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+        final Gson gson = new Gson();
+        final SharedPreferences.Editor editorList = sharedPrefs.edit();
+
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        loginLink = findViewById(R.id.loginLink);
 
-        ImageButton btnClose = findViewById(R.id.buttonClose);
-        btnClose.setOnClickListener(new View.OnClickListener() {
+        btnRegister = findViewById(R.id.btnRegister);
+        txtSchools = findViewById(R.id.txtSchools);
 
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //       SignUp.this.finish();
-                Intent intent = new Intent(RegisterActivity.this, LoginRegisterActivity.class);
+                register();
+            }
+        });
+
+
+        txtSchools.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                SchoolsSearchFragment fragment = new SchoolsSearchFragment();
+                fragment.setArguments(bundle);
+                fragment.show(((FragmentActivity) RegisterActivity.this).getSupportFragmentManager(), TAG);
+            }
+        });
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        mContext = this;
-
-        Button btnSignUp = this.findViewById(R.id.buttonSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loading = ProgressDialog.show(mContext, null, "Please wait...", true, false);
-                registerUser();
-            }
-        });
     }
 
-    public void registerUser(){
+    public void setTextSch(String schoolName, String schoolId) {
+        txtSchools.setText(schoolName);
+        idSchool = schoolId;
+    }
+
+    public void register() {
+        loading = ProgressDialog.show(RegisterActivity.this, null, "Please wait...", true, false);
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+
         String username = etUsername.getText().toString().trim();
         final String email = etEmail.getText().toString().trim();
         final String name = etName.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String confirmpassword = etConfirmPassword.getText().toString().trim();
+//        String confirmpassword = etConfirmPassword.getText().toString().trim();
         String accept = "application/json";
-
         String status = "Active";
+        // String idSchool = sharedPrefs.getString("schoolId", "0001");
 
         if (username.isEmpty()) {
             loading.dismiss();
@@ -106,23 +144,16 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-//        if (phone.isEmpty()) {
-//            loading.dismiss();
-//            etPhone.setError("Phone Number is required");
-//            etPhone.requestFocus();
-//            return;
-//        }
-//
-//        if (phone.length() < 10 || phone.length() > 13) {
-//            loading.dismiss();
-//            etPhone.setError("Phone Number should be at least 10-13 characters long");
-//            etPhone.requestFocus();
-//            return;
-//        }
 
         if (password.isEmpty()) {
             loading.dismiss();
             etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            return;
+        }
+        if (idSchool.isEmpty()) {
+            loading.dismiss();
+            etPassword.setError("School is required");
             etPassword.requestFocus();
             return;
         }
@@ -134,7 +165,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if (confirmpassword.isEmpty()) {
+
+        /*if (confirmpassword.isEmpty()) {
             loading.dismiss();
             etConfirmPassword.setError("Confirm Password is required");
             etConfirmPassword.requestFocus();
@@ -153,22 +185,23 @@ public class RegisterActivity extends AppCompatActivity {
             etConfirmPassword.setError("Password not matching");
             etConfirmPassword.requestFocus();
             return;
-        }
+        }*/
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, name, email, username, password, password);
+                .registerUser(accept, username, email, name, password, idSchool);
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override
             public void onResponse(Call<ResponseSignUp> call, Response<ResponseSignUp> response) {
                 ResponseSignUp signUpResponse = response.body();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     if (signUpResponse.getStatus().equals("success")) {
                         Log.i("debug", "onResponse: SUCCESS");
                         loading.dismiss();
-                        Toast.makeText(mContext, "Registration Success!", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(mContext, LoginRegisterActivity.class));
+                        Toast.makeText(RegisterActivity.this, "Registration Success!", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
                     }
                 } else {
                     loading.dismiss();
@@ -187,9 +220,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 separator = "\n";
                             }
                         }
-                        Toast.makeText(mContext, errors.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, errors.toString(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -198,7 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseSignUp> call, Throwable t) {
                 Log.e("debug", "onFailure: ERROR > " + t.getMessage());
                 loading.dismiss();
-                Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Something wrong. Please try again later.", Toast.LENGTH_LONG).show();
             }
         });
     }

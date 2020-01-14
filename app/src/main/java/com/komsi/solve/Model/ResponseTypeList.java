@@ -14,9 +14,14 @@ public class ResponseTypeList {
     @Expose
     private ArrayList<TypeListModel> result ;
 
-    public ResponseTypeList(String status, ArrayList<TypeListModel> result) {
+    @SerializedName("message")
+    @Expose
+    private String message ;
+
+    public ResponseTypeList(String status, ArrayList<TypeListModel> result, String message) {
         this.status = status;
         this.result = result;
+        this.message = message;
     }
 
     public String getStatus() {
@@ -25,5 +30,9 @@ public class ResponseTypeList {
 
     public ArrayList<TypeListModel> getResult() {
         return result;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

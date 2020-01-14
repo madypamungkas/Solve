@@ -43,12 +43,12 @@ public class ReviewActivity extends AppCompatActivity {
     ReviewAdapter adapter;
     Context mCtx = ReviewActivity.this;
     ProgressDialog progress;
-
+    int idSoal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-
+        idSoal = getIntent().getIntExtra("idSoal", 1);
         reviewRV = findViewById(R.id.RVmain);
         loadAns();
     }
@@ -140,7 +140,7 @@ public class ReviewActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(ReviewActivity.this, ResultQuizActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
+                    intent.putExtra("idSoal", idSoal);
                     startActivity(intent);
 
                 } else {

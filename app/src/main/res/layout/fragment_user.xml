@@ -51,11 +51,12 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginBottom="@dimen/_8sdp">
 
-                            <View
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/avatar"
                                 android:layout_width="@dimen/_53sdp"
                                 android:layout_height="@dimen/_53sdp"
                                 android:layout_marginStart="@dimen/_10sdp"
-                                android:background="@drawable/layout_circle_gray" />
+                                android:src="@drawable/layout_circle_gray" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -94,7 +95,6 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_user"
-                            app:civ_border_color="@color/white"
                             app:civ_border_width="1dp" />
 
                         <LinearLayout

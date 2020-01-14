@@ -3,6 +3,7 @@ package com.komsi.solve;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -29,11 +31,16 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class ChangeProfile extends AppCompatActivity {
+    private static final String TAG = "Register";
+
     private AppCompatEditText etSName, etSEmail;
     private AppCompatTextView etSUsername;
     MaterialButton btnConfirm;
     UserModel user;
     ProgressDialog loading;
+    public TextView txtSchools;
+    String idSchool, schoolName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public class ChangeProfile extends AppCompatActivity {
         etSUsername = findViewById(R.id.etSUsername);
         user = SharedPrefManager.getInstance(this).getUser();
         btnConfirm = findViewById(R.id.btnConfirm);
+        txtSchools = findViewById(R.id.txtSchools);
 
         etSName.setText(user.getName());
         etSEmail.setText(user.getEmail());
@@ -56,7 +64,15 @@ public class ChangeProfile extends AppCompatActivity {
                 updateProfil();
             }
         });
-
+        txtSchools.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                SchoolsSearchFragment fragment = new SchoolsSearchFragment();
+                fragment.setArguments(bundle);
+                fragment.show(((FragmentActivity) ChangeProfile.this).getSupportFragmentManager(), TAG);
+            }
+        });
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +81,11 @@ public class ChangeProfile extends AppCompatActivity {
             }
         });
     }
+    public void setTextSch(String schoolName, String schoolId) {
+        txtSchools.setText(schoolName);
+        idSchool = schoolId;
+    }
+
 
     public void updateProfil() {
         loading = ProgressDialog.show(ChangeProfile.this, null, "Please wait...", true, false);
@@ -73,7 +94,7 @@ public class ChangeProfile extends AppCompatActivity {
         String name = etSName.getText().toString().trim();
         String email = etSEmail.getText().toString().trim();
         String username = etSUsername.getText().toString().trim();
-        retrofit2.Call<ResponseProfile> call = RetrofitClient.getInstance().getApi().updateProfil(token, name, email, username);
+        retrofit2.Call<ResponseProfile> call = RetrofitClient.getInstance().getApi().updateProfil(token, name, email, username, idSchool);
         call.enqueue(new Callback<ResponseProfile>() {
             @Override
             public void onResponse(retrofit2.Call<ResponseProfile> call, Response<ResponseProfile> response) {

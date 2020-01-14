@@ -89,7 +89,8 @@ public interface Api {
             @Header("Authorization") String token,
             @Field("name") String name,
             @Field("email") String email,
-            @Field("username") String username
+            @Field("username") String username,
+            @Field("username") String idSchool
 
     );
 
@@ -205,6 +206,7 @@ public interface Api {
             @Header("Accept") String accept,
             @Header("Authorization") String token
     );
+
     @GET("collager/school")
     Call<ResponseSchools> schools(
             @Header("Accept") String accept,
@@ -217,7 +219,6 @@ public interface Api {
             @Header("Authorization") String token,
             @Query("term") String term
     );
-
 
 
 }

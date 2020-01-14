@@ -3,6 +3,7 @@ package com.komsi.solve.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -14,10 +15,13 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.Gson;
+import com.komsi.solve.ChangeProfile;
 import com.komsi.solve.Model.OptionModel;
 import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.SchoolsModel;
+import com.komsi.solve.QuizActivity_viewpager;
 import com.komsi.solve.R;
+import com.komsi.solve.RegisterActivity;
 import com.komsi.solve.RegisterFragment;
 import com.komsi.solve.SchoolsSearchFragment;
 
@@ -31,8 +35,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH>  {
-
+public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> {
+    private int mSelectedItem = -1;
     private List<SchoolsModel> schoolsModels;
     private Context mCtx;
     SchoolsSearchFragment schoolsSearchFragment;
@@ -57,23 +61,23 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
 
     @Override
     public void onBindViewHolder(@NonNull final SchoolVH holder, int position) {
-        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        final Gson gson = new Gson();
-        final SharedPreferences.Editor editorList = sharedPrefs.edit();
         final SchoolsModel schools = schoolsModels.get(position);
 
         holder.jawaban.setText(schools.getText() + "");
-        holder.placeA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editorList.putString("schoolName", schools.getText());
-                editorList.putString("schoolId", schools.getId());
-                editorList.commit();
-
-              //  registerFragment.setTextSch();
+        if(position == mSelectedItem){
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
+            if (mCtx instanceof RegisterActivity) {
+                ((RegisterActivity) mCtx).setTextSch(schools.getText(), schools.getId());
             }
-        });
+            if (mCtx instanceof ChangeProfile) {
+                ((ChangeProfile) mCtx).setTextSch(schools.getText(), schools.getId());
+            }
+        }
+        else{
+         }
+
     }
+
     @Override
     public int getItemCount() {
         return schoolsModels.size();
@@ -97,10 +101,14 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolVH> 
             View.OnClickListener l = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mSelectedItem = getAdapterPosition();
+                    notifyItemRangeChanged(0, schoolsModels.size());
+                    notifyDataSetChanged();
 
                 }
             };
 
+            rbChoose.setOnClickListener(l);
             itemView.setOnClickListener(l);
             placeA.setOnClickListener(l);
         }

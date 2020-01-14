@@ -39,7 +39,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private Context mCtx;
     private QuestionModel question;
     QuizViewPagerAdapter adapter;
-    String link = "http://10.33.74.105/solve/solve-jst/public/storage/answer/";
+    String link = "https://solve.technow.id/storage/answer/";
     String content;
     String[] strings;
     private boolean onBind;
@@ -71,7 +71,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         holder.rbChoose.setChecked(position == mSelectedItem);
         holder.jawaban.setText(option.getContents() + " ");
         String choosen = sharedPrefs.getString("id-" + option.getQuestion_id(), "question");
-        if(position == mSelectedItem){
+        if (position == mSelectedItem) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             if (!choosen.equals("question")) {
                 if (choosen.equals(option.getOption())) {
@@ -83,8 +83,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             } else {
 
             }
-        }
-        else{
+        } else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
             if (!choosen.equals("question")) {
                 if (choosen.equals(option.getOption())) {
@@ -143,9 +142,12 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
                     editorList.putString("id-" + option.getQuestion_id(), option.getOption());
                     holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                 }
+
+
             } else {
 
             }
+
             //mSelectedItem = position;
             /*if (position == mSelectedItem) {
                 holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
@@ -178,11 +180,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
         }
 
-       /* if (holder.id == 1) {
-
+        if (holder.id == 1) {
+          /*  if (mCtx instanceof QuizActivity) {
+                ((QuizActivity) mCtx).nextSoalAuto();
+            }*/
         } else {
 
-        }*/
+        }
 
     }
 
@@ -191,7 +195,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         return optionModel.size();
     }
 
-     class OptionVH extends RecyclerView.ViewHolder {
+    class OptionVH extends RecyclerView.ViewHolder {
         TextView jawaban;
         RadioButton rbChoose;
         public int id;
@@ -209,9 +213,11 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             View.OnClickListener l = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     mSelectedItem = getAdapterPosition();
                     notifyItemRangeChanged(0, optionModel.size());
                     notifyDataSetChanged();
+
 
                 }
             };

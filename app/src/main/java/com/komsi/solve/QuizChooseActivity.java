@@ -61,7 +61,7 @@ public class QuizChooseActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                   //  int size = model.getResult().size();
                     models = response.body().getResult();
-                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                     adapter = new TypeQuizAdapter(models, QuizChooseActivity.this);
                    // Toast.makeText(QuizChooseActivity.this, models.size()+" ", Toast.LENGTH_SHORT).show();
                     RVmain.setLayoutManager(new LinearLayoutManager(QuizChooseActivity.this));
