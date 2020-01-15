@@ -35,8 +35,8 @@ public class BannerSliderAdapter  extends SliderViewAdapter<com.komsi.solve.Adap
     @Override
     public void onBindViewHolder(BannerVH viewHolder, int position) {
         final BannerModel banner = bannerModels.get(position);
-        String link = "http://10.33.74.105/solve/solve-jst/public/storage/";
-        Picasso.get().load(link+"banner/"+banner.getId()).error(R.drawable.ic_userprofile)
+        String link = "http://solve.technow.id/storage/";
+        Picasso.get().load(link+"banner/"+banner.getId()).error(R.color.colorPrimary)
                 .into(viewHolder.imageViewBackground);
         String linkTo = banner.getLinkTo();
         if(linkTo.length() > 5){
@@ -46,7 +46,7 @@ public class BannerSliderAdapter  extends SliderViewAdapter<com.komsi.solve.Adap
                     //                   Intent i = new Intent(Intent.ACTION_VIEW);
 //                    i.setData(Uri.parse("http://"+banner.getLinkTo()));
                     Intent i = new Intent(mCtx, WebViewsActivity.class);
-                    i.putExtra("BannerLink","https://"+banner.getLinkTo());
+                    i.putExtra("BannerLink",banner.getLinkTo());
                     mCtx.startActivity(i);
                 }
             });

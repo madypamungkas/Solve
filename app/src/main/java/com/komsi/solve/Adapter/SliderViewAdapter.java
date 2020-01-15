@@ -34,7 +34,7 @@ public class SliderViewAdapter extends com.smarteist.autoimageslider.SliderViewA
     public void onBindViewHolder(SliderVH viewHolder, int position) {
         final BannerModel banner = bannerModels.get(position);
         String link = "https://solve.technow.id/storage/";
-        Picasso.get().load(link+"banner/"+banner.getId()).error(R.drawable.ic_userprofile)
+        Picasso.get().load(link+"banner/"+banner.getId()).error(R.color.colorPrimary)
                 .into(viewHolder.imageViewBackground);
         String linkTo = banner.getLinkTo();
         if(linkTo.length() > 5){

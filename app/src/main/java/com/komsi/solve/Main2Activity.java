@@ -151,7 +151,7 @@ public class Main2Activity extends AppCompatActivity
         mDialogOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  finish();
+                finish();
                 dialog.dismiss();
             }
         });

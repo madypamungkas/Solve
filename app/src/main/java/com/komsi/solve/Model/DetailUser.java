@@ -39,12 +39,17 @@ public class DetailUser {
     @SerializedName("deleted_at")
     @Expose
     private String deleted_at;
-    @SerializedName("count_played")
+
+    @SerializedName("school_id")
+    @Expose
+    private String school_id;
+
     @Expose
     private String count_played;
     @SerializedName("high_score")
     @Expose
     private String high_score;
+
 
     public DetailUser(String id, String name, String username, String email, String email_verified_at, String picture, String created_at, String updated_at, String deleted_at, String count_played, String high_score) {
         this.id = id;

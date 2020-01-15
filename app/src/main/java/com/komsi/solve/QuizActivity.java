@@ -714,19 +714,19 @@ public class QuizActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(QuizActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_exit_quiz);
+        dialog.setContentView(R.layout.dialog_confirm_exit_quiz);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
-        mDialogNo.setOnClickListener(new View.OnClickListener() {
+        MaterialButton btnNo = dialog.findViewById(R.id.btnNo);
+        btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
-        mDialogOk.setOnClickListener(new View.OnClickListener() {
+        MaterialButton btnYes = dialog.findViewById(R.id.btnYes);
+        btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(QuizActivity.this, Main2Activity.class);
@@ -739,12 +739,5 @@ public class QuizActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void refreshRV(){
-        QuestionModel questions = questionModel.get(currentQusetionId);
-       // soal.setText(questions.getQuestion());
-        optionModel = questions.getOption();
-        adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
-        optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
-        optionRV.setAdapter(adapter);
-    }
+
 }
