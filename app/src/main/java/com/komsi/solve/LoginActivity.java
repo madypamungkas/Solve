@@ -8,7 +8,9 @@ import retrofit2.Response;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.ResponseLogin;
@@ -223,6 +226,15 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(retrofit2.Call<ResponseDetails> call, Response<ResponseDetails> response) {
                     if (response.isSuccessful()) {
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editorList = sharedPrefs.edit();
+                        Gson gson = new Gson();
+
+                        String detailUser = gson.toJson(response.body());
+                        editorList.putString("DetailUser", detailUser);
+                        editorList.commit();
+
+
                         SharedPrefManager.getInstance(LoginActivity.this).saveDetail(response.body().getUser());
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

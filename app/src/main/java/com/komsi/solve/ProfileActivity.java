@@ -7,11 +7,13 @@ import retrofit2.Response;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -21,10 +23,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.DetailUser;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.ResponseProfile;
+import com.komsi.solve.Model.ResponseQuestion;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 import com.squareup.picasso.Picasso;
@@ -32,9 +37,10 @@ import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView username, email, highScore, gamePlayed;
+    TextView username, email, highScore, gamePlayed, txtSchools;
     FrameLayout frame;
     Context context;
     private static final int IMG_REQUEST = 777;
@@ -43,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView editProfile, uploadProfile;
     ProgressDialog progress;
     DetailUser detailUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +63,20 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         editProfile = findViewById(R.id.editProfile);
         uploadProfile = findViewById(R.id.uploadProfile);
-        DetailUser detail = SharedPrefManager.getInstance(ProfileActivity.this).detailUser();
+        txtSchools = findViewById(R.id.txtSchools);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        Gson gson = new Gson();
+
+        String json = sharedPrefs.getString("DetailUser", "DetailUser");
+        Type type = new TypeToken<ResponseDetails>() {
+        }.getType();
+        ResponseDetails responseDetails = gson.fromJson(json, type);
+
+        DetailUser detail = responseDetails.getUser();
+
+        txtSchools.setText(detail.getSchool().getName());
+
         if (detail.getHigh_score() == null) {
             highScore.setText("0");
         } else {
@@ -75,7 +95,8 @@ public class ProfileActivity extends AppCompatActivity {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectImage();
+                Intent intent = new Intent(ProfileActivity.this, ChangeProfile.class);
+                startActivity(intent) ;
             }
         });
         uploadProfile.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 } else {
                     progress.dismiss();
-                    Toast.makeText(ProfileActivity.this, response.code() +"Ukuran Foto Terlalu Besar", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, response.code() + "Ukuran Foto Terlalu Besar", Toast.LENGTH_LONG).show();
 
                     //        Toast.makeText(ProfileActivity.this, response.errorBody().toString(), Toast.LENGTH_LONG).show();
                 }
@@ -190,23 +211,13 @@ public class ProfileActivity extends AppCompatActivity {
                         email.setText(response.body().getUser().getEmail());
                         String defaultLink = getResources().getString(R.string.link);
                         String link = defaultLink + "user/";
-                        /*Picasso.with(ProfileActivity.this).load(link + response.body().getUser().getPicture()).error(R.drawable.ic_userprofile)
-                                .into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        frame.setBackground(new BitmapDrawable(ProfileActivity.this.getResources(), bitmap));
-                                    }
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                        SharedPreferences.Editor editorList = sharedPrefs.edit();
+                        Gson gson = new Gson();
 
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        Log.d("TAG", "FAILED Load");
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                        Log.d("TAG", "Prepare Load");
-                                    }
-                                });*/
+                        String detailUser = gson.toJson(response.body());
+                        editorList.putString("DetailUser", detailUser);
+                        editorList.commit();
 
 
                     } else {
@@ -255,6 +266,14 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onResponse(retrofit2.Call<ResponseDetails> call, Response<ResponseDetails> response) {
                     if (response.isSuccessful()) {
 
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                        SharedPreferences.Editor editorList = sharedPrefs.edit();
+                        Gson gson = new Gson();
+
+                        String detailUser = gson.toJson(response.body());
+                        editorList.putString("DetailUser", detailUser);
+                        editorList.commit();
+
                         SharedPrefManager.getInstance(ProfileActivity.this).saveDetail(response.body().getUser());
                         Intent intent = new Intent(ProfileActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -274,7 +293,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void getFoto() {
-        detailUser = SharedPrefManager.getInstance(this).detailUser();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        Gson gson = new Gson();
+
+        String json = sharedPrefs.getString("DetailUser", "DetailUser");
+        Type type = new TypeToken<ResponseDetails>() {
+        }.getType();
+        ResponseDetails responseDetails = gson.fromJson(json, type);
+
+        detailUser = responseDetails.getUser();
         username.setText(detailUser.getUsername());
         email.setText(detailUser.getEmail());
         String defaultLink = "https://solve.technow.id/storage/";

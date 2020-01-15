@@ -44,14 +44,20 @@ public class DetailUser {
     @Expose
     private String school_id;
 
+    @SerializedName("count_played")
     @Expose
     private String count_played;
     @SerializedName("high_score")
     @Expose
     private String high_score;
+    @SerializedName("collager")
+    @Expose
+    private CollagerModel collager;
+    @SerializedName("school")
+    @Expose
+    private DetailSchoolModel school;
 
-
-    public DetailUser(String id, String name, String username, String email, String email_verified_at, String picture, String created_at, String updated_at, String deleted_at, String count_played, String high_score) {
+    public DetailUser(String id, String name, String username, String email, String email_verified_at, String picture, String created_at, String updated_at, String deleted_at, String school_id, String count_played, String high_score, CollagerModel collager, DetailSchoolModel school) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -61,8 +67,11 @@ public class DetailUser {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.deleted_at = deleted_at;
+        this.school_id = school_id;
         this.count_played = count_played;
         this.high_score = high_score;
+        this.collager = collager;
+        this.school = school;
     }
 
     public String getId() {
@@ -101,11 +110,23 @@ public class DetailUser {
         return deleted_at;
     }
 
+    public String getSchool_id() {
+        return school_id;
+    }
+
     public String getCount_played() {
         return count_played;
     }
 
     public String getHigh_score() {
         return high_score;
+    }
+
+    public CollagerModel getCollager() {
+        return collager;
+    }
+
+    public DetailSchoolModel getSchool() {
+        return school;
     }
 }

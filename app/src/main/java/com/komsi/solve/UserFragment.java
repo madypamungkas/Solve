@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.komsi.solve.Api.RetrofitClient;
 import com.komsi.solve.Model.ResponseDetails;
 import com.komsi.solve.Model.UserModel;
@@ -139,6 +141,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         txtUsername.setText(responseDetails.getUser().getName());
                         Picasso.get().load(link+response.body().getUser().getId()).error(R.drawable.ic_user).into(imgProfile);
                         shimmerFrameLayout.setVisibility(View.GONE);
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editorList = sharedPrefs.edit();
+                        Gson gson = new Gson();
+
+                        String detailUser = gson.toJson(response.body());
+                        editorList.putString("DetailUser", detailUser);
+                        editorList.commit();
                     }
                 } else {
                     try {
@@ -293,6 +302,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
+
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editorList = sharedPrefs.edit();
+                    editorList.clear();
+                    editor.apply();
+
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

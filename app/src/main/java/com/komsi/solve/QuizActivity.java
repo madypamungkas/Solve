@@ -697,7 +697,6 @@ public class QuizActivity extends AppCompatActivity {
                 String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
                 timer.setText(limitFormat);
             }
-
             @Override
             public void onFinish() {
                 storeAnswer();

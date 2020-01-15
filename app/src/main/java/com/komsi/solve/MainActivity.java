@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         String defaultLink = getResources().getString(R.string.link);
         String link = defaultLink + "user/";
-        DetailUser detailUser = SharedPrefManager.getInstance(this).detailUser();
+        //DetailUser detailUser = SharedPrefManager.getInstance(this).detailUser();
 
         //navEmail = header.findViewById(R.id.navEmail);
 
@@ -470,7 +470,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
         UserModel user = SharedPrefManager.getInstance(this).getUser();
-        DetailUser detailUser = SharedPrefManager.getInstance(this).detailUser();
 
         View header = navigationView.getHeaderView(0);
 
@@ -480,9 +479,9 @@ public class MainActivity extends AppCompatActivity
         String defaultLink = getResources().getString(R.string.link);
         String link = defaultLink + "user/";
 
-        Picasso.get().load(link + detailUser.getPicture()).error(R.drawable.ic_userprofile)
+       /* Picasso.get().load(link + detailUser.getPicture()).error(R.drawable.ic_userprofile)
                 .into(navImage);
-
+*/
     }
 
     public void getListCategory() {

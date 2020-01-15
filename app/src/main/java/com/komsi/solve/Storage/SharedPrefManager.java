@@ -2,10 +2,19 @@ package com.komsi.solve.Storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.komsi.solve.Model.CollagerModel;
+import com.komsi.solve.Model.DetailSchoolModel;
 import com.komsi.solve.Model.DetailUser;
+import com.komsi.solve.Model.QuestionModel;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Model.VersionModel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class SharedPrefManager {  public static final String SHARED_PREF_NAME = "user_shared_pref";
     private static SharedPrefManager mInstance;
@@ -42,8 +51,10 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
     }
 
     public void saveDetail(DetailUser detailUser) {
+        Gson gson = new Gson();
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         editor.putString("id", detailUser.getId());
         editor.putString("name", detailUser.getName());
@@ -54,12 +65,21 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
         editor.putString("created_at", detailUser.getCreated_at());
         editor.putString("updated_at", detailUser.getUpdated_at());
         editor.putString("deleted_at", detailUser.getDeleted_at());
+        editor.putString("school_id", detailUser.getSchool_id());
         editor.putString("count_played", detailUser.getCount_played());
         editor.putString("high_score", detailUser.getHigh_score());
+        String collager = gson.toJson(detailUser.getCollager());
+        editor.putString("collager", collager);
+        String school = gson.toJson(detailUser.getSchool());
+        editor.putString("school", school);
+
+
         editor.apply();
     }
 
-    public DetailUser detailUser(){
+    /*public DetailUser detailUser(){
+        Gson gson = new Gson();
+
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new DetailUser(
                 sharedPreferences.getString("id", null),
@@ -71,10 +91,14 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
                 sharedPreferences.getString("created_at", null),
                 sharedPreferences.getString("updated_at", null),
                 sharedPreferences.getString("deleted_at", null),
+                sharedPreferences.getString("school_id", null),
                 sharedPreferences.getString("count_played", null),
-                sharedPreferences.getString("high_score", null)
+                sharedPreferences.getString("high_score", null),
+                sharedPreferences.getClass< CollagerModel >,
+        sharedPreferences.getClass< DetailSchoolModel >
+
         );
-    }
+    }*/
 
     public void saveVersion(VersionModel version){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -128,6 +152,11 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
+        editor.apply();
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+        editorList.clear();
         editor.apply();
     }
 }

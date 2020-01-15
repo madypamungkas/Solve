@@ -34,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -248,6 +249,12 @@ public class Main2Activity extends AppCompatActivity
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
+
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(Main2Activity.this);
+                    SharedPreferences.Editor editorList = sharedPrefs.edit();
+                    editorList.clear();
+                    editor.apply();
+
                     Intent intent = new Intent(Main2Activity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

@@ -160,12 +160,13 @@
                         android:tint="@color/light_grey" />
 
                     <TextView
+                        android:id="@+id/txtSchools"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_7sdp"
                         android:layout_weight="1"
-                        android:text="Indonesia"
+                        android:text="SMA "
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
