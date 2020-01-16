@@ -53,14 +53,15 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
         ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
 
         int num = position+1;
         holder.typeGame.setText(responseQuestion.getQuiz().getTitle());
         holder.num.setText(num+" ");
         holder.desc.setText(answer.getQuestion());
-        holder.answer.setText(answer.getTrueAnswer());
-        holder.userAnswer.setText(answer.getUser_answer());
+        holder.answer.setText(answer.getTrueAnswerContent());
+        holder.userAnswer.setText(answer.getUser_answer_content());
 
         if(answer.getUser_answer().equals(answer.getTrueAnswer())){
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));

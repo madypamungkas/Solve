@@ -41,10 +41,18 @@ public class UserModel {
     @Expose
     private String deleted_at;
 
+    @SerializedName("school_id")
+    @Expose
+    private String school_id;
+
+    @SerializedName("phone_number")
+    @Expose
+    private String phone_number;
+
     @SerializedName("token")
     private String token;
 
-    public UserModel(String id, String name, String username, String email, String email_verified_at, String picture, String created_at, String updated_at, String deleted_at, String token) {
+    public UserModel(String id, String name, String username, String email, String email_verified_at, String picture, String created_at, String updated_at, String deleted_at, String school_id, String phone_number, String token) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -54,6 +62,8 @@ public class UserModel {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.deleted_at = deleted_at;
+        this.school_id = school_id;
+        this.phone_number = phone_number;
         this.token = token;
     }
 
@@ -91,6 +101,14 @@ public class UserModel {
 
     public String getDeleted_at() {
         return deleted_at;
+    }
+
+    public String getSchool_id() {
+        return school_id;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
     }
 
     public String getToken() {

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.komsi.solve.Model.CategoryModel;
 import com.komsi.solve.Model.ResponseCategory;
 import com.komsi.solve.Model.UserModel;
 import com.komsi.solve.Storage.SharedPrefManager;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class TypeChooseActivity extends AppCompatActivity {
     private RecyclerView typeRV;
     TypeGameAdapter adapter;
     int idCategory;
+    ImageView imgCategory;
     Context mCtx = TypeChooseActivity.this;
 
     @Override
@@ -46,15 +49,16 @@ public class TypeChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_type_choose);
         idCategory = getIntent().getIntExtra("idCategory", 1);
 
-
+        String Link = "https://solve.technow.id/storage/quiz_category2/";
         load();
         typeRV = findViewById(R.id.typeRV);
+        imgCategory = findViewById(R.id.imgCategory);
         typeRV.setLayoutManager(new LinearLayoutManager(mCtx));
         TextView txtDesc = findViewById(R.id.txtDesc);
         TextView tvQuizType = findViewById(R.id.tvQuizType);
         tvQuizType.setText(getIntent().getStringExtra("Type"));
-        txtDesc.setText(R.string.descHangeul);
-
+        txtDesc.setText(getIntent().getStringExtra("desc"));
+        Picasso.get().load(Link+idCategory).error(R.drawable.img_type_astronomi).into(imgCategory);
 
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {

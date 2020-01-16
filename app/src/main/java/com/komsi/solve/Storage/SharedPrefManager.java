@@ -45,6 +45,8 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
         editor.putString("created_at", user.getCreated_at());
         editor.putString("updated_at", user.getUpdated_at());
         editor.putString("deleted_at", user.getDeleted_at());
+        editor.putString("school_id", user.getSchool_id());
+        editor.putString("phone_number", user.getPhone_number());
         editor.putString("token", user.getToken());
         editor.commit();
         editor.apply();
@@ -143,6 +145,8 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
                 sharedPreferences.getString("created_at", null),
                 sharedPreferences.getString("updated_at", null),
                 sharedPreferences.getString("deleted_at", null),
+                sharedPreferences.getString("school_id", null),
+                sharedPreferences.getString("phone_number", null),
                 sharedPreferences.getString("token", null)
         );
     }

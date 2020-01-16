@@ -36,7 +36,11 @@ public class CategoryModel {
     @Expose
     private String deleted_at;
 
-    public CategoryModel(int id, String quiz_category_id, String name, String description, String pic_url, String created_at, String updated_at, String deleted_at) {
+    @SerializedName("pic_url_2")
+    @Expose
+    private String pic_url_2;
+
+    public CategoryModel(int id, String quiz_category_id, String name, String description, String pic_url, String created_at, String updated_at, String deleted_at, String pic_url_2) {
         this.id = id;
         this.quiz_category_id = quiz_category_id;
         this.name = name;
@@ -45,6 +49,7 @@ public class CategoryModel {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.deleted_at = deleted_at;
+        this.pic_url_2 = pic_url_2;
     }
 
     public int getId() {
@@ -77,5 +82,9 @@ public class CategoryModel {
 
     public String getDeleted_at() {
         return deleted_at;
+    }
+
+    public String getPic_url_2() {
+        return pic_url_2;
     }
 }

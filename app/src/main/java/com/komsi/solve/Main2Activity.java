@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,7 +21,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.komsi.solve.Api.RetrofitClient;
+import com.komsi.solve.Model.ResponseVersion;
 import com.komsi.solve.Model.UserModel;
+import com.komsi.solve.Model.VersionModel;
 import com.komsi.solve.Storage.SharedPrefManager;
 
 import androidx.core.view.GravityCompat;
@@ -118,6 +121,7 @@ public class Main2Activity extends AppCompatActivity
             loadFragment(new UserFragment());
             bottomNavigationView.setSelectedItemId(R.id.navigationUser);
         }
+        getVersion();
     }
 
     @Override
@@ -272,4 +276,77 @@ public class Main2Activity extends AppCompatActivity
 
     }
 
+    public void getVersion() {
+        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json");
+        call.enqueue(new Callback<ResponseVersion>() {
+            @Override
+            public void onResponse(Call<ResponseVersion> call, Response<ResponseVersion> response) {
+                if (response.isSuccessful()) {
+                    SharedPrefManager.getInstance(Main2Activity.this).saveVersion(response.body().getResult());
+                    versionCheck();
+                } else {
+                    Toast.makeText(Main2Activity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseVersion> call, Throwable t) {
+                Toast.makeText(Main2Activity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    public void versionCheck() {
+        VersionModel versionModel = SharedPrefManager.getInstance(Main2Activity.this).versionModel();
+
+        String version = versionModel.getVersion() + "." + versionModel.getSub_version();
+
+        if (!version.equals(BuildConfig.VERSION_NAME)) {
+            final Dialog dialog = new Dialog(Main2Activity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.custom_update_dialog);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
+            FloatingActionButton fbNo = dialog.findViewById(R.id.fbNo);
+            fbNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                    dialog.dismiss();
+                }
+            });
+
+            FloatingActionButton fbYes = dialog.findViewById(R.id.fbYes);
+            fbYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //finish();
+                    dialog.dismiss();
+                    final String appPackageName = getPackageName();
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
+
+                }
+            });
+            dialog.show();
+
+            Window window = dialog.getWindow();
+            window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getVersion();
+
+    }
 }

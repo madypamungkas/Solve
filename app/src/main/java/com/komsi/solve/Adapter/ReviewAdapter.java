@@ -38,7 +38,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
             holder.tvAns.setText("| -");
         }
         else {
-            holder.tvAns.setText("| "+ questionModel.getUser_answer());
+            holder.tvAns.setText("| "+ questionModel.getUser_answer_content());
 
         }
         int number = position +1;

@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     SpinnerDialog spinnerDialog;
     ArrayList<SchoolsModel> items = new ArrayList<>();
     public TextView txtSchools, loginLink;
-    private EditText etUsername, etEmail, etName, etPassword, etConfirmPassword;
+    private EditText etUsername, etEmail, etName, etPassword, etPhone;
     Context mContext;
     String idSchool, schoolName;
     ProgressDialog loading;
@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
-        etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        etPhone = findViewById(R.id.etPhone);
         loginLink = findViewById(R.id.loginLink);
 
         btnRegister = findViewById(R.id.btnRegister);
@@ -105,7 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = etEmail.getText().toString().trim();
         final String name = etName.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-//        String confirmpassword = etConfirmPassword.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+
         String accept = "application/json";
         String status = "Active";
         // String idSchool = sharedPrefs.getString("schoolId", "0001");
@@ -165,6 +166,35 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (phone.isEmpty()) {
+            loading.dismiss();
+            etPhone.setError("Phone Number is required");
+            etPhone.requestFocus();
+            return;
+        }
+
+        if (phone.length() < 8 || phone.length() > 15) {
+            loading.dismiss();
+            etPhone.setError("Phone Number should be at least 8-15 characters long");
+            etPhone.requestFocus();
+            return;
+        }
+
+        int phoneValid = 0;
+        if (phone.substring(0, 1).equals("0")) {
+            phoneValid = 1;
+        } else if (phone.substring(0, 2).equals("62")) {
+            phoneValid = 1;
+        } else if (phone.substring(0, 3).equals("+62")) {
+            phoneValid = 1;
+        }
+
+        if (phoneValid != 1) {
+            loading.dismiss();
+            etPhone.setError("Enter a valid Indonesia Phone Number");
+            etPhone.requestFocus();
+            return;
+        }
 
         /*if (confirmpassword.isEmpty()) {
             loading.dismiss();
@@ -189,7 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, username, email, name, password, idSchool);
+                .registerUser(accept, username, email, name, password, idSchool, phone);
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override

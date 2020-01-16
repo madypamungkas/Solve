@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog loading;
     private static final String TAG = "Login";
     MaterialButton btnLogin;
+    Context mCtx = LoginActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         inputPass = findViewById(R.id.inputPass);
         btnForgotPass = findViewById(R.id.btnForgotPass);
         signUpLink = findViewById(R.id.signUpLink);
+        if (mCtx instanceof Main2Activity) {
+            ((Main2Activity) mCtx).getVersion();
+        }
 
         btnForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override

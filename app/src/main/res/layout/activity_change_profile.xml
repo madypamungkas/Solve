@@ -64,8 +64,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_marginStart="@dimen/_23sdp"
-            android:background="#4d4f9a94" />
+            android:background="@color/white" />
 
 
         <LinearLayout
@@ -134,6 +133,45 @@
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:text="email@email.com"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_13ssp"
+                app:backgroundTint="@android:color/transparent" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/light_grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_23sdp"
+                android:layout_marginBottom="@dimen/_13sdp"
+                android:layout_weight="0.4"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/phone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_medium"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text="081234"
                 android:textAlignment="textEnd"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_13ssp"

@@ -125,6 +125,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             option.setChoosen("yes");
 
             editorList.putString("userAnswer", option.getOption());
+            editorList.putString("userAnswerContent", option.getContents());
             editorList.putString("id-" + option.getQuestion_id(), option.getOption());
 
             String questionSt = gson.toJson(questionSave);

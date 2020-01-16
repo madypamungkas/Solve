@@ -143,6 +143,34 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPhone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:hint="@string/phone"
+                    android:textColorHint="@color/white"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxStrokeColor="@color/white"
+                    app:boxStrokeErrorColor="#CF6679"
+                    app:boxStrokeWidth="@dimen/_1sdp"
+                    app:errorTextColor="#CF6679"
+                    app:hintTextColor="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_12ssp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <LinearLayout
                     android:background="@drawable/bg_stroke"
                     android:layout_width="match_parent"

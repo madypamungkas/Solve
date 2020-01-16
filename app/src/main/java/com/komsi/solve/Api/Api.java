@@ -47,7 +47,9 @@ public interface Api {
             @Field("email") String email,
             @Field("username") String username,
             @Field("password") String password,
-            @Field("school_id") String school_id
+            @Field("school_id") String school_id,
+            @Field("phone_number") String phone_number
+
     );
 
 
@@ -90,7 +92,8 @@ public interface Api {
             @Field("name") String name,
             @Field("email") String email,
             @Field("username") String username,
-            @Field("username") String idSchool
+            @Field("username") String idSchool,
+            @Field("phone_number") String phone_number
 
     );
 
@@ -197,8 +200,7 @@ public interface Api {
 
     @GET("collager/version")
     Call<ResponseVersion> version(
-            @Header("Accept") String accept,
-            @Header("Authorization") String token
+            @Header("Accept") String accept
     );
 
     @GET("collager/history")

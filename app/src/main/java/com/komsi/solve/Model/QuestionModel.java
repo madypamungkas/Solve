@@ -26,6 +26,10 @@ public class QuestionModel {
     @Expose
     private String trueAnswer;
 
+    @SerializedName("trueAnswerContent")
+    @Expose
+    private String trueAnswerContent;
+
     @SerializedName("trueAnswerPic")
     @Expose
     private String trueAnswerPic;
@@ -33,19 +37,24 @@ public class QuestionModel {
     @SerializedName("user_answer")
     @Expose
     private String user_answer;
+    @SerializedName("user_answer_content")
+    @Expose
+    private String user_answer_content;
 
     @SerializedName("option")
     @Expose
     private List<OptionModel> option = null;
 
-    public QuestionModel(int id_soal, String question, String pic_question, String duration, String trueAnswer, String trueAnswerPic, String user_answer, List<OptionModel> option) {
+    public QuestionModel(int id_soal, String question, String pic_question, String duration, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_answer, String user_answer_content, List<OptionModel> option) {
         this.id_soal = id_soal;
         this.question = question;
         this.pic_question = pic_question;
         this.duration = duration;
         this.trueAnswer = trueAnswer;
+        this.trueAnswerContent = trueAnswerContent;
         this.trueAnswerPic = trueAnswerPic;
         this.user_answer = user_answer;
+        this.user_answer_content = user_answer_content;
         this.option = option;
     }
 
@@ -69,12 +78,20 @@ public class QuestionModel {
         return trueAnswer;
     }
 
+    public String getTrueAnswerContent() {
+        return trueAnswerContent;
+    }
+
     public String getTrueAnswerPic() {
         return trueAnswerPic;
     }
 
     public String getUser_answer() {
         return user_answer;
+    }
+
+    public String getUser_answer_content() {
+        return user_answer_content;
     }
 
     public List<OptionModel> getOption() {
@@ -85,7 +102,7 @@ public class QuestionModel {
         this.user_answer = user_answer;
     }
 
-    public void setOption(List<OptionModel> option) {
-        this.option = option;
+    public void setUser_answer_content(String user_answer_content) {
+        this.user_answer_content = user_answer_content;
     }
 }

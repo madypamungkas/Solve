@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.komsi.solve.Adapter.BannerSliderAdapter;
@@ -400,7 +401,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void getVersion() {
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();
-        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json", token);
+        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json");
         call.enqueue(new Callback<ResponseVersion>() {
             @Override
             public void onResponse(Call<ResponseVersion> call, Response<ResponseVersion> response) {
@@ -433,17 +434,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-            FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
-            mDialogNo.setOnClickListener(new View.OnClickListener() {
+            FloatingActionButton fbNo = dialog.findViewById(R.id.fbNo);
+            fbNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // finish();
+                    ((Main2Activity)getActivity()).finish();
                     dialog.dismiss();
                 }
             });
 
-            FrameLayout mDialogOk = dialog.findViewById(R.id.frmYes);
-            mDialogOk.setOnClickListener(new View.OnClickListener() {
+            FloatingActionButton fbYes = dialog.findViewById(R.id.fbYes);
+            fbYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //finish();

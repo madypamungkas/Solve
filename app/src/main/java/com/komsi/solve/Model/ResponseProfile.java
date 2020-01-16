@@ -29,7 +29,6 @@ public class ResponseProfile {
     public String getMessage() {
         return message;
     }
-
     public UserModel getUser() {
         return user;
     }

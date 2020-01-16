@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity
     public void getVersion() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
-        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json", token);
+        Call<ResponseVersion> call = RetrofitClient.getInstance().getApi().version("application/json");
         call.enqueue(new Callback<ResponseVersion>() {
             @Override
             public void onResponse(Call<ResponseVersion> call, Response<ResponseVersion> response) {

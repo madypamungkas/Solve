@@ -287,11 +287,14 @@ public class QuizActivity extends AppCompatActivity {
 
         ArrayList<QuestionModel> que = questionSave;
         String userAnswer = sharedPrefs.getString("userAnswer", "**");
+        String userAnswerContent = sharedPrefs.getString("userAnswerContent", "**");
+
         int questionPosition = sharedPrefs.getInt("position", 0);
 
         List<OptionModel> ops = que.get(currentQusetionId).getOption();
 
         que.get(currentQusetionId).setUser_answer(userAnswer);
+        que.get(currentQusetionId).setUser_answer_content(userAnswerContent);
 
         SharedPreferences.Editor editorList = sharedPrefs.edit();
         // editorList.putString("userAnswer", option.getOption());

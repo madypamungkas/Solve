@@ -242,7 +242,7 @@ public class RegisterFragment extends Fragment  {
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, username, email, name, password, idSchool);
+                .registerUser(accept, username, email, name, password, idSchool, idSchool);
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override

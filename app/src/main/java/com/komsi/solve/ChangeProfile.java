@@ -49,7 +49,7 @@ import java.util.Iterator;
 public class ChangeProfile extends AppCompatActivity {
     private static final String TAG = "Register";
 
-    private AppCompatEditText etSName, etSEmail;
+    private AppCompatEditText etSName,etSPhone, etSEmail;
     private AppCompatTextView etSUsername;
     MaterialButton btnConfirm;
     UserModel user;
@@ -69,6 +69,7 @@ public class ChangeProfile extends AppCompatActivity {
         setContentView(R.layout.activity_change_profile);
         etSName = findViewById(R.id.etSName);
         etSEmail = findViewById(R.id.etSEmail);
+        etSPhone = findViewById(R.id.etSPhone);
         etSUsername = findViewById(R.id.etSUsername);
         user = SharedPrefManager.getInstance(this).getUser();
         btnConfirm = findViewById(R.id.btnConfirm);
@@ -89,6 +90,7 @@ public class ChangeProfile extends AppCompatActivity {
 
         etSName.setText(user.getName());
         etSEmail.setText(user.getEmail());
+        etSPhone.setText(user.getPhone_number());
         etSUsername.setText(user.getUsername());
         txtSchools.setText(detail.getSchool().getName());
         //loadData();
@@ -129,12 +131,12 @@ public class ChangeProfile extends AppCompatActivity {
 
     public void updateProfil() {
         loading = ProgressDialog.show(ChangeProfile.this, null, "Please wait...", true, false);
-
         String token = "Bearer " + user.getToken();
         String name = etSName.getText().toString().trim();
         String email = etSEmail.getText().toString().trim();
+        String phone = etSPhone.getText().toString().trim();
         String username = etSUsername.getText().toString().trim();
-        retrofit2.Call<ResponseProfile> call = RetrofitClient.getInstance().getApi().updateProfil(token, name, email, username, idSchool);
+        retrofit2.Call<ResponseProfile> call = RetrofitClient.getInstance().getApi().updateProfil(token, name, email, username, idSchool, phone);
         call.enqueue(new Callback<ResponseProfile>() {
             @Override
             public void onResponse(retrofit2.Call<ResponseProfile> call, Response<ResponseProfile> response) {
@@ -147,7 +149,7 @@ public class ChangeProfile extends AppCompatActivity {
                         Toast.makeText(ChangeProfile.this, "Setting Success!", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(ChangeProfile.this, Main2Activity.class));
                     } else {
-                        Toast.makeText(ChangeProfile.this, response.body().getMessage() + "", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChangeProfile.this, R.string.something_wrong + "", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     loading.dismiss();
@@ -176,7 +178,7 @@ public class ChangeProfile extends AppCompatActivity {
             public void onFailure(retrofit2.Call<ResponseProfile> call, Throwable t) {
                 Log.e("debug", "onFailure: ERROR > " + t.getMessage());
                 loading.dismiss();
-                Toast.makeText(ChangeProfile.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangeProfile.this, R.string.something_wrong + " " +t, Toast.LENGTH_LONG).show();
             }
         });
     }

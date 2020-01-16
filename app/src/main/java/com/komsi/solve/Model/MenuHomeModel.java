@@ -16,12 +16,16 @@ public class MenuHomeModel {
     @SerializedName("pic_url")
     @Expose
     private String pic_url;
+    @SerializedName("pic_url_2")
+    @Expose
+    private String pic_url_2;
 
-    public MenuHomeModel(int id, String name, String description, String pic_url) {
+    public MenuHomeModel(int id, String name, String description, String pic_url, String pic_url_2) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.pic_url = pic_url;
+        this.pic_url_2 = pic_url_2;
     }
 
     public int getId() {
@@ -38,5 +42,9 @@ public class MenuHomeModel {
 
     public String getPic_url() {
         return pic_url;
+    }
+
+    public String getPic_url_2() {
+        return pic_url_2;
     }
 }

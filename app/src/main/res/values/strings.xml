@@ -13,6 +13,7 @@
     <string name="try_again">Coba Lagi</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
+    <string name="phone">Nomor HP</string>
     <string name="empty">Quiz Tidak Tersedia!</string>
     <string name="email_address">Alamat Email</string>
     <string name="password">Password</string>
