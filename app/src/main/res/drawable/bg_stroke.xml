@@ -3,7 +3,7 @@
     android:shape="rectangle"
     android:padding="5dp">
     <stroke android:color="@color/white"
-        android:width="1dp"/> <!-- this one is ths color of the Rounded Button -->
+        android:width="@dimen/_1sdp"/> <!-- this one is ths color of the Rounded Button -->
     <corners
         android:bottomRightRadius="5dp"
         android:bottomLeftRadius="5dp"

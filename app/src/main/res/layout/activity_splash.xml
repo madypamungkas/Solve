@@ -7,7 +7,7 @@
     android:background="@drawable/bg_splash"
     android:gravity="bottom"
     android:orientation="vertical"
-    tools:context=".SplashActivity">
+    tools:context="id.technow.solve.SplashActivity">
 
     <TextView
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".ChangeProfile">
+    tools:context="id.technow.solve.ChangeProfile">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,9 +36,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/_49sdp"
-                    android:layout_height="@dimen/_49sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_user"
                     app:civ_border_color="@color/gray"
@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_13sdp"
                 android:layout_weight="0.6"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:fontFamily="@font/roboto_medium"
                 android:singleLine="true"
                 android:text="Name"
@@ -168,8 +169,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_13sdp"
                 android:layout_weight="0.6"
+                android:digits="+0123456789"
                 android:fontFamily="@font/roboto_medium"
-                android:inputType="textEmailAddress"
+                android:inputType="phone"
                 android:singleLine="true"
                 android:text="081234"
                 android:textAlignment="textEnd"
@@ -223,7 +225,7 @@
             android:layout_height="@dimen/_1sdp"
             android:background="@color/light_grey" />
 
-         <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_13sdp"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
     android:orientation="vertical"
-    tools:context=".LoginRegisterActivity">
+    tools:context="id.technow.solve.LoginRegisterActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

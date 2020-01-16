@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchCode">
+    tools:context="id.technow.solve.SearchCode">
     <LinearLayout
         android:id="@+id/readyLayout"
         android:layout_width="match_parent"

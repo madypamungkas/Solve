@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".QuizChooseActivity">
+    tools:context="id.technow.solve.QuizChooseActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

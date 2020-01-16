@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".TypeChooseActivity">
+    tools:context="id.technow.solve.TypeChooseActivity">
 
     <ImageButton
         android:id="@+id/btnBack"
