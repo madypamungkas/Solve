@@ -15,12 +15,13 @@ import retrofit2.Response;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import id.technow.solve.Adapter.TypeQuizAdapter;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
@@ -45,11 +46,17 @@ public class QuizChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizChooseActivity.this, LeaderboardChoose.class);
-                intent.putExtra("idType", 1);
+                intent.putExtra("idType", idType);
                 startActivity(intent);
             }
         });
-
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         getListCategory();
     }
 
@@ -63,11 +70,9 @@ public class QuizChooseActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
                 ResponseTypeList model = response.body();
                 if (response.isSuccessful()) {
-                    //  int size = model.getResult().size();
                     models = response.body().getResult();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
                     adapter = new TypeQuizAdapter(models, QuizChooseActivity.this);
-                    // Toast.makeText(QuizChooseActivity.this, models.size()+" ", Toast.LENGTH_SHORT).show();
                     RVmain.setLayoutManager(new LinearLayoutManager(QuizChooseActivity.this));
                     RVmain.setLayoutManager(staggeredGridLayoutManager);
                     RVmain.setAdapter(adapter);

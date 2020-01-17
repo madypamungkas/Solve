@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import id.technow.solve.LeaderboardActivity;
 import id.technow.solve.Model.TypeListModel;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -68,9 +68,9 @@ public class LeaderboardChooseAdapter extends RecyclerView.Adapter<LeaderboardCh
         holder.btnQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(mCtx, LeaderboardActivity.class);
-                intent.putExtra("idtype", 1);
+                intent.putExtra("idsoal", category.getId());
+                intent.putExtra("namasoal", category.getTitle());
                 mCtx.startActivity(intent);
 
             }

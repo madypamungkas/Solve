@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import id.technow.solve.Model.TypeListModel;
 import id.technow.solve.QuizActivity;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

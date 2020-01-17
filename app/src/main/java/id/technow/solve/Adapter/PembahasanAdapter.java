@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

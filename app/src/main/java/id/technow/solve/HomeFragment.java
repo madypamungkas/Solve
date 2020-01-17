@@ -28,7 +28,7 @@ import id.technow.solve.Model.ResponseBanner;
 import id.technow.solve.Model.ResponseMenuHome;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -83,14 +83,14 @@ public class HomeFragment extends Fragment {
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 
     public void getListCategory() {
-        UserModel user = SharedPrefManager.getInstance(mContext).getUser();
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();
 
         Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json");
@@ -102,19 +102,19 @@ public class HomeFragment extends Fragment {
                     int size = model.getResult().size();
                     models = response.body().getResult();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-                    adapter = new HomeItemAdapter(models, mContext);
-                    listCategory.setLayoutManager(new LinearLayoutManager(mContext));
+                    adapter = new HomeItemAdapter(models, getActivity());
+                    listCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
                     listCategory.setLayoutManager(staggeredGridLayoutManager);
                     listCategory.setAdapter(adapter);
                 } else {
-                    Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
 
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseMenuHome> call, Throwable t) {
-                Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
             loadBanner();
             getListCategory();
         } else {
-            final Dialog dialog = new Dialog(mContext);
+            final Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.dialog_no_internet);

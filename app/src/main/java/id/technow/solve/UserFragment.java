@@ -30,7 +30,7 @@ import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseDetails;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 import com.squareup.picasso.Picasso;
@@ -69,14 +69,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_user, container, false);
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
 
-        mContext = getActivity().getWindow().getContext();
+
         btnLogout = view.findViewById(R.id.btnLogout);
         txtUsername = view.findViewById(R.id.txtUsername);
         txtEmail = view.findViewById(R.id.txtEmail);
         txtVersion = view.findViewById(R.id.txtVersion);
         PackageInfo pInfo = null;
         try {
-            pInfo = mContext.getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -108,7 +108,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -183,7 +183,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         if (isNetworkAvailable()) {
             detailUser();
         } else {
-            final Dialog dialog = new Dialog(mContext);
+            final Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.dialog_no_internet);
@@ -208,7 +208,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void confirmLogOut() {
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_logout);
@@ -288,7 +288,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void logOut() {
-        loading = ProgressDialog.show(mContext, null, getString(R.string.please_wait), true, false);
+        loading = ProgressDialog.show(getActivity(), null, getString(R.string.please_wait), true, false);
 
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="id.technow.solve.LeaderboardChooseType">
+    tools:context=".LeaderboardChooseCategory">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,12 +16,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/typeRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
-        android:nestedScrollingEnabled="false">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical">
 
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 

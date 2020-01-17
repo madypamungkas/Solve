@@ -5,6 +5,7 @@ import id.technow.solve.Model.ResponseCategory;
 import id.technow.solve.Model.ResponseDetails;
 import id.technow.solve.Model.ResponseForgotPassword;
 import id.technow.solve.Model.ResponseHistory;
+import id.technow.solve.Model.ResponseHistoryDetail;
 import id.technow.solve.Model.ResponseLeaderboard;
 import id.technow.solve.Model.ResponseLogin;
 import id.technow.solve.Model.ResponsePassword;
@@ -198,6 +199,13 @@ public interface Api {
     Call<ResponseHistory> history(
             @Header("Accept") String accept,
             @Header("Authorization") String token
+    );
+
+    @GET("collager/history/{history_id}")
+    Call<ResponseHistoryDetail> historyDetail(
+            @Header("Accept") String accept,
+            @Header("Authorization") String token,
+            @Path("history_id") int id
     );
 
     @GET("collager/school")

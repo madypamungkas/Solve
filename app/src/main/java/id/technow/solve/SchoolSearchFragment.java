@@ -26,7 +26,7 @@ import id.technow.solve.Model.ResponseSchools;
 import id.technow.solve.Model.SchoolsModel;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
@@ -175,7 +175,7 @@ public class SchoolSearchFragment extends BottomSheetDialogFragment {
 
     private void loadSchoolsTerm() {
         inputSearch.clearFocus();
-        InputMethodManager in = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         assert in != null;
         in.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
         String school = inputSearch.getText().toString().trim();

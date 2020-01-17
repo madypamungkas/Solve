@@ -16,9 +16,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/typeRV"
@@ -28,5 +25,5 @@
             android:nestedScrollingEnabled="false">
 
         </androidx.recyclerview.widget.RecyclerView>
-    </androidx.core.widget.NestedScrollView>
+ 
 </LinearLayout>

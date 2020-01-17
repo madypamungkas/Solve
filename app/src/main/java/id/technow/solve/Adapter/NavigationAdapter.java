@@ -17,7 +17,7 @@ import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
 import id.technow.solve.Model.SelectedItem;
 import id.technow.solve.QuizActivity;
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

@@ -42,7 +42,7 @@ import id.technow.solve.Adapter.NavigationAdapter;
 import id.technow.solve.Adapter.OptionsAdapter;
 import id.technow.solve.Model.ResponsePostAnswer;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 import com.squareup.picasso.Picasso;

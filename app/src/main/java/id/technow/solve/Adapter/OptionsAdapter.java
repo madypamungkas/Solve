@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import id.technow.solve.Model.OptionModel;
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;

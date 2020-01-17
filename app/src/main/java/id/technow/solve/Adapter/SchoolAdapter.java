@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import id.technow.solve.ChangeProfile;
 import id.technow.solve.Model.SchoolsModel;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import id.technow.solve.RegisterActivity;
 import id.technow.solve.SchoolSearchFragment;
 

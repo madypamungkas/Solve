@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 public class WebViewsActivity extends AppCompatActivity {
     TextView toolbarTitle;

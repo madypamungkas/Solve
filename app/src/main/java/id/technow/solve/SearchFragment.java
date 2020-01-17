@@ -22,7 +22,7 @@ import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseTypeList;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
@@ -100,9 +100,9 @@ public class SearchFragment extends Fragment {
 
     public void searchQuiz() {
         inputSearch.clearFocus();
-        InputMethodManager in = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
-        loading = ProgressDialog.show(mContext, null, getString(R.string.please_wait), true, false);
+        loading = ProgressDialog.show(getActivity(), null, getString(R.string.please_wait), true, false);
         String code = inputSearch.getText().toString().trim();
 
         if (code.isEmpty()) {
@@ -112,7 +112,7 @@ public class SearchFragment extends Fragment {
             return;
         }
 
-        UserModel user = SharedPrefManager.getInstance(mContext).getUser();
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();
 
         Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().code(token, "application/json", code);
@@ -140,7 +140,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 loading.dismiss();
-                Toast.makeText(mContext, "Error ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error ", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -148,7 +148,7 @@ public class SearchFragment extends Fragment {
     /*
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -158,7 +158,7 @@ public class SearchFragment extends Fragment {
         if (isNetworkAvailable()) {
             detailUser();
         } else {
-            final Dialog dialog = new Dialog(mContext);
+            final Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.dialog_no_internet);

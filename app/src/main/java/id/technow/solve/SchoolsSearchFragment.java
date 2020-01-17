@@ -24,7 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import id.technow.solve.Adapter.SchoolAdapter;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import java.util.ArrayList;
 

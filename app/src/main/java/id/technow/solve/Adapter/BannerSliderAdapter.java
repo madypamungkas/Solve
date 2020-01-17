@@ -9,7 +9,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import id.technow.solve.Model.BannerModel;
-import com.technow.solve.R;
+
+import id.technow.solve.R;
 import id.technow.solve.WebViewsActivity;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;

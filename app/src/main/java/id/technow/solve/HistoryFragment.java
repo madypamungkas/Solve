@@ -22,7 +22,7 @@ import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseHistory;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
@@ -42,8 +42,7 @@ public class HistoryFragment extends Fragment {
     RecyclerView rvHistory;
     LinearLayout noDataLayout;
     RelativeLayout rvLayout;
-    Context mContext;
-    HistoryAdapter adapter;
+   HistoryAdapter adapter;
     private ShimmerFrameLayout shimmerFrameLayout;
 
     public HistoryFragment() {
@@ -54,8 +53,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_history, container, false);
-
-        mContext = getActivity().getWindow().getContext();
 
         rvHistory = view.findViewById(R.id.rvHistory);
         rvLayout = view.findViewById(R.id.rvLayout);
@@ -79,7 +76,7 @@ public class HistoryFragment extends Fragment {
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -91,7 +88,7 @@ public class HistoryFragment extends Fragment {
         shimmerFrameLayout.setVisibility(View.VISIBLE);
         shimmerFrameLayout.startShimmer();
 
-        UserModel user = SharedPrefManager.getInstance(mContext).getUser();
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();
 
         Call<ResponseHistory> call = RetrofitClient.getInstance().getApi().history("application/json", token);
@@ -99,8 +96,8 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseHistory> call, Response<ResponseHistory> response) {
                 if (response.isSuccessful()) {
-                    adapter = new HistoryAdapter(response.body().getResult(), mContext);
-                    RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(mContext);
+                    adapter = new HistoryAdapter(response.body().getResult(), getActivity());
+                    RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getActivity());
                     rvHistory.setLayoutManager(eLayoutManager);
                     rvHistory.setItemAnimator(new DefaultItemAnimator());
                     rvHistory.setAdapter(adapter);
@@ -116,7 +113,7 @@ public class HistoryFragment extends Fragment {
                     }
                     //  Toast.makeText(mContext, response.code()+" ", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mContext, "Coba Beberapa Saat Lagi", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Coba Beberapa Saat Lagi", Toast.LENGTH_LONG).show();
 
                 }
                 swipeRefresh.setRefreshing(false);
@@ -130,7 +127,7 @@ public class HistoryFragment extends Fragment {
                 rvLayout.setVisibility(View.GONE);
                 noDataLayout.setVisibility(View.VISIBLE);
                 swipeRefresh.setRefreshing(false);
-                Toast.makeText(mContext, t.toString() + " ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.toString() + " ", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -139,7 +136,7 @@ public class HistoryFragment extends Fragment {
         if (isNetworkAvailable()) {
             loadData();
         } else {
-            final Dialog dialog = new Dialog(mContext);
+            final Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.dialog_no_internet);

@@ -24,7 +24,7 @@ import id.technow.solve.Model.ResponseBanner;
 import id.technow.solve.Model.ResponseMenuHome;
 import id.technow.solve.Model.UserModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 import com.smarteist.autoimageslider.IndicatorAnimations;

@@ -21,7 +21,7 @@ import android.widget.Toast;
 import id.technow.solve.Adapter.LeaderboardAdapter;
 import id.technow.solve.Model.ResponseLeaderboard;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 import com.squareup.picasso.Picasso;
@@ -52,7 +52,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         score2 = findViewById(R.id.score2);
         score3 = findViewById(R.id.score3);
         gameName = findViewById(R.id.gameName);
-        gameName.setText(getIntent().getStringExtra("namaSoal"));
+        gameName.setText(getIntent().getStringExtra("namasoal"));
         idQuiz = getIntent().getIntExtra("idsoal", 1);
 
 
@@ -112,7 +112,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         name1.setText(model1.getUsername());
                         score1.setText(model1.getTotal_score());
                         String linkdefault = "https://solve.technow.id/storage/";
-                        String link1 = linkdefault + "user/" + model1.getPicture();
+                        String link1 = linkdefault + "user/" + model1.getUser_id();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
                                 .into(avatar1);
                     } else if (response.body().getResult().size() == 2) {
@@ -126,8 +126,8 @@ public class LeaderboardActivity extends AppCompatActivity {
                         score1.setText(model1.getTotal_score());
                         score2.setText(model2.getTotal_score());
                         String linkdefault = "https://solve.technow.id/storage/";
-                        String link1 = linkdefault + "user/" + model1.getPicture();
-                        String link2 = linkdefault + "user/" + model2.getPicture();
+                        String link1 = linkdefault + "user/" + model1.getUser_id();
+                        String link2 = linkdefault + "user/" + model2.getUser_id();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
                                 .into(avatar1);
                         Picasso.get().load(link2).error(R.drawable.ic_userprofile)
@@ -146,9 +146,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                         score2.setText(model2.getTotal_score());
                         score3.setText(model3.getTotal_score());
                         String linkdefault = "https://solve.technow.id/storage/";
-                        String link1 = linkdefault + "user/" + model1.getPicture();
-                        String link2 = linkdefault + "user/" + model2.getPicture();
-                        String link3 = linkdefault + "user/" + model3.getPicture();
+                        String link1 = linkdefault + "user/" + model1.getUser_id();
+                        String link2 = linkdefault + "user/" + model2.getUser_id();
+                        String link3 = linkdefault + "user/" + model3.getUser_id();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
                                 .into(avatar1);
                         Picasso.get().load(link2).error(R.drawable.ic_userprofile)

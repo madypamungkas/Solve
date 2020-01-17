@@ -20,14 +20,14 @@ import android.widget.Toast;
 
 import id.technow.solve.Adapter.LeaderboardChooseAdapter;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
 import java.util.ArrayList;
 
 public class LeaderboardChoose extends AppCompatActivity {
-    private  ArrayList<TypeListModel> categories;
+    private ArrayList<TypeListModel> categories;
     private RecyclerView typeRV;
     LeaderboardChooseAdapter adapter;
     int idType;
@@ -38,7 +38,7 @@ public class LeaderboardChoose extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard_choose);
         typeRV = findViewById(R.id.typeRV);
         typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChoose.this));
-        idType = getIntent().getIntExtra("idType",1);
+        idType = getIntent().getIntExtra("idType", 2);
         getListCategory();
 
         ImageButton btnBack = findViewById(R.id.btnBack);
@@ -53,38 +53,10 @@ public class LeaderboardChoose extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(LeaderboardChoose.this, Main2Activity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        super.onBackPressed();
     }
 
-   /* public void getListCategory() {
-        UserModel user = SharedPrefManager.getInstance(this).getUser();
-        String token = "Bearer " + user.getToken();
 
-        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json");
-        call.enqueue(new Callback<ResponseMenuHome>() {
-            @Override
-            public void onResponse(Call<ResponseMenuHome> call, Response<ResponseMenuHome> response) {
-                ResponseMenuHome category__response = response.body();
-                if (response.isSuccessful()) {
-                    int size = category__response.getResult().size();
-                    categories = response.body().getResult();
-                    adapter = new LeaderboardChooseAdapter(LeaderboardChoose.this, categories);
-                    typeRV.setAdapter(adapter);
-                } else {
-                    Toast.makeText(LeaderboardChoose.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseMenuHome> call, Throwable t) {
-                Toast.makeText(LeaderboardChoose.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }*/
     public void getListCategory() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
@@ -98,8 +70,7 @@ public class LeaderboardChoose extends AppCompatActivity {
                     //  int size = model.getResult().size();
                     categories = response.body().getResult();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                    adapter = new LeaderboardChooseAdapter( LeaderboardChoose.this, categories);
-                    // Toast.makeText(QuizChooseActivity.this, models.size()+" ", Toast.LENGTH_SHORT).show();
+                    adapter = new LeaderboardChooseAdapter(LeaderboardChoose.this, categories);
                     typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChoose.this));
                     typeRV.setLayoutManager(staggeredGridLayoutManager);
                     typeRV.setAdapter(adapter);

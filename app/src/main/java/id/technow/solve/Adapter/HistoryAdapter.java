@@ -8,12 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import id.technow.solve.Model.HistoryModel;
-import com.technow.solve.R;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import id.technow.solve.R;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryVH> {
     ArrayList<HistoryModel> historyModels;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.QuizActivity_viewpager;
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import java.util.ArrayList;
 

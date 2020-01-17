@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import id.technow.solve.Adapter.TabsPagerAdapter;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 public class LoginRegisterActivity extends AppCompatActivity {
 

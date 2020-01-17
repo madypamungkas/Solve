@@ -3,7 +3,7 @@ package id.technow.solve.Adapter;
 import android.content.Context;
 
 import id.technow.solve.LoginFragment;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import id.technow.solve.RegisterFragment;
 
 import androidx.annotation.Nullable;

@@ -30,7 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import id.technow.solve.Model.ResponseLogin;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 

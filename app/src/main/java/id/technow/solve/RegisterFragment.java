@@ -21,7 +21,7 @@ import id.technow.solve.Model.PageViewModel;
 import id.technow.solve.Model.ResponseSignUp;
 import id.technow.solve.Model.SchoolsModel;
 
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

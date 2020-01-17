@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import id.technow.solve.Model.LeaderboarModel;
-import com.technow.solve.R;
+import id.technow.solve.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class LeaderboardAdapter  extends RecyclerView.Adapter<LeaderboardAdapter
         holder.number.setText((position+4)+"");
         holder.score.setText(""+leader.getTotal_score());
         holder.name.setText(""+leader.getUsername());
-        String link = "https://solve.technow.id/storage/"+"user/"+ leader.getPicture();
+        String link = "https://solve.technow.id/storage/"+"user/"+ leader.getUser_id();
         Picasso.get().load(link).error(R.drawable.ic_userprofile)
                 .into(holder.avatar);
 

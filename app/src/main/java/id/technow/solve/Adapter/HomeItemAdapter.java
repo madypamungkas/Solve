@@ -14,7 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import id.technow.solve.Model.MenuHomeModel;
-import com.technow.solve.R;
+
+import id.technow.solve.R;
 import id.technow.solve.TypeChooseActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

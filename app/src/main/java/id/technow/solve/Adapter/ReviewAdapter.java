@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import id.technow.solve.Model.QuestionModel;
-import com.technow.solve.R;
+import id.technow.solve.R;
 
 import java.util.ArrayList;
 
