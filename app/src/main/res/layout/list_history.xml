@@ -5,6 +5,7 @@
     android:layout_marginStart="@dimen/_8sdp"
     android:layout_marginEnd="@dimen/_8sdp"
     android:baselineAligned="false"
+    android:id="@+id/historyLayout"
     android:orientation="horizontal">
 
     <LinearLayout

@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Adapter.HistoryDetailActivity"></activity>
+        <activity android:name=".HistoryDetailActivity"></activity>
         <activity android:name=".LeaderboardChooseCategory" />
         <activity android:name=".PembahasanQuizActivity" />
         <activity android:name=".ResultQuizActivity" />

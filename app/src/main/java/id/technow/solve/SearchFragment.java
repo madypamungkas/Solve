@@ -126,8 +126,8 @@ public class SearchFragment extends Fragment {
                         Toast.makeText(getActivity(), response.body().getMessage() , Toast.LENGTH_LONG).show();
                     } else {
                         Intent i = new Intent(getActivity(), QuizActivity.class);
-                        i.putExtra("idCategory", response.body().getResult().get(0).getId());
-                        i.putExtra("Type", response.body().getResult().get(0).getPic_url());
+                        i.putExtra("idsoal", response.body().getResult().get(0).getId());
+                        i.putExtra("idsoal", response.body().getResult().get(0).getPic_url());
                         startActivity(i);
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
                     }

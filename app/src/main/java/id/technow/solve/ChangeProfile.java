@@ -88,10 +88,10 @@ public class ChangeProfile extends AppCompatActivity {
 
         Picasso.get().load("https://solve.technow.id/storage/user/" + user.getId()).error(R.drawable.ic_user).into(imgProfile);
 
-        etSName.setText(user.getName());
-        etSEmail.setText(user.getEmail());
-        etSPhone.setText(user.getPhone_number());
-        etSUsername.setText(user.getUsername());
+        etSName.setText(detail.getName());
+        etSEmail.setText(detail.getEmail());
+        etSPhone.setText(detail.getPhone_number());
+        etSUsername.setText(detail.getUsername());
         txtSchools.setText(detail.getSchool().getName());
         idSchool = detail.getSchool().getId();
         //loadData();

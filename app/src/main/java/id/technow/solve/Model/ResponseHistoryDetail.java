@@ -14,9 +14,14 @@ public class ResponseHistoryDetail {
     @Expose
     private HistoryDetailModel result;
 
-    public ResponseHistoryDetail(String status, HistoryDetailModel result) {
+    @SerializedName("question")
+    @Expose
+    private ArrayList<AnswerSaveHDModel> question;
+
+    public ResponseHistoryDetail(String status, HistoryDetailModel result, ArrayList<AnswerSaveHDModel> question) {
         this.status = status;
         this.result = result;
+        this.question = question;
     }
 
     public String getStatus() {
@@ -25,5 +30,9 @@ public class ResponseHistoryDetail {
 
     public HistoryDetailModel getResult() {
         return result;
+    }
+
+    public ArrayList<AnswerSaveHDModel> getQuestion() {
+        return question;
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class HistoryDetailModel {
     @SerializedName("id")
     @Expose
-    private int id;
+    private String id;
 
     @SerializedName("quiz_id")
     @Expose
@@ -21,7 +21,6 @@ public class HistoryDetailModel {
     @SerializedName("total_score")
     @Expose
     private String total_score;
-
 
     @SerializedName("created_at")
     @Expose
@@ -39,11 +38,8 @@ public class HistoryDetailModel {
     @Expose
     private String false_sum;
 
-    @SerializedName("answer_save")
-    @Expose
-    private ArrayList< AnswerSaveHDModel> answer_save;
 
-    public HistoryDetailModel(int id, String quiz_id, String collager_id, String total_score, String created_at, String updated_at, String true_sum, String false_sum, ArrayList<AnswerSaveHDModel> answer_save) {
+    public HistoryDetailModel(String id, String quiz_id, String collager_id, String total_score, String created_at, String updated_at, String true_sum, String false_sum) {
         this.id = id;
         this.quiz_id = quiz_id;
         this.collager_id = collager_id;
@@ -52,10 +48,9 @@ public class HistoryDetailModel {
         this.updated_at = updated_at;
         this.true_sum = true_sum;
         this.false_sum = false_sum;
-        this.answer_save = answer_save;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -85,9 +80,5 @@ public class HistoryDetailModel {
 
     public String getFalse_sum() {
         return false_sum;
-    }
-
-    public ArrayList<AnswerSaveHDModel> getAnswer_save() {
-        return answer_save;
     }
 }

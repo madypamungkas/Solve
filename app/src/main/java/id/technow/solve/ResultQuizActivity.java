@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import id.technow.solve.Model.ResponsePostAnswer;
@@ -36,7 +38,7 @@ public class ResultQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_quiz);
-        idquiz = getIntent().getIntExtra("idSoal", 1);
+        idquiz = getIntent().getIntExtra("idsoal", 1);
         point = findViewById(R.id.point);
         namaSoal = getIntent().getStringExtra("namaSoal");
 
@@ -82,13 +84,14 @@ public class ResultQuizActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ResultQuizActivity.this, QuizActivity.class);
+               /* Intent intent = new Intent(ResultQuizActivity.this, QuizActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("category", category);
                 intent.putExtra("namaSoal", getIntent().getStringExtra("namaSoal") + " ");
                 intent.putExtra("idsoal", idquiz);
+                Toast.makeText(ResultQuizActivity.this, idquiz+" ", Toast.LENGTH_LONG).show();
                 intent.putExtra("namaSoal", namaSoal);
-                startActivity(intent);
+                startActivity(intent);*/
             }
 
 
@@ -108,7 +111,7 @@ public class ResultQuizActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.custom_confirmation_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
+        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
         mDialogNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +119,7 @@ public class ResultQuizActivity extends AppCompatActivity {
             }
         });
 
-        FrameLayout mDialogOk = dialog.findViewById(R.id.frmYes);
+        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
         mDialogOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -191,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, username, email, name, password, idSchool, phone);
+                .registerUser(accept, name+"", email+"", username+"", password, idSchool+"" , phone);
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override

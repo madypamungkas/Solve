@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import id.technow.solve.Adapter.TypeGameAdapter;
 import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseTypeList;
 import id.technow.solve.Model.TypeListModel;
@@ -71,11 +72,16 @@ public class QuizChooseActivity extends AppCompatActivity {
                 ResponseTypeList model = response.body();
                 if (response.isSuccessful()) {
                     models = response.body().getResult();
-                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-                    adapter = new TypeQuizAdapter(models, QuizChooseActivity.this);
-                    RVmain.setLayoutManager(new LinearLayoutManager(QuizChooseActivity.this));
-                    RVmain.setLayoutManager(staggeredGridLayoutManager);
-                    RVmain.setAdapter(adapter);
+                    if(models.size() == 0){
+                        Toast.makeText(QuizChooseActivity.this, "Soal Tidak Tersedia", Toast.LENGTH_SHORT).show();
+                    }else{
+                        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                        adapter = new TypeQuizAdapter(models, QuizChooseActivity.this);
+                        RVmain.setLayoutManager(new LinearLayoutManager(QuizChooseActivity.this));
+                        RVmain.setLayoutManager(staggeredGridLayoutManager);
+                        RVmain.setAdapter(adapter);
+                    }
+
                 } else {
                     Toast.makeText(QuizChooseActivity.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
                 }

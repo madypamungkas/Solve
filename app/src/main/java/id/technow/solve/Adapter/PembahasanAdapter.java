@@ -65,7 +65,7 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             holder.status.setText("Benar");
         }else {
-            holder.cardGame.setCardBackgroundColor(Color.parseColor("#FF424242"));
+            holder.cardGame.setCardBackgroundColor(Color.parseColor("#545454"));
             holder.status.setText("Salah");
         }
 

@@ -1,12 +1,15 @@
 package id.technow.solve.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import id.technow.solve.HistoryDetailActivity;
 import id.technow.solve.Model.HistoryModel;
 
 import java.util.ArrayList;
@@ -34,14 +37,26 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryVH holder, int position) {
-        HistoryModel history = historyModels.get(position);
+    public void onBindViewHolder(@NonNull final HistoryVH holder, int position) {
+        final HistoryModel history = historyModels.get(position);
         holder.quizName.setText(history.getQuiz().getTitle());
         holder.txtDateTime.setText(history.getCreated_at());
         holder.txtScore.setText(history.getTotal_score()+" ");
         holder.txtTrueAns.setText(history.getTrue_sum()+" ");
         holder.txtSumQues.setText(history.getQuiz().getSum_question()+" ");
         holder.txtFalse.setText(history.getFalse_sum()+" ");
+
+        holder.historyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mCtx, HistoryDetailActivity.class);
+                i.putExtra("idHistory", history.getId());
+                i.putExtra("gameName", history.getQuiz().getTitle());
+                mCtx.startActivity(i);
+
+            }
+        });
+
 
     }
 
@@ -55,8 +70,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     class HistoryVH extends RecyclerView.ViewHolder {
         private TextView quizName, txtDateTime, txtScore,  txtTrueAns, txtSumQues, txtFalse;
         private ImageView imgLiveReport;
+        LinearLayout historyLayout;
         public HistoryVH(@NonNull View itemView) {
             super(itemView);
+            historyLayout = itemView.findViewById(R.id.historyLayout);
             quizName = itemView.findViewById(R.id.quizName);
             txtDateTime = itemView.findViewById(R.id.txtDateTime);
             txtScore = itemView.findViewById(R.id.txtScore);

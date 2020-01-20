@@ -95,16 +95,15 @@ public class TypeChooseActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     int size = category__response.getResult().size();
                     categories = response.body().getResult();
-                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-                    SharedPreferences.Editor editorList = sharedPrefs.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(categories);
-                    editorList.putString("Hangeul", json);
-                    editorList.commit();
-                    adapter = new TypeGameAdapter(mCtx, categories);
-                    typeRV.setAdapter(adapter);
+                    if(categories.size() == 0){
+                        Toast.makeText(mCtx, "Soal Tidak Tersedia", Toast.LENGTH_SHORT).show();
+                    }else{
+                        adapter = new TypeGameAdapter(mCtx, categories);
+                        typeRV.setAdapter(adapter);
+                    }
+
                 } else {
-                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+                    /*SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
                     Gson gson = new Gson();
                     String json = sharedPrefs.getString("Hangeul", "hangeul");
                     Type type = new TypeToken<List<CategoryModel>>() {
@@ -112,16 +111,16 @@ public class TypeChooseActivity extends AppCompatActivity {
                     ArrayList<CategoryModel> categories = gson.fromJson(json, type);
                     if (categories.size() != 0) {
                         adapter = new TypeGameAdapter(mCtx, categories);  typeRV.setAdapter(adapter);
-                    } else {
+                    } else {*/
                         Toast.makeText(mCtx, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-                    }
+                 /*   }*/
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseCategory> call, Throwable t) {
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-                Gson gson = new Gson();
+                /*Gson gson = new Gson();
                 String json = sharedPrefs.getString("Hangeul", "hangeul");
                 Type type = new TypeToken<List<CategoryModel>>() {
                 }.getType();
@@ -129,9 +128,9 @@ public class TypeChooseActivity extends AppCompatActivity {
                 if (categories.size() != 0) {
                     adapter = new TypeGameAdapter(mCtx, categories);
                     typeRV.setAdapter(adapter);
-                } else {
+                } else {*/
                     Toast.makeText(mCtx, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-                }
+              /*  }*/
             }
         });
 

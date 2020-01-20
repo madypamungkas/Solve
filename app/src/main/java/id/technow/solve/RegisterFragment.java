@@ -55,9 +55,7 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    /**
-     * @return A new instance of fragment SpeedDialFragment.
-     */
+
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
     }
@@ -110,40 +108,11 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-       /* ArrayList<String> names = android:entries="@array/labels";
-
-        spinnerDialog=new SpinnerDialog(getActivity(),items ,"Select or Search City","Close Button Text");// With No Animation
-        spinnerDialog=new SpinnerDialog(getActivity(),,"Select or Search City",R.style.DialogAnimations_SmileWindow,"Close Button Text");// With 	Animation
-
-        spinnerDialog.setCancellable(true); // for cancellable
-        spinnerDialog.setShowKeyboard(false);// for open keyboard by default
-
-
-        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
-            @Override
-            public void onClick(String item, int position) {
-                Toast.makeText(getActivity(), item + "  " + position+"", Toast.LENGTH_SHORT).show();
-                selectedItems.setText(item + " Position: " + position);
-            }
-        });
-        view.findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerDialog.showSpinerDialog();
-            }
-        });*/
 
 
         return view;
     }
 
-    public void setTextSch() {
-        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String schoolName = sharedPrefs.getString("schoolName", "Asal Sekolah");
-        txtSchools.setText(schoolName);
-
-
-    }
 
     private void clear() {
         final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -238,7 +207,7 @@ public class RegisterFragment extends Fragment {
         Call<ResponseSignUp> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .registerUser(accept, username, email, name, password, idSchool, idSchool);
+                .registerUser(accept, name+"", email+"", username+"", password, idSchool+"" , idSchool )/*username, email, name, password, idSchool, idSchool*/;
 
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override

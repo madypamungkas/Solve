@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context=".Adapter.HistoryDetailActivity">
+    tools:context=".HistoryDetailActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar_leaderboard" />
+        <include layout="@layout/toolbar_history" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

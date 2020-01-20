@@ -25,7 +25,6 @@ public class ResponseProfile {
     public String getStatus() {
         return status;
     }
-
     public String getMessage() {
         return message;
     }

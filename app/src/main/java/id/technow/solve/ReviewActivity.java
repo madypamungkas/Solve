@@ -120,7 +120,7 @@ public class ReviewActivity extends AppCompatActivity {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
 
         String token = "Bearer " + user.getToken();
-        Call<ResponsePostAnswer> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token, 1,
+        Call<ResponsePostAnswer> call = RetrofitClient.getInstance().getApi().postQuestion("application/json", token,idSoal,
                 responseQuestion);
         call.enqueue(new Callback<ResponsePostAnswer>() {
             @Override
@@ -139,12 +139,13 @@ public class ReviewActivity extends AppCompatActivity {
                     Toast.makeText(mCtx,
                             "Sukses",
                             Toast.LENGTH_LONG).show();
-                    //saveInternal();
+
                     progress.dismiss();
 
                     Intent intent = new Intent(ReviewActivity.this, ResultQuizActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("idSoal", idSoal);
+                    intent.putExtra("idsoal", response.body().getResult().getQuiz_id());
+                    editorList.commit();
                     startActivity(intent);
 
                 } else {
