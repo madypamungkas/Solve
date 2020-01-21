@@ -129,6 +129,7 @@
                                     android:id="@+id/imgGame"
                                     android:layout_width="@dimen/_55sdp"
                                     android:layout_height="@dimen/_55sdp"
+                                    android:visibility="visible"
                                     android:src="@drawable/img_leaderboard" />
                             </LinearLayout>
 

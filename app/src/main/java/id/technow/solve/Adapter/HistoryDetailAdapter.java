@@ -41,7 +41,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         final AnswerSaveHDModel answer = answerSaveHDModels.get(position);
 
         int num = position+1;
-       // holder.typeGame.setText(responseQuestion.getQuiz().getTitle());
+        holder.typeGame.setText(typeGame+" ");
 
         holder.num.setText(num+" ");
         holder.desc.setText(answer.getQuestion());

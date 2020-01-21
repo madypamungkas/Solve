@@ -95,7 +95,7 @@ public class TypeChooseActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     int size = category__response.getResult().size();
                     categories = response.body().getResult();
-                    if(categories.size() == 0){
+                    if(categories.isEmpty()){
                         Toast.makeText(mCtx, "Soal Tidak Tersedia", Toast.LENGTH_SHORT).show();
                     }else{
                         adapter = new TypeGameAdapter(mCtx, categories);

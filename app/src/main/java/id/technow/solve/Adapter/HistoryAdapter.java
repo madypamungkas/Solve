@@ -41,17 +41,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         final HistoryModel history = historyModels.get(position);
         holder.quizName.setText(history.getQuiz().getTitle());
         holder.txtDateTime.setText(history.getCreated_at());
-        holder.txtScore.setText(history.getTotal_score()+" ");
-        holder.txtTrueAns.setText(history.getTrue_sum()+" ");
-        holder.txtSumQues.setText(history.getQuiz().getSum_question()+" ");
-        holder.txtFalse.setText(history.getFalse_sum()+" ");
+        holder.txtScore.setText(history.getTotal_score() + " ");
+        holder.txtTrueAns.setText(history.getTrue_sum() + " ");
+        holder.txtSumQues.setText(history.getQuiz().getSum_question() + " ");
+        holder.txtFalse.setText(history.getFalse_sum() + " ");
+
+        holder.idHistory = historyModels.get(position).getId();
+        holder.gameName = historyModels.get(position).getQuiz().getTitle();
 
         holder.historyLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(mCtx, HistoryDetailActivity.class);
-                i.putExtra("idHistory", history.getId());
-                i.putExtra("gameName", history.getQuiz().getTitle());
+                i.putExtra("idHistory", holder.idHistory);
+                i.putExtra("gameName", holder.gameName);
                 mCtx.startActivity(i);
 
             }
@@ -66,11 +69,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
 
-
     class HistoryVH extends RecyclerView.ViewHolder {
-        private TextView quizName, txtDateTime, txtScore,  txtTrueAns, txtSumQues, txtFalse;
+        private TextView quizName, txtDateTime, txtScore, txtTrueAns, txtSumQues, txtFalse;
         private ImageView imgLiveReport;
+        private int idHistory;
+        private String gameName;
         LinearLayout historyLayout;
+
         public HistoryVH(@NonNull View itemView) {
             super(itemView);
             historyLayout = itemView.findViewById(R.id.historyLayout);

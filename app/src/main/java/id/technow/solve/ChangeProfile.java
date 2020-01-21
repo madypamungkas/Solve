@@ -334,7 +334,6 @@ public class ChangeProfile extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         dstBmp.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
-        //    bt_uploadFoto.setEnabled(true);
         return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }
 
@@ -358,15 +357,13 @@ public class ChangeProfile extends AppCompatActivity {
                 } else {
                     progress.dismiss();
                     Toast.makeText(ChangeProfile.this, response.code() + "Ukuran foto terlalu besar", Toast.LENGTH_LONG).show();
-
-                    //        Toast.makeText(ChangeProfile.this, response.errorBody().toString(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<ResponseProfile> call, Throwable t) {
                 progress.dismiss();
-                Toast.makeText(ChangeProfile.this, t.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(ChangeProfile.this, t.toString(), Toast.LENGTH_LONG).show();
                 Toast.makeText(ChangeProfile.this, "Ukuran foto terlalu besar", Toast.LENGTH_LONG).show();
 
             }

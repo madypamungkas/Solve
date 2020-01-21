@@ -201,11 +201,11 @@ public interface Api {
             @Header("Authorization") String token
     );
 
-    @GET("collager/history/{history_id}")
+    @GET("collager/history/{quiz_collager_id}")
     Call<ResponseHistoryDetail> historyDetail(
             @Header("Accept") String accept,
             @Header("Authorization") String token,
-            @Path("history_id") int id
+            @Path("quiz_collager_id") int quiz_collager_id
     );
 
     @GET("collager/school")

@@ -52,7 +52,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
         Picasso.get().load(link+ types.getPic_url()).into(holder.imgLoc);
         holder.titleMenu.setText(types.getTitle());
         holder.tvDesc.setText(types.getDescription());
-        holder.tvSum.setText("Jumlah Soal :" +types.getSum_question());
+        holder.tvSum.setText("Jumlah Soal: " + types.getTot_visible());
         holder.layoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +63,23 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
 
                 Intent i = new Intent(mCtx, QuizActivity.class);
                 i.putExtra("idsoal", types.getId());
-                i.putExtra("namaSoal", types.getName());
+                i.putExtra("namaSoal", types.getTitle());
+                i.putExtra("codeSoal", types.getCode());
+                mCtx.startActivity(i);
+
+            }
+        });
+        holder.imgLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                editor.clear();
+                editor.commit();
+
+                Intent i = new Intent(mCtx, QuizActivity.class);
+                i.putExtra("idsoal", types.getId());
+                i.putExtra("namaSoal", types.getTitle());
                 i.putExtra("codeSoal", types.getCode());
                 mCtx.startActivity(i);
 

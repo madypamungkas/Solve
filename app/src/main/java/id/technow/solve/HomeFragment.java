@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
                         bannerModel = new ArrayList<>();
                         bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
                     } else {
-                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                       /* SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         SharedPreferences.Editor editorList = sharedPrefs.edit();
                         Gson gson = new Gson();
 
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment {
 
                         editorList.putString("Banner", json);
                         editorList.apply();
-
+*/
                         sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
                         slider.startAutoCycle();
                         slider.setIndicatorAnimation(IndicatorAnimations.WORM);

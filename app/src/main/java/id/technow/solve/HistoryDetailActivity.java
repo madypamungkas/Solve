@@ -33,7 +33,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_detail);
         typeRV = findViewById(R.id.typeRV);
         typeRV.setLayoutManager(new LinearLayoutManager(HistoryDetailActivity.this));
-        idHistory = getIntent().getIntExtra("idHistory", 1);
+
+        idHistory = getIntent().getIntExtra("idHistory", 0);
         type = getIntent().getStringExtra("gameName");
 
         load();
@@ -51,7 +52,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
     public void load() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
-        Call<ResponseHistoryDetail> call = RetrofitClient.getInstance().getApi().historyDetail(token, "application/json", idHistory);
+
+        Call<ResponseHistoryDetail> call = RetrofitClient.getInstance().getApi().historyDetail("application/json", token, idHistory);
         call.enqueue(new Callback<ResponseHistoryDetail>() {
             @Override
             public void onResponse(Call<ResponseHistoryDetail> call, Response<ResponseHistoryDetail> response) {
