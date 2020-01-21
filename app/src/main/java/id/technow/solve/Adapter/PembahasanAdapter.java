@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
 import id.technow.solve.R;
@@ -25,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH>{
+public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH> {
     Context mCtx;
     ArrayList<QuestionModel> questionModels;
     List<String> colors;
@@ -54,17 +55,17 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
 
         ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
 
-        int num = position+1;
+        int num = position + 1;
         holder.typeGame.setText(responseQuestion.getQuiz().getTitle());
-        holder.num.setText(num+" ");
+        holder.num.setText(num + " ");
         holder.desc.setText(answer.getQuestion());
         holder.answer.setText(answer.getTrueAnswerContent());
         holder.userAnswer.setText(answer.getUser_answer_content());
 
-        if(answer.getUser_answer().equals(answer.getTrueAnswer())){
+        if (answer.getUser_answer().equals(answer.getTrueAnswer())) {
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             holder.status.setText("Benar");
-        }else {
+        } else {
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#545454"));
             holder.status.setText("Salah");
         }

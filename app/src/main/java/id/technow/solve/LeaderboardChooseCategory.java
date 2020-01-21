@@ -35,26 +35,28 @@ import java.util.List;
 
 public class LeaderboardChooseCategory extends AppCompatActivity {
     private ArrayList<MenuHomeModel> categories;
-
     private RecyclerView typeRV;
     LeadChooseCategoryAdapter adapter;
     int idCategory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard_choose_category);
         typeRV = findViewById(R.id.typeRV);
         typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChooseCategory.this));
-        idCategory = getIntent().getIntExtra("idCategory",1);
+        idCategory = getIntent().getIntExtra("idCategory", 1);
         getListCategory();
 
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LeaderboardChooseCategory.this, Main2Activity.class));            }
+                startActivity(new Intent(LeaderboardChooseCategory.this, Main2Activity.class));
+            }
         });
     }
+
     public void getListCategory() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
@@ -68,7 +70,7 @@ public class LeaderboardChooseCategory extends AppCompatActivity {
                     int size = model.getResult().size();
                     categories = response.body().getResult();/*
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.HORIZONTAL);*/
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager( LeaderboardChooseCategory.this, RecyclerView.VERTICAL, false);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeaderboardChooseCategory.this, RecyclerView.VERTICAL, false);
                     adapter = new LeadChooseCategoryAdapter(LeaderboardChooseCategory.this, categories);
                     typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChooseCategory.this));
                     typeRV.setLayoutManager(linearLayoutManager);

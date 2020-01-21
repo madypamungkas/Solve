@@ -4,20 +4,21 @@
     android:id="@+id/cardGame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_3sdp"
     android:layout_marginTop="@dimen/_1sdp"
-    app:cardBackgroundColor="@color/cardview_dark_background"
+    android:layout_marginEnd="@dimen/_3sdp"
+    app:cardBackgroundColor="@color/colorQuiz"
     app:cardCornerRadius="@dimen/_8sdp"
-    app:cardElevation="@dimen/_6sdp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:id="@+id/btnQuiz"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/_8sdp"
         android:baselineAligned="false"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="@dimen/_4sdp">
@@ -25,117 +26,120 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/_14sdp"
             android:layout_weight="0.6"
             android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <TextView
-                android:id="@+id/typeGame"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_regular"
-                android:text="Game"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_regular"
-                android:text="Game"
-                android:layout_weight="1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/typeGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Game"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Game"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/num"
-                    android:layout_margin="@dimen/_3sdp"
                     android:layout_width="wrap_content"
-                    android:layout_marginRight="@dimen/_4sdp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_regular"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="1"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_18ssp" />
+                    android:textSize="@dimen/_13ssp" />
+
                 <TextView
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:fontFamily="@font/rubik_regular"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="Question"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_18ssp" />
+                    android:textSize="@dimen/_13ssp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:orientation="vertical">
+
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:fontFamily="@font/rubik_regular"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_light"
                     android:text="Jawaban Benar"
                     android:textAlignment="center"
-                    android:textColor="@color/silver"
+                    android:textColor="@color/white_smoke"
                     android:textSize="@dimen/_10ssp" />
 
                 <TextView
                     android:id="@+id/answer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:fontFamily="@font/rubik_regular"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="answer"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_12ssp" />
             </LinearLayout>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_margin="@dimen/_3sdp"
-               android:orientation="vertical">
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_margin="@dimen/_3sdp"
-                   android:fontFamily="@font/rubik_regular"
-                   android:text="Jawaban Anda"
-                   android:textAlignment="center"
-                   android:textColor="@color/silver"
-                   android:textSize="@dimen/_10ssp" />
 
-               <TextView
-                   android:id="@+id/userAnswer"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:fontFamily="@font/rubik_regular"
-                   android:text="answer"
-                   android:textAlignment="center"
-                   android:textColor="@color/white"
-                   android:textSize="@dimen/_14ssp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="vertical">
 
-           </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="Jawaban Kamu"
+                    android:textAlignment="center"
+                    android:textColor="@color/white_smoke"
+                    android:textSize="@dimen/_10ssp" />
 
+                <TextView
+                    android:id="@+id/userAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="answer"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
 
+            </LinearLayout>
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

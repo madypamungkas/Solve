@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH> {
     private ArrayList<QuestionModel> question;
     private Context mCtx;
 
@@ -22,6 +22,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
         this.question = question;
         this.mCtx = mCtx;
     }
+
     @NonNull
     @Override
     public ReviewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,15 +35,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
     public void onBindViewHolder(@NonNull ReviewVH holder, int position) {
         final QuestionModel questionModel = question.get(position);
         holder.tvSoal.setText(questionModel.getQuestion());
-        if(questionModel.getUser_answer().equals("**")){
-            holder.tvAns.setText("| -");
-        }
-        else {
-            holder.tvAns.setText("| "+ questionModel.getUser_answer_content());
+        if (questionModel.getUser_answer().equals("**")) {
+            holder.tvAns.setText("---");
+        } else {
+            holder.tvAns.setText(questionModel.getUser_answer_content());
 
         }
-        int number = position +1;
-        holder.tvNum.setText(number+"");
+        int number = position + 1;
+        holder.tvNum.setText(number + "");
 
     }
 
@@ -52,14 +52,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH>{
     }
 
     class ReviewVH extends RecyclerView.ViewHolder {
-        TextView tvSoal,tvAns, tvNum;
+        TextView tvSoal, tvAns, tvNum;
+
         public ReviewVH(@NonNull View itemView) {
             super(itemView);
             tvSoal = itemView.findViewById(R.id.tvSoal);
             tvAns = itemView.findViewById(R.id.tvAns);
             tvNum = itemView.findViewById(R.id.tvNum);
-
-
         }
     }
 }

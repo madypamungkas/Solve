@@ -17,6 +17,7 @@ import android.widget.TextView;
 import id.technow.solve.Model.TypeListModel;
 import id.technow.solve.QuizActivity;
 import id.technow.solve.R;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
     public void onBindViewHolder(@NonNull QuizVH holder, int position) {
         final TypeListModel types = type.get(position);
         String link = "";
-        Picasso.get().load(link+ types.getPic_url()).into(holder.imgLoc);
+        Picasso.get().load(link + types.getPic_url()).into(holder.imgLoc);
         holder.titleMenu.setText(types.getTitle());
         holder.tvDesc.setText(types.getDescription());
         holder.tvSum.setText("Jumlah Soal: " + types.getTot_visible());
@@ -59,30 +60,13 @@ public class TypeQuizAdapter extends RecyclerView.Adapter<TypeQuizAdapter.QuizVH
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
                 SharedPreferences.Editor editor = sharedPrefs.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
 
                 Intent i = new Intent(mCtx, QuizActivity.class);
                 i.putExtra("idsoal", types.getId());
                 i.putExtra("namaSoal", types.getTitle());
                 i.putExtra("codeSoal", types.getCode());
                 mCtx.startActivity(i);
-
-            }
-        });
-        holder.imgLoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-                SharedPreferences.Editor editor = sharedPrefs.edit();
-                editor.clear();
-                editor.commit();
-
-                Intent i = new Intent(mCtx, QuizActivity.class);
-                i.putExtra("idsoal", types.getId());
-                i.putExtra("namaSoal", types.getTitle());
-                i.putExtra("codeSoal", types.getCode());
-                mCtx.startActivity(i);
-
             }
         });
 

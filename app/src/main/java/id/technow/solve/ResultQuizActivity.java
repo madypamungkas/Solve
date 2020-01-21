@@ -19,6 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import id.technow.solve.Model.ResponsePostAnswer;
 
 import id.technow.solve.R;
@@ -57,7 +58,7 @@ public class ResultQuizActivity extends AppCompatActivity {
         textCorrect = findViewById(R.id.textCorrect);
         String correct = String.valueOf(responseAnswer.getResult().getTrue_sum());
         int sum = getIntent().getIntExtra("sum", 10);
-        textCorrect.setText(correct+" ");
+        textCorrect.setText(correct + " ");
         category = getIntent().getStringExtra("category");
         textSumQues.setText(responseAnswer.getResult().getAnswer_save().size() + " Pertanyaan");
         btn_pembahasan = findViewById(R.id.btn_pembahasan);
@@ -104,33 +105,8 @@ public class ResultQuizActivity extends AppCompatActivity {
     }
 
     private void confirmOnBackPressed() {
-
-        final Dialog dialog = new Dialog(ResultQuizActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_confirmation_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        FloatingActionButton mDialogNo = dialog.findViewById(R.id.fbNo);
-        mDialogNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        FloatingActionButton mDialogOk = dialog.findViewById(R.id.fbYes);
-        mDialogOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent play = new Intent(ResultQuizActivity.this, TypeChooseActivity.class);
-                startActivity(play);
-                finish();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        Window window = dialog.getWindow();
-        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        Intent i = new Intent(ResultQuizActivity.this, Main2Activity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 }

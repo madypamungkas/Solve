@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context="id.technow.solve.ReviewActivity">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/toolbar_review" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_review" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,41 +33,48 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
+                android:fontFamily="@font/roboto_medium"
                 android:text="No"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:id="@+id/tvSoal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Soal"
                 android:textAlignment="center"
-                android:text="Soal" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:id="@+id/tvAns"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Jawaban Kamu"
                 android:textAlignment="center"
-                android:text=" Jawaban Anda" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5ssp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:background="@color/light_grey" />
 
     </LinearLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/carousel"
-        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:fillViewport="true">
 
         <RelativeLayout
@@ -77,25 +89,23 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical">
+                android:nestedScrollingEnabled="false">
 
             </androidx.recyclerview.widget.RecyclerView>
-            <Button
-                android:onClick="Submit"
-                android:layout_below="@id/RVmain"
+
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/RVmain"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_6sdp"
-                android:background="@drawable/btn_rounded_green"
-                android:enabled="true"
-                android:paddingLeft="@dimen/_28sdp"
-                android:paddingRight="@dimen/_28sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="Submit"
                 android:text="Kirim Jawaban"
-                android:textColor="@color/white"
-                android:visibility="visible" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                app:backgroundTint="@color/colorAccent" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

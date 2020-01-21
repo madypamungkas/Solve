@@ -1,6 +1,7 @@
 package id.technow.solve;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import id.technow.solve.Adapter.NavigationAdapter;
 import id.technow.solve.Adapter.OptionsAdapter;
 import id.technow.solve.Model.ResponsePostAnswer;
@@ -45,6 +47,7 @@ import id.technow.solve.Model.ResponsePostAnswer;
 import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
+
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
@@ -70,11 +73,11 @@ public class QuizActivity extends AppCompatActivity {
     int status = 0;
     RecyclerView optionRV;
     OptionsAdapter adapter;
+    NestedScrollView scrollOption;
     public int time;
     FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
     String link = "https://solve.technow.id/storage/question/";
-    Button submitBtn;
     Runnable runnable;
     NavigationAdapter nAdapter;
     String namaQuiz, codeQuiz;
@@ -100,10 +103,10 @@ public class QuizActivity extends AppCompatActivity {
         nextSoal = findViewById(R.id.nextSoal);
         prevSoal = findViewById(R.id.prevSoal);
         readyBtn = findViewById(R.id.readyBtn);
+        scrollOption = findViewById(R.id.scrollOption);
         optionRV = findViewById(R.id.optionRV);
         fab = findViewById(R.id.fab);
         fab2 = findViewById(R.id.fab2);
-        submitBtn = findViewById(R.id.submitBtn);
         gameName = findViewById(R.id.gameName);
         loadSoal();
 
@@ -139,6 +142,23 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        scrollOption.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    fab.hide();
+                    if (fab2.getVisibility() == View.VISIBLE) {
+                        fab2.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    fab.show();
+                    if (fab2.getVisibility() == View.INVISIBLE) {
+                        fab2.show();
+                    }
+                }
+            }
+        });
+
     }
 
     public void loadSoal() {
@@ -171,19 +191,18 @@ public class QuizActivity extends AppCompatActivity {
 
                         String json = gson.toJson(questionModel);
                         editorList.putString("question", json);
-                        editorList.commit();
+                        editorList.apply();
 
                         SharedPreferences.Editor editor = sharedPrefs.edit();
                         editor.putInt("num", currentQusetionId);
-                        editor.commit();
+                        editor.apply();
 
                         readyBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 getCurrentTime();
                                 readyLayout.setVisibility(View.GONE);
-                                soalLayout.setVisibility(view.VISIBLE);
-
+                                soalLayout.setVisibility(View.VISIBLE);
                             }
                         });
 
@@ -291,7 +310,7 @@ public class QuizActivity extends AppCompatActivity {
         String responseQuiz = gson.toJson(responseQuestion);
         editorList.putString("response", responseQuiz);
 
-        editorList.commit();
+        editorList.apply();
     }
 
     public void checkAnswer() {
@@ -325,7 +344,7 @@ public class QuizActivity extends AppCompatActivity {
         String responseQuiz = gson.toJson(responseQuestion);
         editorList.putString("response", responseQuiz);
 
-        editorList.commit();
+        editorList.apply();
     }
 
 
@@ -355,7 +374,7 @@ public class QuizActivity extends AppCompatActivity {
         String responseQuiz = gson.toJson(responseQuestion);
         editorList.putString("response", responseQuiz);
 
-        editorList.commit();*/
+        editorList.apply();*/
 
         return questionSave.get(currentQusetionId).getUser_answer();
 
@@ -374,12 +393,15 @@ public class QuizActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt("num", currentQusetionId);
-        editor.commit();
+        editor.apply();
 
         if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
             // submitBtn.setVisibility(View.VISIBLE);
-            fab2.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.INVISIBLE);
+            if (fab.getVisibility() == View.VISIBLE) {
+                fab2.setVisibility(View.VISIBLE);
+            }
         }
 
         if (currentQusetionId + 1 == questionSave.size()) {
@@ -426,12 +448,15 @@ public class QuizActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt("num", currentQusetionId);
-        editor.commit();
+        editor.apply();
 
         if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
             // submitBtn.setVisibility(View.VISIBLE);
-            fab2.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.INVISIBLE);
+            if (fab.getVisibility() == View.VISIBLE) {
+                fab2.setVisibility(View.VISIBLE);
+            }
         }
 
         if (currentQusetionId + 1 == questionSave.size()) {
@@ -469,7 +494,6 @@ public class QuizActivity extends AppCompatActivity {
     public void prevSoal(View view) {
         nextSoal.setVisibility(View.VISIBLE);
         prevSoal.setVisibility(View.VISIBLE);
-        submitBtn.setVisibility(View.GONE);
         saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
@@ -480,7 +504,7 @@ public class QuizActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt("num", currentQusetionId);
-        editor.commit();
+        editor.apply();
 
         if (currentQusetionId == 0) {
         } else {
@@ -547,8 +571,10 @@ public class QuizActivity extends AppCompatActivity {
 
         } else if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
-            fab2.setVisibility(View.VISIBLE);
-
+            fab2.setVisibility(View.INVISIBLE);
+            if (fab.getVisibility() == View.VISIBLE) {
+                fab2.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -615,7 +641,7 @@ public class QuizActivity extends AppCompatActivity {
 
                     String responsePost = gson.toJson(response.body());
                     editorList.putString("answerPost", responsePost);
-                    editorList.commit();
+                    editorList.apply();
 
                     Toast.makeText(mCtx,
                             "Sukses",
@@ -686,6 +712,7 @@ public class QuizActivity extends AppCompatActivity {
                 String limitFormat = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
                 timer.setText(limitFormat);
             }
+
             @Override
             public void onFinish() {
                 storeAnswer();
@@ -699,7 +726,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void confirmOnBackPressed() {
-
         final Dialog dialog = new Dialog(QuizActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -725,8 +751,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(QuizActivity.this, Main2Activity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                finish();
                 dialog.dismiss();
             }
         });
