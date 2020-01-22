@@ -68,8 +68,14 @@ public class LeaderboardChooseType extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     int size = category__response.getResult().size();
                     categories = response.body().getResult();
-                    adapter = new LeaChooseTypeAdapter(LeaderboardChooseType.this, categories);
-                    typeRV.setAdapter(adapter);
+                    if(categories.isEmpty()){
+                        Toast.makeText(LeaderboardChooseType.this, "Bidang Tidak Tersedia", Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        adapter = new LeaChooseTypeAdapter(LeaderboardChooseType.this, categories);
+                        typeRV.setAdapter(adapter);
+                    }
+
                 } else {
                         Toast.makeText(LeaderboardChooseType.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
 

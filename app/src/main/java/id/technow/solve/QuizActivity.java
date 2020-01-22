@@ -29,6 +29,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,13 +88,14 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         soalLayout = findViewById(R.id.soalLayout);
         readyLayout = findViewById(R.id.readyLayout);
         idsoal = getIntent().getIntExtra("idsoal", 1);
         namaQuiz = getIntent().getStringExtra("namaSoal");
         codeQuiz = getIntent().getStringExtra("codeSoal");
-        //answerModels = new ArrayList<>();
+    
         timer = findViewById(R.id.timer);
         number = findViewById(R.id.number);
         sum = findViewById(R.id.sum);

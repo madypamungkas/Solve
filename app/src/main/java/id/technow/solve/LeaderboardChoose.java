@@ -65,15 +65,19 @@ public class LeaderboardChoose extends AppCompatActivity {
         call.enqueue(new Callback<ResponseTypeList>() {
             @Override
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
-                ResponseTypeList model = response.body();
-                if (response.isSuccessful()) {
+               if (response.isSuccessful()) {
                     //  int size = model.getResult().size();
                     categories = response.body().getResult();
-                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                    adapter = new LeaderboardChooseAdapter(LeaderboardChoose.this, categories);
-                    typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChoose.this));
-                    typeRV.setLayoutManager(staggeredGridLayoutManager);
-                    typeRV.setAdapter(adapter);
+                    if (categories.isEmpty()) {
+                        Toast.makeText(LeaderboardChoose.this, "Bidang Tidak Tersedia", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                        adapter = new LeaderboardChooseAdapter(LeaderboardChoose.this, categories);
+                        typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChoose.this));
+                        typeRV.setLayoutManager(staggeredGridLayoutManager);
+                        typeRV.setAdapter(adapter);
+                    }
                 } else {
                     Toast.makeText(LeaderboardChoose.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
                 }

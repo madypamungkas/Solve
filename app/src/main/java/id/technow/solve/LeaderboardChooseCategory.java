@@ -69,22 +69,27 @@ public class LeaderboardChooseCategory extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     int size = model.getResult().size();
                     categories = response.body().getResult();/*
+
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.HORIZONTAL);*/
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeaderboardChooseCategory.this, RecyclerView.VERTICAL, false);
-                    adapter = new LeadChooseCategoryAdapter(LeaderboardChooseCategory.this, categories);
-                    typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChooseCategory.this));
-                    typeRV.setLayoutManager(linearLayoutManager);
-                    typeRV.setAdapter(adapter);
+                    if (categories.isEmpty()) {
+                        Toast.makeText(LeaderboardChooseCategory.this, "Bidang Tidak Tersedia", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeaderboardChooseCategory.this, RecyclerView.VERTICAL, false);
+                        adapter = new LeadChooseCategoryAdapter(LeaderboardChooseCategory.this, categories);
+                        typeRV.setLayoutManager(new LinearLayoutManager(LeaderboardChooseCategory.this));
+                        typeRV.setLayoutManager(linearLayoutManager);
+                        typeRV.setAdapter(adapter);
+                    }
+
                 } else {
                     Toast.makeText(LeaderboardChooseCategory.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseMenuHome> call, Throwable t) {
                 Toast.makeText(LeaderboardChooseCategory.this, R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
             }
         });
     }
