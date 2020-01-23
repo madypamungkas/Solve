@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
+
 import id.technow.solve.Adapter.HistoryAdapter;
 import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseHistory;
@@ -38,12 +39,12 @@ import retrofit2.Response;
 
 public class HistoryFragment extends Fragment {
     View view;
-    SwipeRefreshLayout swipeRefresh;
     RecyclerView rvHistory;
     LinearLayout noDataLayout;
     RelativeLayout rvLayout;
-   HistoryAdapter adapter;
-    private ShimmerFrameLayout shimmerFrameLayout;
+    HistoryAdapter adapter;
+    SwipeRefreshLayout swipeRefresh;
+    ShimmerFrameLayout shimmerFrameLayout;
 
     public HistoryFragment() {
 
@@ -79,6 +80,34 @@ public class HistoryFragment extends Fragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void checkConnection() {
+        if (isNetworkAvailable()) {
+            loadData();
+        } else {
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.dialog_no_internet);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int width = metrics.widthPixels;
+            int height = metrics.heightPixels;
+
+            dialog.getWindow().setLayout((9 * width) / 10, height);
+
+            MaterialButton btnRetry = dialog.findViewById(R.id.btnRetry);
+            btnRetry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    checkConnection();
+                }
+            });
+            dialog.show();
+        }
     }
 
     private void loadData() {
@@ -131,35 +160,6 @@ public class HistoryFragment extends Fragment {
             }
         });
     }
-
-    private void checkConnection() {
-        if (isNetworkAvailable()) {
-            loadData();
-        } else {
-            final Dialog dialog = new Dialog(getActivity());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_no_internet);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-            DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int width = metrics.widthPixels;
-            int height = metrics.heightPixels;
-
-            dialog.getWindow().setLayout((9 * width) / 10, height);
-
-            MaterialButton btnRetry = dialog.findViewById(R.id.btnRetry);
-            btnRetry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    checkConnection();
-                }
-            });
-            dialog.show();
-        }
-    }
-
 
     @Override
     public void onResume() {

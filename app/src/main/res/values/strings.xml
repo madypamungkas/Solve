@@ -73,6 +73,8 @@
     <string name="konfirmasi_keluar">Apa Anda Yakin ?</string>
     <string name="jawaban">Jawaban Anda Tidak Tersimpan.</string>
     <string name="get_ready">Persiapan</string>
+    <string name="not_found">Tidak Ditemukan</string>
+    <string name="not_found_desc">Tidak ada data yang tersedia untuk saat ini</string>
     <string name="search">Cari Quiz</string>
     <string name="search_desc">Kamu dapat mencari menggunakan kode quiz\nyang telah diberikan</string>
     <string name="code">Kode Quiz</string>

@@ -16,51 +16,117 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarThumbHorizontal="@null"
-        android:scrollbarThumbVertical="@null">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:fillViewport="true"
+            android:scrollbarThumbHorizontal="@null"
+            android:scrollbarThumbVertical="@null">
 
-            <TextView
-                android:id="@+id/tvQuizType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:fontFamily="@font/brandon_grotesque_medium"
-                android:text="Type Quiz"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_25ssp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/txtDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:fontFamily="@font/rubik_regular"
-                android:lineSpacingExtra="@dimen/_1sdp"
-                android:text="Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum, neque sem pretium metus. Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum"
-                android:textSize="@dimen/_11ssp"
-                android:visibility="gone" />
-
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fillViewport="true">
+                android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/layoutData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:orientation="vertical"
+                        app:shimmer_duration="1000">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginEnd="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginStart="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginEnd="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginStart="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginEnd="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginStart="@dimen/_3sdp"
+                                    android:layout_weight="0.5"
+                                    android:background="@color/light_grey" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/RVmain"
@@ -82,6 +148,8 @@
                         android:layout_height="@dimen/_85sdp"
                         android:layout_below="@+id/RVmain"
                         android:layout_marginTop="@dimen/_1sdp"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="@color/colorQuiz"
                         app:cardCornerRadius="@dimen/_8sdp"
                         app:cardElevation="@dimen/_6sdp"
@@ -92,9 +160,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:baselineAligned="false"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?attr/selectableItemBackground"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:padding="@dimen/_4sdp">
@@ -129,8 +194,8 @@
                                     android:id="@+id/imgGame"
                                     android:layout_width="@dimen/_55sdp"
                                     android:layout_height="@dimen/_55sdp"
-                                    android:visibility="visible"
-                                    android:src="@drawable/img_leaderboard" />
+                                    android:src="@drawable/img_leaderboard"
+                                    android:visibility="visible" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -138,8 +203,44 @@
                     </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
-            </androidx.core.widget.NestedScrollView>
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:id="@+id/layoutNoData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="@dimen/_160sdp"
+                        android:src="@drawable/img_not_found" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/not_found"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_21ssp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/not_found_desc"
+                        android:textAlignment="center"
+                        android:textColor="@color/light_grey"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

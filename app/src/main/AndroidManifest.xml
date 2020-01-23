@@ -16,34 +16,83 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistoryDetailActivity"></activity>
-        <activity android:name=".LeaderboardChooseCategory" />
-        <activity android:name=".PembahasanQuizActivity" />
-        <activity android:name=".ResultQuizActivity" />
-        <activity android:name=".LeaderboardChooseType" />
-        <activity android:name=".LeaderboardActivity" />
-        <activity android:name=".ChangeProfile" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".QuizActivity_viewpager" />
-        <activity android:name=".ReviewActivity" />
-        <activity android:name=".SearchCode" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".LoginRegisterActivity" />
-        <activity android:name=".QuizActivity" />
-        <activity android:name=".QuizChooseActivity" />
-        <activity android:name=".WebViewsActivity" />
-        <activity android:name=".TypeChooseActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".LeaderboardChoose" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".ForgotPassword" />
+        <activity
+            android:name=".HistoryDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LeaderboardChooseCategory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PembahasanQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ResultQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LeaderboardChooseType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LeaderboardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangeProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuizActivity_viewpager"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchCode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuizChooseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WebViewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TypeChooseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LeaderboardChoose"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgotPassword"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

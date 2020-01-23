@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import id.technow.solve.Adapter.BannerSliderAdapter;
 import id.technow.solve.Adapter.HomeItemAdapter;
 import id.technow.solve.Api.RetrofitClient;
@@ -31,6 +33,7 @@ import id.technow.solve.Model.UserModel;
 import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
+
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -51,16 +54,17 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     View view;
-    SwipeRefreshLayout swipeRefresh;
+    private SwipeRefreshLayout swipeRefresh;
     Context mContext;
     private ShimmerFrameLayout shimmerFrameLayout;
     HomeItemAdapter adapter;
-    ArrayList<MenuHomeModel> models;
-    ArrayList<BannerModel> bannerModel;
-    BannerSliderAdapter sliderAdapter;
+    private ArrayList<MenuHomeModel> models;
+    private ArrayList<BannerModel> bannerModel;
+    private BannerSliderAdapter sliderAdapter;
     private int a = 0;
     private SliderView slider;
-    RecyclerView listCategory;
+    private RecyclerView listCategory;
+    private LinearLayout layoutData;
 
     public HomeFragment() {
 
@@ -74,11 +78,21 @@ public class HomeFragment extends Fragment {
         mContext = getActivity().getWindow().getContext();
         slider = view.findViewById(R.id.banner_slider2);
         listCategory = view.findViewById(R.id.listCategory);
+        layoutData = view.findViewById(R.id.layoutData);
+        shimmerFrameLayout = view.findViewById(R.id.shimmerContainer);
+
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setEnabled(true);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                checkConnection();
+            }
+        });
+
         checkConnection();
-        //getVersion();
 
         return view;
-
     }
 
     private boolean isNetworkAvailable() {
@@ -88,8 +102,10 @@ public class HomeFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-
-    public void getListCategory() {
+    private void getListCategory() {
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
+        layoutData.setVisibility(View.GONE);
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
         String token = "Bearer " + user.getToken();
 
@@ -106,23 +122,29 @@ public class HomeFragment extends Fragment {
                     listCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
                     listCategory.setLayoutManager(staggeredGridLayoutManager);
                     listCategory.setAdapter(adapter);
+                    loadBanner();
                 } else {
+                    layoutData.setVisibility(View.GONE);
+                    swipeRefresh.setRefreshing(false);
+                    shimmerFrameLayout.stopShimmer();
+                    shimmerFrameLayout.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseMenuHome> call, Throwable t) {
+                layoutData.setVisibility(View.GONE);
+                swipeRefresh.setRefreshing(false);
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
-
             }
         });
     }
 
     private void checkConnection() {
         if (isNetworkAvailable()) {
-            loadBanner();
             getListCategory();
         } else {
             final Dialog dialog = new Dialog(getActivity());
@@ -169,15 +191,6 @@ public class HomeFragment extends Fragment {
                         bannerModel = new ArrayList<>();
                         bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
                     } else {
-                       /* SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor editorList = sharedPrefs.edit();
-                        Gson gson = new Gson();
-
-                        String json = gson.toJson(bannerModel);
-
-                        editorList.putString("Banner", json);
-                        editorList.apply();
-*/
                         sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
                         slider.startAutoCycle();
                         slider.setIndicatorAnimation(IndicatorAnimations.WORM);
@@ -187,9 +200,6 @@ public class HomeFragment extends Fragment {
                     }
 
                 } else {
-                /*    bannerModel = new ArrayList<>();
-                    bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
-*/
                     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     Gson gson = new Gson();
                     String json = sharedPrefs.getString("Banner", "Banner");
@@ -207,10 +217,18 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
+                layoutData.setVisibility(View.VISIBLE);
+                swipeRefresh.setRefreshing(false);
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<ResponseBanner> call, Throwable t) {
+                layoutData.setVisibility(View.GONE);
+                swipeRefresh.setRefreshing(false);
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 Gson gson = new Gson();
                 String json = sharedPrefs.getString("Banner", "Banner");
@@ -227,7 +245,6 @@ public class HomeFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
