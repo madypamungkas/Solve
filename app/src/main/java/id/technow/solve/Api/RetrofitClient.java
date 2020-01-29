@@ -12,8 +12,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     //private static final String BASE_URL = "http://192.168.43.91/master-ruko/ruko/public/api/";
     //private static final String BASE_URL = "https://ruko.technow.id/api/";
-//    private static final String BASE_URL = "http://10.33.74.105/solve/solve-jst/public/api/";
-    private static final String BASE_URL = "https://solve.technow.id/api/";
+    private static final String BASE_URL = "http://10.33.88.100/solve/solve-jst/public/api/";
+   // private static final String BASE_URL = "http://10.33.68.248/solve-jst/public/api/";
+
+   // private static final String BASE_URL = "https://solve.technow.id/api/";
 
     private static RetrofitClient mInstance;
     private Retrofit retrofit;

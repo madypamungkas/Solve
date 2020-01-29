@@ -200,22 +200,25 @@ public class HomeFragment extends Fragment {
                     }
 
                 } else {
-                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                /*    bannerModel = new ArrayList<>();
+                    bannerModel.add(new BannerModel(1, "5d440cdd72347.jpg", "Banner 2", "1", "https://ruko.technow.id", "2019-08-02 10:13:49", "2019-08-02 10:13:49"));
+*/
+                   /* SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     Gson gson = new Gson();
                     String json = sharedPrefs.getString("Banner", "Banner");
                     Type type = new TypeToken<List<BannerModel>>() {
                     }.getType();
-                    ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
-                    if (bannerModel.size() != 0) {
+                    ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);*/
+                   /* if (bannerModel.size() != 0) {
                         sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
                         slider.startAutoCycle();
                         slider.setIndicatorAnimation(IndicatorAnimations.WORM);
                         slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
                         slider.setScrollTimeInSec(6);
                         slider.setSliderAdapter(sliderAdapter);
-                    } else {
-                        Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
-                    }
+                    } else {*/
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                    //}
                 }
                 layoutData.setVisibility(View.VISIBLE);
                 swipeRefresh.setRefreshing(false);
@@ -225,16 +228,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBanner> call, Throwable t) {
-                layoutData.setVisibility(View.GONE);
-                swipeRefresh.setRefreshing(false);
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+               /* SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 Gson gson = new Gson();
                 String json = sharedPrefs.getString("Banner", "Banner");
                 Type type = new TypeToken<List<BannerModel>>() {
                 }.getType();
-                ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);
+                ArrayList<BannerModel> bannerModel = gson.fromJson(json, type);*//*
                 if (bannerModel.size() != 0) {
                     sliderAdapter = new BannerSliderAdapter(getActivity(), bannerModel);
                     slider.startAutoCycle();
@@ -242,9 +241,10 @@ public class HomeFragment extends Fragment {
                     slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
                     slider.setScrollTimeInSec(6);
                     slider.setSliderAdapter(sliderAdapter);
-                } else {
-                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
-                }
+                } else {*/
+                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_LONG).show();
+                /*}
+                 */
             }
         });
     }

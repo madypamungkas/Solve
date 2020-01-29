@@ -70,6 +70,7 @@
     <string name="no">Tidak</string>
     <string name="confirm">Konfirmasi</string>
     <string name="ready">Siap?</string>
+    <string name="save">Simpan Jawaban</string>
     <string name="konfirmasi_keluar">Apa Anda Yakin ?</string>
     <string name="jawaban">Jawaban Anda Tidak Tersimpan.</string>
     <string name="get_ready">Persiapan</string>
@@ -78,6 +79,7 @@
     <string name="search">Cari Quiz</string>
     <string name="search_desc">Kamu dapat mencari menggunakan kode quiz\nyang telah diberikan</string>
     <string name="code">Kode Quiz</string>
+    <string name="your_answer">Jawaban Anda</string>
     <string name="schoolSearch">Cari Nama Sekolah</string>
     <string name="game_desc">Terdapat batasan waktu untuk soal yang akan dikerjakan dan waktu tidak dapat dihentikan saat soal telah diberikan</string>
     <string name="start">Mulai Sekarang</string>

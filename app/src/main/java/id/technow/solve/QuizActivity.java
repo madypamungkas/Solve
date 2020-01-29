@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +39,8 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,7 +63,7 @@ import java.util.TimeZone;
 
 public class QuizActivity extends AppCompatActivity {
     LinearLayout soalLayout, readyLayout;
-    private TextView timer, soal, number, sum, namaSoal, gameName;
+    private TextView timer, soal, number, sum, namaSoal, gameName, tvIsian;
     ProgressDialog progress;
     CountDownTimer cd;
     private List<QuestionModel> questionModel;
@@ -79,8 +82,9 @@ public class QuizActivity extends AppCompatActivity {
     FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
     String link = "https://solve.technow.id/storage/question/";
-    Runnable runnable;
-    NavigationAdapter nAdapter;
+    TextInputLayout layoutAnswer;
+    LinearLayout layoutAns;
+    TextInputEditText inputAnswer;
     String namaQuiz, codeQuiz;
 
 
@@ -91,11 +95,15 @@ public class QuizActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         soalLayout = findViewById(R.id.soalLayout);
+        layoutAnswer = findViewById(R.id.layoutAnswer);
+        layoutAns = findViewById(R.id.layoutAns);
+        inputAnswer = findViewById(R.id.inputAnswer);
+        tvIsian = findViewById(R.id.tvIsian);
         readyLayout = findViewById(R.id.readyLayout);
         idsoal = getIntent().getIntExtra("idsoal", 1);
         namaQuiz = getIntent().getStringExtra("namaSoal");
         codeQuiz = getIntent().getStringExtra("codeSoal");
-    
+
         timer = findViewById(R.id.timer);
         number = findViewById(R.id.number);
         sum = findViewById(R.id.sum);
@@ -124,7 +132,7 @@ public class QuizActivity extends AppCompatActivity {
                 Type type = new TypeToken<ArrayList<QuestionModel>>() {
                 }.getType();
                 ArrayList<QuestionModel> questionModels = gson.fromJson(json, type);
-                saveOption();
+                //saveOption();
 
                 //navigationSoal();
                 bundle.putString("question", json);
@@ -259,10 +267,26 @@ public class QuizActivity extends AppCompatActivity {
         soal.setText(questions.getQuestion());
         optionModel = questions.getOption();
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-        adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
-        optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
-        optionRV.setLayoutManager(staggeredGridLayoutManager);
-        optionRV.setAdapter(adapter);
+        if (questions.getType().equals("option")) {
+            optionRV.setVisibility(View.VISIBLE);
+            layoutAns.setVisibility(View.GONE);
+
+            adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+            optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+            optionRV.setLayoutManager(staggeredGridLayoutManager);
+            optionRV.setAdapter(adapter);
+        } else {
+            layoutAns.setVisibility(View.VISIBLE);
+            optionRV.setVisibility(View.GONE);
+            tvIsian.setText("Jawaban Anda : " + questionModel.get(currentQusetionId).getUser_answer_content());
+            inputAnswer.setText(questionModel.get(currentQusetionId).getUser_answer_content());
+            if (questions.getUser_answer_content().equals("**")) {
+                tvIsian.setText("Jawaban Anda : ");
+                inputAnswer.setText("");
+            }
+
+        }
+
         if (questions.getPic_question() == null) {
             imgSoal.setVisibility(View.GONE);
         } else {
@@ -295,10 +319,10 @@ public class QuizActivity extends AppCompatActivity {
         String userAnswer = sharedPrefs.getString("userAnswer", "**");
         String userAnswerContent = sharedPrefs.getString("userAnswerContent", "**");
 
-        int questionPosition = sharedPrefs.getInt("position", 0);
+  /*      int questionPosition = sharedPrefs.getInt("position", 0);
 
         List<OptionModel> ops = que.get(currentQusetionId).getOption();
-
+*/
         que.get(currentQusetionId).setUser_answer(userAnswer);
         que.get(currentQusetionId).setUser_answer_content(userAnswerContent);
 
@@ -315,77 +339,11 @@ public class QuizActivity extends AppCompatActivity {
         editorList.apply();
     }
 
-    public void checkAnswer() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        Gson gson = new Gson();
-
-        String json = sharedPrefs.getString("response", "response");
-        Type type = new TypeToken<ResponseQuestion>() {
-        }.getType();
-        ResponseQuestion responseQuestion = gson.fromJson(json, type);
-
-        String json2 = sharedPrefs.getString("question", "question");
-        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
-        }.getType();
-        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
-
-
-        ArrayList<QuestionModel> que = questionSave;
-       /* String userAnswer = sharedPrefs.getString("userAnswer", "**");
-        int questionPosition = sharedPrefs.getInt("position", 0);*/
-
-        // que.get(currentQusetionId).setUser_answer(userAnswer);
-
-        SharedPreferences.Editor editorList = sharedPrefs.edit();
-        // editorList.putString("userAnswer", option.getOption());
-
-        String questionSt = gson.toJson(questionSave);
-        editorList.putString("question", questionSt);
-
-        responseQuestion.setQuestion(questionSave);
-        String responseQuiz = gson.toJson(responseQuestion);
-        editorList.putString("response", responseQuiz);
-
-        editorList.apply();
-    }
-
-
-    public String checkUserAnswer() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        Gson gson = new Gson();
-
-        String json = sharedPrefs.getString("response", "response");
-        Type type = new TypeToken<ResponseQuestion>() {
-        }.getType();
-        ResponseQuestion responseQuestion = gson.fromJson(json, type);
-
-        String json2 = sharedPrefs.getString("question", "question");
-        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
-        }.getType();
-        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
-
-
-
-        /*SharedPreferences.Editor editorList = sharedPrefs.edit();
-        // editorList.putString("userAnswer", option.getOption());
-
-        String questionSt = gson.toJson(questionSave);
-        editorList.putString("question", questionSt);
-
-        responseQuestion.setQuestion(questionSave);
-        String responseQuiz = gson.toJson(responseQuestion);
-        editorList.putString("response", responseQuiz);
-
-        editorList.apply();*/
-
-        return questionSave.get(currentQusetionId).getUser_answer();
-
-    }
 
     @SuppressLint("RestrictedApi")
     public void nextSoal(View view) {
         prevSoal.setVisibility(View.VISIBLE);
-        saveOption();
+        //saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -420,12 +378,28 @@ public class QuizActivity extends AppCompatActivity {
             } else {
                 soal.setText(questions.getQuestion());
                 number.setText(currentQusetionId + 1 + "");
-                optionModel = questions.getOption();
-                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
-                optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
-                optionRV.setLayoutManager(staggeredGridLayoutManager);
-                optionRV.setAdapter(adapter);
+                if (questions.getType().equals("option")) {
+                    optionRV.setVisibility(View.VISIBLE);
+                    layoutAns.setVisibility(View.GONE);
+                    optionModel = questions.getOption();
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                    adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+                    optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+                    optionRV.setLayoutManager(staggeredGridLayoutManager);
+                    optionRV.setAdapter(adapter);
+                } else {
+                    layoutAns.setVisibility(View.VISIBLE);
+                    optionRV.setVisibility(View.GONE);
+                    tvIsian.setText("Jawaban Anda : " + questionSave.get(currentQusetionId).getUser_answer_content());
+                    inputAnswer.setText(questionSave.get(currentQusetionId).getUser_answer_content());
+                    if (questions.getUser_answer_content().equals("**")) {
+                        tvIsian.setText("Jawaban Anda : ");
+                        inputAnswer.setText("");
+                    }
+
+                }
+
+
                 if (questions.getPic_question() == null) {
                     imgSoal.setVisibility(View.GONE);
                 } else {
@@ -440,7 +414,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public void nextSoalAuto() {
         prevSoal.setVisibility(View.VISIBLE);
-        saveOption();
+        //saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -496,7 +470,7 @@ public class QuizActivity extends AppCompatActivity {
     public void prevSoal(View view) {
         nextSoal.setVisibility(View.VISIBLE);
         prevSoal.setVisibility(View.VISIBLE);
-        saveOption();
+        //saveOption();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("question", "question");
@@ -519,11 +493,33 @@ public class QuizActivity extends AppCompatActivity {
                 soal.setText(questions.getQuestion());
                 number.setText(currentQusetionId + 1 + "");
                 optionModel = questions.getOption();
-                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                if (questions.getType().equals("option")) {
+                    optionRV.setVisibility(View.VISIBLE);
+                    layoutAns.setVisibility(View.GONE);
+
+                    optionModel = questions.getOption();
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+                    adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+                    optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+                    optionRV.setLayoutManager(staggeredGridLayoutManager);
+                    optionRV.setAdapter(adapter);
+                } else {
+                    layoutAns.setVisibility(View.VISIBLE);
+                    optionRV.setVisibility(View.GONE);
+                    tvIsian.setText("Jawaban Anda : " + questionSave.get(currentQusetionId).getUser_answer_content());
+                    inputAnswer.setText(questionSave.get(currentQusetionId).getUser_answer_content());
+                    if (questions.getUser_answer_content().equals("**")) {
+                        tvIsian.setText("Jawaban Anda : ");
+                        inputAnswer.setText("");
+                    }
+
+
+                }
+               /* StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                 adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
                 optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
                 optionRV.setLayoutManager(staggeredGridLayoutManager);
-                optionRV.setAdapter(adapter);
+                optionRV.setAdapter(adapter);*/
                 if (questions.getPic_question() == null) {
                     imgSoal.setVisibility(View.GONE);
                 } else {
@@ -540,7 +536,7 @@ public class QuizActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     public void navigationSoal(int num) {
-        saveOption();
+        //saveOption();
         currentQusetionId = num;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
         Gson gson = new Gson();
@@ -555,12 +551,34 @@ public class QuizActivity extends AppCompatActivity {
         final QuestionModel questions = questionSave.get(currentQusetionId);
         soal.setText(questions.getQuestion());
         number.setText(currentQusetionId + 1 + "");
-        optionModel = questions.getOption();
+        if (questions.getType().equals("option")) {
+            optionRV.setVisibility(View.VISIBLE);
+            layoutAns.setVisibility(View.GONE);
+
+            optionModel = questions.getOption();
+            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+            adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
+            optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
+            optionRV.setLayoutManager(staggeredGridLayoutManager);
+            optionRV.setAdapter(adapter);
+        } else {
+            layoutAns.setVisibility(View.VISIBLE);
+            optionRV.setVisibility(View.GONE);
+            tvIsian.setText("Jawaban Anda : " + questionSave.get(currentQusetionId).getUser_answer_content());
+            inputAnswer.setText(questionSave.get(currentQusetionId).getUser_answer_content());
+            if (questions.getUser_answer_content().equals("**")) {
+                tvIsian.setText("Jawaban Anda : ");
+                inputAnswer.setText("");
+            }
+
+
+        }
+       /* optionModel = questions.getOption();
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
         optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         optionRV.setLayoutManager(staggeredGridLayoutManager);
-        optionRV.setAdapter(adapter);
+        optionRV.setAdapter(adapter);*/
         if (questions.getPic_question() == null) {
             imgSoal.setVisibility(View.GONE);
         } else {
@@ -762,5 +780,59 @@ public class QuizActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void saveIsian() {
 
+        inputAnswer.clearFocus();
+        InputMethodManager in = (InputMethodManager) QuizActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(inputAnswer.getWindowToken(), 0);
+        String answer = inputAnswer.getText().toString().trim();
+
+       /* if (answer.isEmpty()) {
+            layoutAnswer.setError("Kode Quiz Harus Diisi");
+            inputAnswer.requestFocus();
+            return;
+        }
+       */
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
+        Gson gson = new Gson();
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+
+        String userAnswer = answer;
+        String userAnswerContent = answer;
+
+        String json = sharedPrefs.getString("response", "response");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+
+        String json2 = sharedPrefs.getString("question", "question");
+        Type type2 = new TypeToken<ArrayList<QuestionModel>>() {
+        }.getType();
+        ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
+
+
+        // option.setChoosen("yes");
+
+        editorList.putString("userAnswer", userAnswer);
+        editorList.putString("userAnswerContent", userAnswer);
+        // editorList.putString("id-" + option.getQuestion_id(), option.getOption());
+
+        String questionSt = gson.toJson(questionSave);
+        editorList.putString("question", questionSt);
+
+        responseQuestion.setQuestion(questionSave);
+        String responseQuiz = gson.toJson(responseQuestion);
+        editorList.putString("response", responseQuiz);
+
+        editorList.commit();
+        saveOption();
+        inputAnswer.setText(answer);
+        tvIsian.setText("Jawaban Anda : " + answer);
+
+    }
+
+
+    public void saveIsian(View view) {
+        saveIsian();
+    }
 }

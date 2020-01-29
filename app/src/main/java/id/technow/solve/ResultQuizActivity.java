@@ -39,7 +39,7 @@ public class ResultQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_quiz);
-        idquiz = getIntent().getIntExtra("idsoal", 1);
+       // idquiz = getIntent().getIntExtra("idsoal", 1);
         point = findViewById(R.id.point);
         namaSoal = getIntent().getStringExtra("namaSoal");
 
@@ -50,6 +50,7 @@ public class ResultQuizActivity extends AppCompatActivity {
         Type type = new TypeToken<ResponsePostAnswer>() {
         }.getType();
         ResponsePostAnswer responseAnswer = gson.fromJson(json, type);
+        idquiz = responseAnswer.getResult().getQuiz_id();
 
 
         point.setText(responseAnswer.getResult().getTotal_score() + "  pts");
@@ -85,14 +86,14 @@ public class ResultQuizActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(ResultQuizActivity.this, QuizActivity.class);
+                Intent intent = new Intent(ResultQuizActivity.this, QuizActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("category", category);
                 intent.putExtra("namaSoal", getIntent().getStringExtra("namaSoal") + " ");
                 intent.putExtra("idsoal", idquiz);
                 Toast.makeText(ResultQuizActivity.this, idquiz+" ", Toast.LENGTH_LONG).show();
                 intent.putExtra("namaSoal", namaSoal);
-                startActivity(intent);*/
+                startActivity(intent);
             }
 
 

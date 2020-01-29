@@ -18,8 +18,15 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import id.technow.solve.Adapter.TypeQuizAdapter;
 import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.ResponseTypeList;
+import id.technow.solve.Model.TypeListModel;
 import id.technow.solve.Model.UserModel;
 
 import id.technow.solve.R;
@@ -38,6 +45,9 @@ public class SearchFragment extends Fragment {
     TextInputEditText inputSearch;
     Context mContext;
     ProgressDialog loading;
+    ArrayList<TypeListModel> models;
+    int idType;
+
 
     public SearchFragment() {
 
@@ -122,14 +132,11 @@ public class SearchFragment extends Fragment {
                 ResponseTypeList model = response.body();
                 loading.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().getStatus().equals("failed") ) {
-                        Toast.makeText(getActivity(), response.body().getMessage() , Toast.LENGTH_LONG).show();
+                    if (response.body().getStatus().equals("failed")) {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     } else {
-                        Intent i = new Intent(getActivity(), QuizActivity.class);
-                        i.putExtra("idsoal", response.body().getResult().get(0).getId());
-                        i.putExtra("idsoal", response.body().getResult().get(0).getPic_url());
-                        startActivity(i);
-                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
+                        idType = response.body().getResult().get(0).getId();
+                        getListCategory();
                     }
 
                 } else {
@@ -145,43 +152,37 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    /*
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+    public void getListCategory() {
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+        String token = "Bearer " + user.getToken();
 
+        Call<ResponseTypeList> call = RetrofitClient.getInstance().getApi().quiz(token, "application/json", idType);
+        call.enqueue(new Callback<ResponseTypeList>() {
+            @Override
+            public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
+                ResponseTypeList model = response.body();
+                if (response.isSuccessful()) {
+                    models = response.body().getResult();
+                    Intent i = new Intent(getActivity(), QuizActivity.class);
 
-    private void checkConnection() {
-        if (isNetworkAvailable()) {
-            detailUser();
-        } else {
-            final Dialog dialog = new Dialog(getActivity());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_no_internet);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                    i.putExtra("idsoal", response.body().getResult().get(0).getId());
+                    Toast.makeText(getActivity(),response.body().getResult().get(0).getId()+" " , Toast.LENGTH_SHORT).show();
 
-            DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int width = metrics.widthPixels;
-            int height = metrics.heightPixels;
+                  //  i.putExtra("idsoal", response.body().getResult().get(0).getPic_url());
+                    startActivity(i);
+                    Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
 
-            dialog.getWindow().setLayout((9 * width) / 10, height);
-
-            Button btnRetry = dialog.findViewById(R.id.btnRetry);
-            btnRetry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    checkConnection();
+                } else {
+                    Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
                 }
-            });
-            dialog.show();
-        }
-    }
+            }
 
-     */
+            @Override
+            public void onFailure(Call<ResponseTypeList> call, Throwable t) {
+
+                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

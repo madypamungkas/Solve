@@ -144,6 +144,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardGame"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_85sdp"
                         android:layout_below="@+id/RVmain"

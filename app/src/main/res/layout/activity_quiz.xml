@@ -265,7 +265,72 @@
                         android:id="@+id/optionRV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false" />
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layoutAns"
+                        android:visibility="visible">
+                        <TextView
+                            android:id="@+id/tvIsian"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Jawaban Anda : "
+                            android:layout_margin="@dimen/_13sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_13ssp">
+
+                        </TextView>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutAnswer"
+                            android:visibility="visible"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:hint="@string/your_answer"
+                            android:textColorHint="@color/white"
+                            app:boxBackgroundColor="@android:color/transparent"
+                            app:boxStrokeColor="@color/white"
+                            app:boxStrokeErrorColor="#CF6679"
+                            app:boxStrokeWidth="@dimen/_1sdp"
+                            app:endIconMode="custom"
+                            app:endIconTint="@color/white"
+                            app:errorTextColor="#CF6679"
+                            app:hintTextColor="@color/white">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/inputAnswer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lines="5"
+                                android:maxLines="5"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textCursorDrawable="@drawable/cursor_color"
+                                android:textSize="@dimen/_12ssp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/saveAnswer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="@string/save"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp"
+                            app:backgroundTint="@color/colorAccent"
+                            android:onClick="saveIsian"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -329,12 +394,15 @@
 
         <TextView
             android:id="@+id/namaSoal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:text="Quiz"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_20ssp" />
+
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_18ssp" />
 
         <TextView
             android:layout_width="wrap_content"

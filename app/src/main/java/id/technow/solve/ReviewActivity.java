@@ -24,6 +24,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -54,7 +55,15 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
         idSoal = getIntent().getIntExtra("idSoal", 1);
         reviewRV = findViewById(R.id.RVmain);
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         loadAns();
+
     }
 
     public void loadAns() {

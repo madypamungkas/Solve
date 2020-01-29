@@ -44,7 +44,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.txtDateTime.setText(history.getCreated_at());
         holder.txtScore.setText(history.getTotal_score());
         holder.txtTrueAns.setText(history.getTrue_sum());
-        holder.txtSumQues.setText(history.getQuiz().getSum_question());
+        holder.txtSumQues.setText(history.getQuiz().getTot_visible());
         holder.txtFalse.setText(history.getFalse_sum());
 
         holder.idHistory = historyModels.get(position).getId();

@@ -16,6 +16,8 @@ import com.google.gson.reflect.TypeToken;
 import id.technow.solve.Model.OptionModel;
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
+import id.technow.solve.QuizActivity;
+import id.technow.solve.QuizActivity_viewpager;
 import id.technow.solve.R;
 import com.squareup.picasso.Picasso;
 
@@ -130,6 +132,10 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             editorList.putString("response", responseQuiz);
 
             editorList.commit();
+
+            if (mCtx instanceof QuizActivity) {
+                ((QuizActivity) mCtx).saveOption();
+            }
             if (!choosen.equals("question")) {
                 if (choosen.equals(option.getOption())) {
                     holder.rbChoose.setChecked(true);
@@ -141,6 +147,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
 
             } else {
 
+            }
+            if (mCtx instanceof QuizActivity) {
+                ((QuizActivity) mCtx).nextSoalAuto();
             }
 
             //mSelectedItem = position;
@@ -203,7 +212,6 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
             rbChoose = itemView.findViewById(R.id.rbChoose);
             imgOption = itemView.findViewById(R.id.imgOption);
             placeA = itemView.findViewById(R.id.placeA);
-
 
             View.OnClickListener l = new View.OnClickListener() {
                 @Override

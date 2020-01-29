@@ -44,54 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
     String idSchool, schoolName;
     ProgressDialog loading;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
-        etUsername = findViewById(R.id.etUsername);
-        etEmail = findViewById(R.id.etEmail);
-        etName = findViewById(R.id.etName);
-        etPassword = findViewById(R.id.etPassword);
-        etPhone = findViewById(R.id.etPhone);
-        loginLink = findViewById(R.id.loginLink);
-        btnSchool = findViewById(R.id.btnSchool);
-        btnRegister = findViewById(R.id.btnRegister);
-        txtSchools = findViewById(R.id.txtSchools);
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-            }
-        });
-
-        btnSchool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                SchoolSearchFragment fragment = new SchoolSearchFragment();
-                fragment.setArguments(bundle);
-                fragment.show(((FragmentActivity) RegisterActivity.this).getSupportFragmentManager(), TAG);
-            }
-        });
-
-        loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    public void setTextSch(String schoolName, String schoolId) {
-        txtSchools.setText(schoolName);
-        idSchool = schoolId;
-    }
-
     public void register() {
         loading = ProgressDialog.show(RegisterActivity.this, null, "Please wait...", true, false);
 
@@ -192,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .getInstance()
                 .getApi()
                 .registerUser(accept, name+"", email+"", username+"", password, idSchool+"" , phone);
-
+        Toast.makeText(RegisterActivity.this, " "+phone, Toast.LENGTH_LONG).show();
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override
             public void onResponse(Call<ResponseSignUp> call, Response<ResponseSignUp> response) {
@@ -236,6 +188,54 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Something wrong. Please try again later.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+
+        etUsername = findViewById(R.id.etUsername);
+        etEmail = findViewById(R.id.etEmail);
+        etName = findViewById(R.id.etName);
+        etPassword = findViewById(R.id.etPassword);
+        etPhone = findViewById(R.id.etPhone);
+        loginLink = findViewById(R.id.loginLink);
+        btnSchool = findViewById(R.id.btnSchool);
+        btnRegister = findViewById(R.id.btnRegister);
+        txtSchools = findViewById(R.id.txtSchools);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
+
+        btnSchool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                SchoolSearchFragment fragment = new SchoolSearchFragment();
+                fragment.setArguments(bundle);
+                fragment.show(((FragmentActivity) RegisterActivity.this).getSupportFragmentManager(), TAG);
+            }
+        });
+
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    public void setTextSch(String schoolName, String schoolId) {
+        txtSchools.setText(schoolName);
+        idSchool = schoolId;
     }
 
 }

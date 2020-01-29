@@ -66,8 +66,7 @@ public class LeaderboardChoose extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseTypeList> call, Response<ResponseTypeList> response) {
                if (response.isSuccessful()) {
-                    //  int size = model.getResult().size();
-                    categories = response.body().getResult();
+                     categories = response.body().getResult();
                     if (categories.isEmpty()) {
                         Toast.makeText(LeaderboardChoose.this, "Bidang Tidak Tersedia", Toast.LENGTH_SHORT).show();
 

@@ -1,6 +1,7 @@
 package id.technow.solve;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +24,17 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import id.technow.solve.Adapter.NavigationAdapter;
 
 import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,7 +57,24 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
         optionRV = fragmentView.findViewById(R.id.optionRV);
 
         btnDone.setOnClickListener(this);
-        loadSoal();
+
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("response", "response");
+        //  String json = getArguments().getString("question");
+        Type type = new TypeToken<ResponseQuestion>() {
+        }.getType();
+        ResponseQuestion responseQuestion = gson.fromJson(json, type);
+        ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
+
+
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
+        adapter = new NavigationAdapter(questionModels, getActivity());
+        optionRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        optionRV.setLayoutManager(staggeredGridLayoutManager);
+        optionRV.setAdapter(adapter);
+      //  loadSoal();
         return fragmentView;
     }
 

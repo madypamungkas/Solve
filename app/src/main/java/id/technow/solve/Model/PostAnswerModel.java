@@ -13,7 +13,7 @@ public class PostAnswerModel {
 
     @SerializedName("quiz_id")
     @Expose
-    private String quiz_id;
+    private int quiz_id;
 
     @SerializedName("collager_id")
     @Expose
@@ -41,7 +41,7 @@ public class PostAnswerModel {
     @Expose
     private ArrayList<UserAnswerModel> answer_save;
 
-    public PostAnswerModel(int id, String quiz_id, String collager_id, String total_score, String created_at, String updated_at, String true_sum, String false_sum, ArrayList<UserAnswerModel> answer_save) {
+    public PostAnswerModel(int id, int quiz_id, String collager_id, String total_score, String created_at, String updated_at, String true_sum, String false_sum, ArrayList<UserAnswerModel> answer_save) {
         this.id = id;
         this.quiz_id = quiz_id;
         this.collager_id = collager_id;
@@ -57,7 +57,7 @@ public class PostAnswerModel {
         return id;
     }
 
-    public String getQuiz_id() {
+    public int getQuiz_id() {
         return quiz_id;
     }
 
