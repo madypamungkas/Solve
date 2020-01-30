@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
-    android:orientation="vertical"
-    tools:context="id.technow.solve.LoginRegisterActivity">
+    android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -110,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:textColor="@color/white"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/_12ssp" />
@@ -166,8 +165,8 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
                         android:digits="+0123456789"
+                        android:inputType="phone"
                         android:textColor="@color/white"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/_12ssp" />

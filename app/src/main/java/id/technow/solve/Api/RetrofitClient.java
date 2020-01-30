@@ -13,9 +13,9 @@ public class RetrofitClient {
     //private static final String BASE_URL = "http://192.168.43.91/master-ruko/ruko/public/api/";
     //private static final String BASE_URL = "https://ruko.technow.id/api/";
     private static final String BASE_URL = "http://10.33.88.100/solve/solve-jst/public/api/";
-   // private static final String BASE_URL = "http://10.33.68.248/solve-jst/public/api/";
+    //private static final String BASE_URL = "http://10.33.68.248/solve-jst/public/api/";
 
-   // private static final String BASE_URL = "https://solve.technow.id/api/";
+    //private static final String BASE_URL = "https://solve.technow.id/api/";
 
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
@@ -24,7 +24,7 @@ public class RetrofitClient {
             .setLenient()
             .create();
 
-    private RetrofitClient(){
+    private RetrofitClient() {
     /*    HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -50,7 +50,8 @@ public class RetrofitClient {
         }
         return mInstance;
     }
-    public Api getApi(){
+
+    public Api getApi() {
         return retrofit.create(Api.class);
     }
 }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,9 +26,9 @@ import id.technow.solve.R;
 import static id.technow.solve.LoginActivity.isValidEmail;
 
 public class ForgotPassword extends AppCompatActivity {
-    TextInputLayout ilEmail;
-    TextInputEditText etEmail;
-    Button btnReset;
+    TextInputLayout layoutEmail;
+    TextInputEditText inputEmail;
+    MaterialButton btnReset;
     String email;
     ProgressDialog loading;
 
@@ -35,20 +36,19 @@ public class ForgotPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        ilEmail = findViewById(R.id.ilEmail);
-        etEmail = findViewById(R.id.etEmail);
+        inputEmail = findViewById(R.id.inputEmail);
+        layoutEmail = findViewById(R.id.layoutEmail);
 
         btnReset = findViewById(R.id.btnReset);
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loading = ProgressDialog.show(ForgotPassword.this, null, getString(R.string.please_wait), true, false);
-
                 resetEmail();
-
             }
         });
-        etEmail.addTextChangedListener(new TextWatcher() {
+
+        inputEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -61,28 +61,29 @@ public class ForgotPassword extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String email = etEmail.getText().toString();
+                String email = inputEmail.getText().toString();
 
                 if (email.isEmpty()) {
-                    ilEmail.setError("Email is required");
+                    layoutEmail.setError("Email is required");
                 } else if (!isValidEmail(email)) {
-                    ilEmail.setError("Enter a valid address");
+                    layoutEmail.setError("Enter a valid address");
                 } else {
-                    ilEmail.setError(null);
+                    layoutEmail.setError(null);
                 }
             }
         });
     }
 
     public void resetEmail() {
-        email = etEmail.getText().toString().trim();
+        email = inputEmail.getText().toString().trim();
 
         if (email.isEmpty()) {
             loading.dismiss();
-            ilEmail.setError("Email is required");
-            etEmail.requestFocus();
+            layoutEmail.setError("Email is required");
+            inputEmail.requestFocus();
             return;
         }
+
         retrofit2.Call<ResponseForgotPassword> call = RetrofitClient.getInstance().getApi().resetEmail("application/json", email);
         call.enqueue(new Callback<ResponseForgotPassword>() {
             @Override
@@ -104,7 +105,6 @@ public class ForgotPassword extends AppCompatActivity {
                             finish();
                         }
                     });
-
                     builder.show();
                 } else {
                     loading.dismiss();
@@ -112,7 +112,7 @@ public class ForgotPassword extends AppCompatActivity {
                     builder.setTitle("Warning");
                     builder.setMessage("Reset Link Could Not Be Sent");
                     builder.setCancelable(false);
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -121,7 +121,6 @@ public class ForgotPassword extends AppCompatActivity {
                     builder.show();
                 }
             }
-
 
             @Override
             public void onFailure(retrofit2.Call<ResponseForgotPassword> call, Throwable t) {

@@ -16,7 +16,7 @@
         <View
             android:id="@+id/carousel"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_130sdp"
+            android:layout_height="@dimen/_135sdp"
             android:layout_marginStart="@dimen/_13sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:layout_marginEnd="@dimen/_13sdp"
