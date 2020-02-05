@@ -130,6 +130,7 @@ public class QuizActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                navSave();
                 Bundle bundle = new Bundle();
                 bundle.putInt("idSoal", idsoal);
                 bundle.putString("namaSoal", namaQuiz);
@@ -302,6 +303,18 @@ public class QuizActivity extends AppCompatActivity {
             adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
             optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
             optionRV.setLayoutManager(staggeredGridLayoutManager);
+            nextSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    nextSoal();
+                }
+            });
+            prevSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    prevSoal();
+                }
+            });
             optionRV.setAdapter(adapter);
         } else {
             layoutAns.setVisibility(View.VISIBLE);
@@ -312,8 +325,18 @@ public class QuizActivity extends AppCompatActivity {
                 tvIsian.setText("Jawaban Anda : ");
                 inputAnswer.setText("");
             }
-            //    answerWatcher();
-
+            nextSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveNext();
+                }
+            });
+            prevSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    savePrev();
+                }
+            });
 
         }
 
@@ -411,6 +434,18 @@ public class QuizActivity extends AppCompatActivity {
                     optionRV.setVisibility(View.VISIBLE);
                     layoutAns.setVisibility(View.GONE);
                     optionModel = questions.getOption();
+                    nextSoal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            nextSoal();
+                        }
+                    });
+                    prevSoal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            prevSoal();
+                        }
+                    });
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                     adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
                     optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
@@ -453,61 +488,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    /* public void nextSoalAuto() {
-         prevSoal.setVisibility(View.VISIBLE);
-         //saveOption();
-         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
-         Gson gson = new Gson();
-         String json = sharedPrefs.getString("question", "question");
-         Type type = new TypeToken<ArrayList<QuestionModel>>() {
-         }.getType();
-         ArrayList<QuestionModel> questionSave = gson.fromJson(json, type);
 
-         SharedPreferences.Editor editor = sharedPrefs.edit();
-         editor.putInt("num", currentQusetionId);
-         editor.apply();
-
-         if (currentQusetionId + 1 == questionSave.size()) {
-             nextSoal.setVisibility(View.INVISIBLE);
-             // submitBtn.setVisibility(View.VISIBLE);
-             fab2.setVisibility(View.INVISIBLE);
-             if (fab.getVisibility() == View.VISIBLE) {
-                 fab2.setVisibility(View.VISIBLE);
-             }
-         }
-
-         if (currentQusetionId + 1 == questionSave.size()) {
-             if (status == 1) {
-             } else {
-             }
-
-         } else {
-             currentQusetionId++;
-             final QuestionModel questions = questionSave.get(currentQusetionId);
-
-             if (currentQusetionId > questionSave.size()) {
-
-             } else {
-                 soal.setText(questions.getQuestion());
-                 number.setText(currentQusetionId + 1 + "");
-                 optionModel = questions.getOption();
-                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-                 adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
-                 optionRV.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
-                 optionRV.setLayoutManager(staggeredGridLayoutManager);
-                 optionRV.setAdapter(adapter);
-                 if (questions.getPic_question() == null) {
-                     imgSoal.setVisibility(View.GONE);
-                 } else {
-                     imgSoal.setVisibility(View.VISIBLE);
-                     Picasso.get().load(link + questions.getId_soal())
-                             .into(imgSoal);
-                 }
-             }
-
-         }
-     }
- */
     public void prevSoal() {
         nextSoal.setVisibility(View.VISIBLE);
         prevSoal.setVisibility(View.VISIBLE);
@@ -536,7 +517,18 @@ public class QuizActivity extends AppCompatActivity {
                 if (questions.getType().equals("option")) {
                     optionRV.setVisibility(View.VISIBLE);
                     layoutAns.setVisibility(View.GONE);
-
+                    nextSoal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            nextSoal();
+                        }
+                    });
+                    prevSoal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            prevSoal();
+                        }
+                    });
                     optionModel = questions.getOption();
                     StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                     adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
@@ -565,7 +557,6 @@ public class QuizActivity extends AppCompatActivity {
                         inputAnswer.setText("");
                     }
                 }
-
                 if (questions.getPic_question() == null) {
                     imgSoal.setVisibility(View.GONE);
                 } else {
@@ -578,7 +569,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
     }
-
 
     @SuppressLint("RestrictedApi")
     public void navigationSoal(int num) {
@@ -601,6 +591,18 @@ public class QuizActivity extends AppCompatActivity {
             optionRV.setVisibility(View.VISIBLE);
             layoutAns.setVisibility(View.GONE);
 
+            nextSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    nextSoal();
+                }
+            });
+            prevSoal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    prevSoal();
+                }
+            });
             optionModel = questions.getOption();
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
             adapter = new OptionsAdapter(optionModel, QuizActivity.this, questions);
@@ -628,7 +630,6 @@ public class QuizActivity extends AppCompatActivity {
                 tvIsian.setText("Jawaban Anda : ");
                 inputAnswer.setText("");
             }
-
         }
 
         if (questions.getPic_question() == null) {
@@ -820,11 +821,18 @@ public class QuizActivity extends AppCompatActivity {
         ArrayList<QuestionModel> questionSave = gson.fromJson(json2, type2);
 
 
-        if (userAnswer == "") {
+        if (userAnswer.equals("")) {
             editorList.putString("userAnswer", "**");
+        } else if (userAnswer.equals("**")) {
+            editorList.putString("userAnswer", "**");
+            editorList.putString("userAnswerContent", "**");
+        } else {
+            editorList.putString("userAnswer", userAnswer);
+            editorList.putString("userAnswerContent", userAnswer);
         }
-        editorList.putString("userAnswer", userAnswer);
-        editorList.putString("userAnswerContent", userAnswer);
+
+        questionSave.get(currentQusetionId).setUser_answer(userAnswer);
+        questionSave.get(currentQusetionId).setUser_answer_content(userAnswerContent);
 
         String questionSt = gson.toJson(questionSave);
         editorList.putString("question", questionSt);
@@ -835,40 +843,31 @@ public class QuizActivity extends AppCompatActivity {
 
         editorList.commit();
         editorList.apply();
-         saveOption();
         inputAnswer.setText(answer);
         tvIsian.setText("Jawaban Anda : " + answer);
 
     }
 
     private void saveNext() {
-      /*  saveIsian();
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-               nextSoal();
-               }
-        }, 500);*/
+        saveIsian();
+        nextSoal();
     }
 
     private void savePrev() {
-      /*  saveIsian();
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                prevSoal();
-            }
-        }, 500);*/
+        saveIsian();
+        prevSoal();
     }
 
     private void navSave() {
-        saveIsian();
+        QuestionModel questions = questionModel.get(currentQusetionId);
+        soal.setText(questions.getQuestion());
+        optionModel = questions.getOption();
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+        if (questions.getType().equals("option")) {
+        } else {
+            saveIsian();
+        }
     }
 
 
-    public void saveIsian(View view) {
-        saveIsian();
-    }
 }

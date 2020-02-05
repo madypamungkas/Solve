@@ -72,7 +72,11 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
 
         if (questionModel.getUser_answer().equals("**")) {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        } else {
+        }
+        else if(questionModel.getUser_answer().equals("")){
+            holder.placeA.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        else {
             holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
 
         }
