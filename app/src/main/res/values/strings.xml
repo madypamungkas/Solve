@@ -5,9 +5,12 @@
     <string name="something_wrong_desc">Silahkan coba beberapa saat lagi</string>
     <string name="something_wrong">Terjadi kesalahan, silahkan coba beberapa saat lagi</string>
     <string name="update_title">Pembaruan Tersedia</string>
+    <string name="maintenance_title">Sistem Dalam Masa Perbaikan</string>
+    <string name="maintenance_desc">Saat ini sistem dalam masa perbaikan untuk versi yang lebih stabil dan pengalaman yang lebih baik</string>
     <string name="update_desc">Perbarui aplikasi untuk versi yang lebih stabil dan pengalaman yang lebih baik</string>
     <string name="update">Perbarui</string>
     <string name="update_later">Perbarui Nanti</string>
+    <string name="maintenance_close">Tutup Aplikasi</string>
     <string name="no_internet_title">Tidak Ada Koneksi Internet</string>
     <string name="no_internet_desc">Cek koneksi internetmu dan coba lagi</string>
     <string name="try_again">Coba Lagi</string>

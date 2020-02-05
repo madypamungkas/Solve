@@ -180,7 +180,6 @@
                                 android:layout_height="@dimen/_48sdp"
                                 android:layout_weight="0.5"
                                 android:foreground="?attr/selectableItemBackground"
-                                android:onClick="prevSoal"
                                 android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
                                 android:visibility="visible" />
 
@@ -227,7 +226,6 @@
                                 android:layout_height="@dimen/_48sdp"
                                 android:layout_weight="0.5"
                                 android:foreground="?attr/selectableItemBackground"
-                                android:onClick="nextSoal"
                                 android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
                                 android:visibility="visible" />
                         </LinearLayout>
@@ -295,7 +293,6 @@
                             android:layout_marginEnd="@dimen/_16sdp"
                             android:hint="@string/your_answer"
                             android:textColorHint="@color/white"
-                            android:visibility="visible"
                             app:boxBackgroundColor="@android:color/transparent"
                             app:boxStrokeColor="@color/white"
                             app:boxStrokeErrorColor="#CF6679"
@@ -309,7 +306,7 @@
                                 android:id="@+id/inputAnswer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:imeOptions="actionSearch"
+                                android:imeOptions="actionSend"
                                 android:inputType="text"
                                 android:lines="5"
                                 android:maxLines="5"
@@ -331,7 +328,7 @@
                             android:text="@string/save"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:backgroundTint="@color/colorAccent" />
 
                     </LinearLayout>
@@ -480,8 +477,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0"
-                android:textColor="@color/white_smoke"
+                android:text="-1"
+                android:textColor="@color/red"
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
 

@@ -44,6 +44,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
     NavigationAdapter adapter;
     MaterialButton btnDone;
     int idSoal;
+    String namaSoal;
     List<QuestionModel> questionModels;
 
     @Override
@@ -53,6 +54,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
         View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
 
         idSoal = getArguments().getInt("idSoal", 1);
+        namaSoal = getArguments().getString("namaSoal", "Solve");
         btnDone = fragmentView.findViewById(R.id.btnDone);
         optionRV = fragmentView.findViewById(R.id.optionRV);
 
@@ -119,6 +121,7 @@ public class NavigationFragment extends BottomSheetDialogFragment implements Vie
             case R.id.btnDone:
                 Intent readyBtn = new Intent(getActivity(), ReviewActivity.class);
                 readyBtn.putExtra("idSoal", idSoal);
+                readyBtn.putExtra("namaSoal", namaSoal);
                 startActivity(readyBtn);
                 break;
         }

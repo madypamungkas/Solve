@@ -190,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(retrofit2.Call<ResponseProfile> call, Throwable t) {
                 progress.dismiss();
-                Toast.makeText(ProfileActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(ProfileActivity.this, t.toString(), Toast.LENGTH_LONG).show();
                 Toast.makeText(ProfileActivity.this, "Ukuran Foto Terlalu Besar 2", Toast.LENGTH_LONG).show();
 
             }

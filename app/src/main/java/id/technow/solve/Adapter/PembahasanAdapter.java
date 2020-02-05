@@ -61,7 +61,9 @@ public class PembahasanAdapter extends RecyclerView.Adapter<PembahasanAdapter.VH
         holder.desc.setText(answer.getQuestion());
         holder.answer.setText(answer.getTrueAnswerContent());
         holder.userAnswer.setText(answer.getUser_answer_content());
-
+        if(answer.getUser_answer_content().equals("**")){
+            holder.userAnswer.setText("--");
+        }
         if (answer.getUser_answer().equals(answer.getTrueAnswer())) {
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             holder.status.setText("Benar");

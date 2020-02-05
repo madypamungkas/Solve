@@ -37,9 +37,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewVH> 
         holder.tvSoal.setText(questionModel.getQuestion());
         if (questionModel.getUser_answer().equals("**")) {
             holder.tvAns.setText("---");
-        } else {
+        } else if( questionModel.getUser_answer().equals("")) {
+            holder.tvAns.setText("---");
+        }
+        else {
             holder.tvAns.setText(questionModel.getUser_answer_content());
-
         }
         int number = position + 1;
         holder.tvNum.setText(number + "");

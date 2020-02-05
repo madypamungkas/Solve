@@ -32,14 +32,14 @@ public class ResultQuizActivity extends AppCompatActivity {
     TextView point, textCorrect, textSumQues;
     MaterialButton play, btn_home, btn_pembahasan;
     UserModel user = SharedPrefManager.getInstance(this).getUser();
-    int total_score, idquiz;
+    int total_score, idquiz, idhistory;
     String namaSoal, category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_quiz);
-       // idquiz = getIntent().getIntExtra("idsoal", 1);
+        // idquiz = getIntent().getIntExtra("idsoal", 1);
         point = findViewById(R.id.point);
         namaSoal = getIntent().getStringExtra("namaSoal");
 
@@ -51,7 +51,7 @@ public class ResultQuizActivity extends AppCompatActivity {
         }.getType();
         ResponsePostAnswer responseAnswer = gson.fromJson(json, type);
         idquiz = responseAnswer.getResult().getQuiz_id();
-
+        idhistory = responseAnswer.getResult().getId();
 
         point.setText(responseAnswer.getResult().getTotal_score() + "  pts");
         total_score = getIntent().getIntExtra("points", 0);
@@ -68,7 +68,9 @@ public class ResultQuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ResultQuizActivity.this, PembahasanQuizActivity.class);
                 intent.putExtra("idsoal", idquiz);
+                intent.putExtra("idHistory", idhistory);
                 intent.putExtra("namaSoal", namaSoal);
+                intent.putExtra("gameName", namaSoal);
                 startActivity(intent);
             }
         });
@@ -79,6 +81,9 @@ public class ResultQuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(ResultQuizActivity.this, Main2Activity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ResultQuizActivity.this);
+                SharedPreferences.Editor editorList = sharedPrefs.edit();
+                editorList.clear();
                 startActivity(i);
             }
         });
@@ -91,8 +96,13 @@ public class ResultQuizActivity extends AppCompatActivity {
                 intent.putExtra("category", category);
                 intent.putExtra("namaSoal", getIntent().getStringExtra("namaSoal") + " ");
                 intent.putExtra("idsoal", idquiz);
-                Toast.makeText(ResultQuizActivity.this, idquiz+" ", Toast.LENGTH_LONG).show();
+                // Toast.makeText(ResultQuizActivity.this, idquiz+" ", Toast.LENGTH_LONG).show();
                 intent.putExtra("namaSoal", namaSoal);
+
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ResultQuizActivity.this);
+                SharedPreferences.Editor editorList = sharedPrefs.edit();
+                editorList.clear();
+                editorList.apply();
                 startActivity(intent);
             }
 

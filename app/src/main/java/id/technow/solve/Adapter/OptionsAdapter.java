@@ -143,40 +143,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
                     editorList.putString("id-" + option.getQuestion_id(), option.getOption());
                     holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
                 }
-
-
-            } else {
-
             }
-            if (mCtx instanceof QuizActivity) {
-                ((QuizActivity) mCtx).nextSoalAuto();
-            }
-
-            //mSelectedItem = position;
-            /*if (position == mSelectedItem) {
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#64b5f6"));
-                if (!choosen.equals("question")) {
-                    if (choosen.equals(option.getOption())) {
-                        holder.rbChoose.setChecked(true);
-                    } else {
-                        editorList.putString("id-" + option.getQuestion_id(), option.getOption());
-                        holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
-                    }
-                } else {
-
-                }
-            } else {
-                holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
-                if (!choosen.equals("question")) {
-                    if (choosen.equals(option.getOption())) {
-                        holder.rbChoose.setChecked(true);
-                    } else {
-                        editorList.putString("id-" + option.getQuestion_id(), option.getOption());
-                        holder.placeA.setCardBackgroundColor(Color.parseColor("#545454"));
-                    }
-                } else {
-
-                }
+            /*if (mCtx instanceof QuizActivity) {
+                ((QuizActivity) mCtx).navigationSoal(position+1);
             }*/
 
         } else {

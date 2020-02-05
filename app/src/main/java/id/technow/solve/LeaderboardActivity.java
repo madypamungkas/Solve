@@ -85,14 +85,14 @@ public class LeaderboardActivity extends AppCompatActivity {
                     adapter = new LeaderboardAdapter(LeaderboardActivity.this, leaModel);
                     leaders.setAdapter(adapter);
                 } else {
-                    Toast.makeText(LeaderboardActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+              //      Toast.makeText(LeaderboardActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseLeaderboard> call, Throwable t) {
                 loading.dismiss();
-                Toast.makeText(LeaderboardActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+             //   Toast.makeText(LeaderboardActivity.this, t.toString(), Toast.LENGTH_LONG).show();
             }
         });
         //String token = "Bearer " + user.getToken();
@@ -157,7 +157,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                                 .into(avatar3);
                     }
                 } else {
-                    Toast.makeText(LeaderboardActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+             //       Toast.makeText(LeaderboardActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
                 }
             }
 

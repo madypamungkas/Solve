@@ -47,14 +47,31 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         holder.desc.setText(answer.getQuestion());
         holder.answer.setText(answer.getTrueAnswerContent());
         holder.userAnswer.setText(answer.getUser_answer_content());
+        if(answer.getUser_answer_content().equals("**")){
+            holder.userAnswer.setText("--");
+        } else if(answer.getUser_answer_content().equals("")){
+            holder.userAnswer.setText("--");
+        }
+        else{
+            holder.userAnswer.setText(answer.getUser_answer_content());
+        }
 
-        if(answer.getUser_answer().equals(answer.getTrueAnswer())){
+        if(answer.getUser_true().equals("1")){
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
             holder.status.setText("Benar");
-        }else {
+        }
+        else {
             holder.cardGame.setCardBackgroundColor(Color.parseColor("#545454"));
             holder.status.setText("Salah");
+           /* if(answer.getUser_answer().equals(answer.getTrueAnswer())){
+                holder.cardGame.setCardBackgroundColor(Color.parseColor("#64b5f6"));
+                holder.status.setText("Benar");
+            }else {
+                holder.cardGame.setCardBackgroundColor(Color.parseColor("#545454"));
+                holder.status.setText("Salah");
+            }*/
         }
+
     }
 
     @Override

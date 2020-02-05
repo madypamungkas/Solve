@@ -192,7 +192,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .getInstance()
                 .getApi()
                 .registerUser(accept, name+"", email+"", username+"", password, idSchool+"" , phone);
-        Toast.makeText(RegisterActivity.this, " "+phone, Toast.LENGTH_LONG).show();
         call.enqueue(new Callback<ResponseSignUp>() {
             @Override
             public void onResponse(Call<ResponseSignUp> call, Response<ResponseSignUp> response) {

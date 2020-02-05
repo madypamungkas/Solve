@@ -238,9 +238,9 @@ public class RegisterFragment extends Fragment {
                                 separator = "\n";
                             }
                         }
-                        Toast.makeText(getActivity(), errors.toString(), Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getActivity(), errors.toString(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }

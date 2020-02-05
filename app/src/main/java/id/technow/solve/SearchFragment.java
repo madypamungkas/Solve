@@ -140,14 +140,14 @@ public class SearchFragment extends Fragment {
                     }
 
                 } else {
-                    Toast.makeText(getActivity(), "eror " + response.code(), Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(getActivity(), "eror " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 loading.dismiss();
-                Toast.makeText(getActivity(), "Error ", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), "Error ", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -166,7 +166,7 @@ public class SearchFragment extends Fragment {
                     Intent i = new Intent(getActivity(), QuizActivity.class);
 
                     i.putExtra("idsoal", response.body().getResult().get(0).getId());
-                    Toast.makeText(getActivity(),response.body().getResult().get(0).getId()+" " , Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getActivity(),response.body().getResult().get(0).getId()+" " , Toast.LENGTH_SHORT).show();
 
                   //  i.putExtra("idsoal", response.body().getResult().get(0).getPic_url());
                     startActivity(i);

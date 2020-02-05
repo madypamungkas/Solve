@@ -105,6 +105,7 @@ public class SplashActivity extends AppCompatActivity {
                         String ver = String.valueOf(responseVersion.getResult().getVersion());
                         String subVer = String.valueOf(responseVersion.getResult().getSub_version());
                         String versionApi = ver + "." + subVer;
+                        String year = String.valueOf(response.body().getResult().getYear());
                         PackageInfo pInfo = null;
                         try {
                             pInfo = mContext.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -113,7 +114,11 @@ public class SplashActivity extends AppCompatActivity {
                         }
                         String version = pInfo.versionName;
                         if (version.equals(versionApi)) {
-                            checkLogin();
+                            if (year.equals("2000")) {
+                                dialogMaintenance();
+                            } else {
+                                checkLogin();
+                            }
                         } else {
                             final Dialog dialog = new Dialog(mContext);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -182,5 +187,45 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, 2500L);
+    }
+
+    private void dialogMaintenance() {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_maintenance);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        dialog.getWindow().setLayout((9 * width) / 10, height);
+
+        MaterialButton btnUpdate = dialog.findViewById(R.id.btnUpdate);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                SplashActivity.this.finish();
+                final String appPackageName = getPackageName();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+
+        TextView btnUpdateLater = dialog.findViewById(R.id.btnUpdateLater);
+        btnUpdateLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                SplashActivity.this.finish();
+            }
+        });
+        dialog.show();
     }
 }

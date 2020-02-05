@@ -252,9 +252,9 @@ public class QuizActivity_viewpager extends AppCompatActivity {
                     editorList.putString("answerPost", responsePost);
                     editorList.commit();
 
-                    Toast.makeText(mCtx,
+                   /* Toast.makeText(mCtx,
                             "Sukses",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
                     //saveInternal();
                     progress.dismiss();
 

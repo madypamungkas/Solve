@@ -47,6 +47,7 @@ public class ReviewActivity extends AppCompatActivity {
     ReviewAdapter adapter;
     Context mCtx = ReviewActivity.this;
     ProgressDialog progress;
+    String namaSoal;
     int idSoal;
 
     @Override
@@ -54,6 +55,7 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
         idSoal = getIntent().getIntExtra("idSoal", 1);
+        namaSoal = getIntent().getStringExtra("namaSoal");
         reviewRV = findViewById(R.id.RVmain);
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +103,7 @@ public class ReviewActivity extends AppCompatActivity {
             outputStreamWriter.write(json);
             outputStreamWriter.close();
 
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+        //    Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             Log.e("Exception", "File write failed: " + e.toString());
@@ -145,15 +147,16 @@ public class ReviewActivity extends AppCompatActivity {
                     editorList.putString("answerPost", responsePost);
                     editorList.commit();
 
-                    Toast.makeText(mCtx,
+                    /*Toast.makeText(mCtx,
                             "Sukses",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
 
                     progress.dismiss();
 
                     Intent intent = new Intent(ReviewActivity.this, ResultQuizActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("idsoal", response.body().getResult().getQuiz_id());
+                    intent.putExtra("namaSoal", namaSoal);
                     editorList.commit();
                     startActivity(intent);
 
@@ -161,9 +164,9 @@ public class ReviewActivity extends AppCompatActivity {
                     progress.dismiss();
                     Log.i("debug", "Failed " + response.errorBody() + " ");
 
-                    Toast.makeText(mCtx, response.code() + " " + response.message() + response.errorBody(),
+               //     Toast.makeText(mCtx, response.code() + " " + response.message() + response.errorBody(),
                             //R.string.something_wrong,
-                            Toast.LENGTH_LONG).show();
+                 //           Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -173,7 +176,6 @@ public class ReviewActivity extends AppCompatActivity {
                 Log.i("debug", "onResponse : FAILED");
                 progress.dismiss();
                 Toast.makeText(mCtx,
-                        t.toString() +
                                 "Quiz Tidak Dapat Diakses",
                         //R.string.something_wrong + t.toString(),
                         Toast.LENGTH_LONG).show();
