@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         Picasso.get().load(link + option.getId())
                 .into(holder.imgOption);
         holder.rbChoose.setChecked(position == mSelectedItem);
+        if (option.getContents().length() > 25) {
+            holder.jawaban.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCtx.getResources().getDimension(R.dimen._14ssp));
+        } else if (option.getContents().length() > 30) {
+            holder.jawaban.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCtx.getResources().getDimension(R.dimen._13ssp));
+        } else {
+            holder.jawaban.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCtx.getResources().getDimension(R.dimen._15ssp));
+        }
         holder.jawaban.setText(option.getContents() + " ");
         String choosen = sharedPrefs.getString("id-" + option.getQuestion_id(), "question");
         if (position == mSelectedItem) {
@@ -173,7 +181,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
         RadioButton rbChoose;
         public int id;
         CardView placeA;
-        ImageView imgOption;
+        br.com.felix.imagezoom.ImageZoom imgOption;
 
         public OptionVH(@NonNull View itemView) {
             super(itemView);

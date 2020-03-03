@@ -7,8 +7,9 @@ android {
         applicationId "id.technow.solve"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 4
-        versionName "0.4"
+        multiDexEnabled true
+        versionCode 7
+        versionName "0.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -59,4 +60,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'com.github.MdFarhanRaja:SearchableSpinner:2.0'
+    implementation 'com.github.felixsoares:ImageZoom:1.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.github.hsmnzaydn:imagezoom:1.2.1'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.4.1'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }

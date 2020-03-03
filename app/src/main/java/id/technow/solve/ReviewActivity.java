@@ -8,6 +8,7 @@ import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.Model.ResponseQuestion;
 import id.technow.solve.Model.UserModel;
+import id.technow.solve.Storage.SharedPrefRate;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +74,6 @@ public class ReviewActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ReviewActivity.this);
         Gson gson = new Gson();
         String json = sharedPrefs.getString("response", "response");
-        //  String json = getArguments().getString("question");
         Type type = new TypeToken<ResponseQuestion>() {
         }.getType();
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
@@ -85,7 +85,6 @@ public class ReviewActivity extends AppCompatActivity {
         reviewRV.setLayoutManager(new LinearLayoutManager(ReviewActivity.this));
         reviewRV.setLayoutManager(staggeredGridLayoutManager);
         reviewRV.setAdapter(adapter);
-        // saveInternal();
     }
 
     public void saveInternal() {
@@ -158,6 +157,7 @@ public class ReviewActivity extends AppCompatActivity {
                     intent.putExtra("idsoal", response.body().getResult().getQuiz_id());
                     intent.putExtra("namaSoal", namaSoal);
                     editorList.commit();
+                    playingCount();
                     startActivity(intent);
 
                 } else {
@@ -182,6 +182,12 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void playingCount(){
+        int playCount = SharedPrefRate.getInstance(ReviewActivity.this).getTryPlaying();
+        playCount = playCount+1;
+        SharedPrefRate.getInstance(ReviewActivity.this).saveTry(playCount);
     }
 
     @Override

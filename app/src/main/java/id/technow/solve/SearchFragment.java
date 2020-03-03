@@ -136,18 +136,21 @@ public class SearchFragment extends Fragment {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     } else {
                         idType = response.body().getResult().get(0).getId();
-                        getListCategory();
+                        Intent i = new Intent(getActivity(), QuizActivity.class);
+
+                        i.putExtra("idsoal", idType);
+
+                        startActivity(i);
+                 //       getListCategory();
                     }
 
                 } else {
-               //     Toast.makeText(getActivity(), "eror " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseTypeList> call, Throwable t) {
                 loading.dismiss();
-             //   Toast.makeText(getActivity(), "Error ", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,14 +166,8 @@ public class SearchFragment extends Fragment {
                 ResponseTypeList model = response.body();
                 if (response.isSuccessful()) {
                     models = response.body().getResult();
-                    Intent i = new Intent(getActivity(), QuizActivity.class);
 
-                    i.putExtra("idsoal", response.body().getResult().get(0).getId());
-                //    Toast.makeText(getActivity(),response.body().getResult().get(0).getId()+" " , Toast.LENGTH_SHORT).show();
-
-                  //  i.putExtra("idsoal", response.body().getResult().get(0).getPic_url());
-                    startActivity(i);
-                    Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();

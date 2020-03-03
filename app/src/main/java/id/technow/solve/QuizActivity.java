@@ -1,5 +1,6 @@
 package id.technow.solve;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
@@ -22,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -30,6 +32,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -43,6 +46,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,8 +80,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class QuizActivity extends AppCompatActivity {
-    LinearLayout soalLayout, readyLayout;
-    private TextView timer, soal, number, sum, namaSoal, gameName, tvIsian;
+    LinearLayout soalLayout, readyLayout, layaoutRemainChance;
+    private TextView timer, soal, number, sum, namaSoal, gameName, tvIsian, txtChance, txtRemainTime;
     ProgressDialog progress;
     CountDownTimer cd;
     private List<QuestionModel> questionModel;
@@ -77,7 +89,8 @@ public class QuizActivity extends AppCompatActivity {
     private int currentQusetionId = 0;
     int idsoal, sumQues;
     String token;
-    ImageView prevSoal, nextSoal, imgSoal;
+    ImageView prevSoal, nextSoal;
+    com.github.chrisbanes.photoview.PhotoView imgSoal;
     Context mCtx = QuizActivity.this;
     MaterialButton readyBtn;
     int status = 0;
@@ -92,6 +105,10 @@ public class QuizActivity extends AppCompatActivity {
     LinearLayout layoutAns;
     TextInputEditText inputAnswer;
     String namaQuiz, codeQuiz;
+    private RewardedAd rewardedad;
+    public int answerChance;
+    ProgressDialog loading;
+    boolean isRunning = false;
 
 
     @Override
@@ -101,7 +118,9 @@ public class QuizActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         soalLayout = findViewById(R.id.soalLayout);
+        layaoutRemainChance = findViewById(R.id.layaoutRemainChance);
         layoutAnswer = findViewById(R.id.layoutAnswer);
+        txtRemainTime = findViewById(R.id.txtRemainTime);
         layoutAns = findViewById(R.id.layoutAns);
         inputAnswer = findViewById(R.id.inputAnswer);
         tvIsian = findViewById(R.id.tvIsian);
@@ -110,7 +129,9 @@ public class QuizActivity extends AppCompatActivity {
         namaQuiz = getIntent().getStringExtra("namaSoal");
         codeQuiz = getIntent().getStringExtra("codeSoal");
 
+
         timer = findViewById(R.id.timer);
+        txtChance = findViewById(R.id.txtChance);
         number = findViewById(R.id.number);
         sum = findViewById(R.id.sum);
         soal = findViewById(R.id.soal);
@@ -124,8 +145,24 @@ public class QuizActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         fab2 = findViewById(R.id.fab2);
         gameName = findViewById(R.id.gameName);
-        loadSoal();
+        answerChance = SharedPrefManager.getInstance(this).getChance();
+        if (answerChance == 0) {
+            if(isRunning == false){
+                timeRemainChance();
+            }
+            else {
 
+            }
+        }
+        txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+        loadSoal();
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        MobileAds.initialize(this, "ca-app-pub-3952453830525109~9642702833");
+        //  rewardedad = new RewardedAd(this, "ca-app-pub-3952453830525109~9642702833");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +238,77 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    private void loadAd() {
+        loading = ProgressDialog.show(QuizActivity.this, null,
+                getString(R.string.please_wait), true, false);
+        rewardedad = new RewardedAd(this,
+                "ca-app-pub-3952453830525109/1481335302"
+        );
+        RewardedAdLoadCallback callback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdFailedToLoad(int i) {
+                super.onRewardedAdFailedToLoad(i);
+                loading.dismiss();
+                Toast.makeText(mCtx,
+                        "Ad Failed To Load",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onRewardedAdLoaded() {
+                super.onRewardedAdLoaded();
+                loading.dismiss();
+                showAd();
+            }
+        };
+        rewardedad.loadAd(new AdRequest.Builder().build(), callback);
+    }
+    private void showAd() {
+        if (rewardedad.isLoaded()) {
+            RewardedAdCallback callback = new RewardedAdCallback() {
+                @Override
+                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                    Toast.makeText(mCtx,
+                            "Tambah Kesempatan Bermain Berhasil",
+                            Toast.LENGTH_LONG).show();
+                    answerChance = answerChance + 1;
+                    SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
+                    txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+                    //loadAd();
+                }
+
+                @Override
+                public void onRewardedAdOpened() {
+                    super.onRewardedAdOpened();
+                   /* Toast.makeText(mCtx,
+                            "Ad opened",
+                            Toast.LENGTH_LONG).show();*/
+                }
+
+                @Override
+                public void onRewardedAdClosed() {
+                    super.onRewardedAdClosed();
+                   /* Toast.makeText(mCtx,
+                            "Batal m",
+                            Toast.LENGTH_LONG).show();*/
+                }
+
+                @Override
+                public void onRewardedAdFailedToShow(int i) {
+                    super.onRewardedAdFailedToShow(i);
+                    /*Toast.makeText(mCtx,
+                            "Ad failed to load",
+                            Toast.LENGTH_LONG).show();*/
+                }
+            };
+            this.rewardedad.show(this, callback);
+        } else {
+           /* Toast.makeText(mCtx,
+                    "Ad not loaded",
+                    Toast.LENGTH_LONG).show();*/
+        }
+    }
+
     public void loadSoal() {
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
@@ -222,7 +330,7 @@ public class QuizActivity extends AppCompatActivity {
                         progress.dismiss();
                         sum.setText("/" + questionModel.size());
                         sumQues = questionModel.size();
-                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+                        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
                         SharedPreferences.Editor editorList = sharedPrefs.edit();
                         Gson gson = new Gson();
 
@@ -240,9 +348,19 @@ public class QuizActivity extends AppCompatActivity {
                         readyBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                getCurrentTime();
+                        /*        getCurrentTime();
                                 readyLayout.setVisibility(View.GONE);
-                                soalLayout.setVisibility(View.VISIBLE);
+                                soalLayout.setVisibility(View.VISIBLE);*/
+                                if (answerChance == 0) {
+                                    dialogAd();
+                                } else {
+                                    getCurrentTime();
+                                    answerChance = answerChance - 1;
+                                    SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
+                                    readyLayout.setVisibility(View.GONE);
+                                    soalLayout.setVisibility(View.VISIBLE);
+                                }
+
                             }
                         });
 
@@ -295,6 +413,13 @@ public class QuizActivity extends AppCompatActivity {
     public void showQuestion() {
         QuestionModel questions = questionModel.get(currentQusetionId);
         soal.setText(questions.getQuestion());
+        if (questions.getQuestion().length() > 120) {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._14ssp));
+        } else if (questions.getQuestion().length() > 200) {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._13ssp));
+        } else {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._17ssp));
+        }
         optionModel = questions.getOption();
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         if (questions.getType().equals("option")) {
@@ -409,7 +534,6 @@ public class QuizActivity extends AppCompatActivity {
 
         if (currentQusetionId + 1 == questionSave.size()) {
             nextSoal.setVisibility(View.INVISIBLE);
-            // submitBtn.setVisibility(View.VISIBLE);
             fab2.setVisibility(View.INVISIBLE);
             if (fab.getVisibility() == View.VISIBLE) {
                 fab2.setVisibility(View.VISIBLE);
@@ -429,6 +553,13 @@ public class QuizActivity extends AppCompatActivity {
 
             } else {
                 soal.setText(questions.getQuestion());
+                if (questions.getQuestion().length() > 120) {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._14ssp));
+                } else if (questions.getQuestion().length() > 200) {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._13ssp));
+                } else {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._17ssp));
+                }
                 number.setText(currentQusetionId + 1 + "");
                 if (questions.getType().equals("option")) {
                     optionRV.setVisibility(View.VISIBLE);
@@ -488,7 +619,6 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-
     public void prevSoal() {
         nextSoal.setVisibility(View.VISIBLE);
         prevSoal.setVisibility(View.VISIBLE);
@@ -512,6 +642,13 @@ public class QuizActivity extends AppCompatActivity {
                 currentQusetionId--;
                 final QuestionModel questions = questionSave.get(currentQusetionId);
                 soal.setText(questions.getQuestion());
+                if (questions.getQuestion().length() > 120) {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._14ssp));
+                } else if (questions.getQuestion().length() > 200) {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._13ssp));
+                } else {
+                    soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._17ssp));
+                }
                 number.setText(currentQusetionId + 1 + "");
                 optionModel = questions.getOption();
                 if (questions.getType().equals("option")) {
@@ -586,6 +723,13 @@ public class QuizActivity extends AppCompatActivity {
 
         final QuestionModel questions = questionSave.get(currentQusetionId);
         soal.setText(questions.getQuestion());
+        if (questions.getQuestion().length() > 120) {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._14ssp));
+        } else if (questions.getQuestion().length() > 200) {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._13ssp));
+        } else {
+            soal.setTextSize(TypedValue.COMPLEX_UNIT_PX, QuizActivity.this.getResources().getDimension(R.dimen._17ssp));
+        }
         number.setText(currentQusetionId + 1 + "");
         if (questions.getType().equals("option")) {
             optionRV.setVisibility(View.VISIBLE);
@@ -794,6 +938,11 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         dialog.show();
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(QuizActivity.this);
+        SharedPreferences.Editor editorList = sharedPrefs.edit();
+        editorList.clear();
+        editorList.apply();
     }
 
     public void saveIsian() {
@@ -869,5 +1018,79 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    private void dialogAd() {
+        final Dialog dialog = new Dialog(QuizActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_chance_answer);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        dialog.getWindow().setLayout((9 * width) / 10, height);
+
+        MaterialButton btnUpgrade = dialog.findViewById(R.id.btnUpgrade);
+        btnUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Toast.makeText(mCtx,
+                        "Fitur Belum Dapat Diakses",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        TextView showIklan = dialog.findViewById(R.id.showAd);
+        showIklan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadAd();
+
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void timeRemainChance() {
+        layaoutRemainChance.setVisibility(View.VISIBLE);
+        isRunning = true; 
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
+        Calendar et = cal;
+        et.add(Calendar.MINUTE, 5);
+        Calendar endTime = et;
+        final long calMilis = cal.getTimeInMillis();
+        final long etMilis = cal.getTimeInMillis() + (5 * 60000);
+
+
+        final long diff = etMilis - calMilis;
+
+        new CountDownTimer(diff, 1000) {
+            @Override
+            public void onTick(long l) {
+                isRunning = true;
+                int hours = (int) (((l / 1000) / 3600) % 24);
+                int minutes = (int) ((l / 1000) / 60 % 60);
+                int seconds = (int) ((l / 1000) % 60);
+                String limitFormat = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                txtRemainTime.setText(limitFormat);
+            }
+
+            @Override
+            public void onFinish() {
+                isRunning = false;
+                answerChance = answerChance + 1;
+                SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
+                txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+                if (answerChance >= 1) {
+                    layaoutRemainChance.setVisibility(View.GONE);
+                } else {
+                    timeRemainChance();
+                }
+            }
+        }.start();
+    }
 }

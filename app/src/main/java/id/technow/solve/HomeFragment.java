@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -107,9 +108,10 @@ public class HomeFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
         layoutData.setVisibility(View.GONE);
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+        String school = user.getSchool_id();
         String token = "Bearer " + user.getToken();
 
-        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json");
+        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json", school);
         call.enqueue(new Callback<ResponseMenuHome>() {
             @Override
             public void onResponse(Call<ResponseMenuHome> call, Response<ResponseMenuHome> response) {
@@ -138,7 +140,7 @@ public class HomeFragment extends Fragment {
                 swipeRefresh.setRefreshing(false);
                 shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -247,6 +249,43 @@ public class HomeFragment extends Fragment {
                  */
             }
         });
+    }
+
+    private void dialogRate() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_rating);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        dialog.getWindow().setLayout((9 * width) / 10, height);
+
+        MaterialButton btnUpgrade = dialog.findViewById(R.id.btnUpgrade);
+        btnUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Toast.makeText(getActivity(),
+                        "Fitur Belum Dapat Diakses",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        TextView showIklan = dialog.findViewById(R.id.showAd);
+        showIklan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // loadAd();
+
+              //  dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 }

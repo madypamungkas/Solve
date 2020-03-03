@@ -48,7 +48,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp" />
 
-                <ImageView
+                <br.com.felix.imagezoom.ImageZoom
                     android:id="@+id/imgOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

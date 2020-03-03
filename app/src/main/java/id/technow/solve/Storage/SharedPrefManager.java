@@ -44,6 +44,13 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
         editor.commit();
         editor.apply();
     }
+    public void saveAnswerChance(int chance){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("chance", chance);
+        editor.commit();
+        editor.apply();
+    }
 
     public void saveDetail(DetailUser detailUser) {
         Gson gson = new Gson();
@@ -143,6 +150,11 @@ public class SharedPrefManager {  public static final String SHARED_PREF_NAME = 
                 sharedPreferences.getString("token", null)
         );
     }
+    public int getChance(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("chance", 3);
+    }
+
 
     public void clear() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

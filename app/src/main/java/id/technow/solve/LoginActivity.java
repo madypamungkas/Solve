@@ -235,8 +235,10 @@ public class LoginActivity extends AppCompatActivity {
                         Gson gson = new Gson();
 
                         String detailUser = gson.toJson(response.body());
+
                         editorList.putString("DetailUser", detailUser);
                         editorList.commit();
+                        SharedPrefManager.getInstance(LoginActivity.this).saveAnswerChance(3);
 
                         SharedPrefManager.getInstance(LoginActivity.this).saveDetail(response.body().getUser());
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);

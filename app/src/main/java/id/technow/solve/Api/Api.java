@@ -175,7 +175,8 @@ public interface Api {
     @GET("collager/category")
     Call<ResponseMenuHome> category(
             @Header("Authorization") String token,
-            @Header("Accept") String accept
+            @Header("Accept") String accept,
+            @Query("school_id") String school_id
     );
 
     @GET("collager/logout")
@@ -220,6 +221,4 @@ public interface Api {
             @Header("Authorization") String token,
             @Query("term") String term
     );
-
-
 }

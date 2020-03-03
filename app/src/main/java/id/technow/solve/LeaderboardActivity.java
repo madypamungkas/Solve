@@ -13,6 +13,7 @@ import retrofit2.Response;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +25,13 @@ import id.technow.solve.Model.ResponseLeaderboard;
 import id.technow.solve.R;
 
 import id.technow.solve.Storage.SharedPrefManager;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -38,6 +46,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     UserModel user = SharedPrefManager.getInstance(this).getUser();
     ProgressDialog loading;
     TextView name1, name2, name3, score1, score2, score3, gameName;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +63,26 @@ public class LeaderboardActivity extends AppCompatActivity {
         gameName = findViewById(R.id.gameName);
         gameName.setText(getIntent().getStringExtra("namasoal"));
         idQuiz = getIntent().getIntExtra("idsoal", 1);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+         mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3952453830525109/1168174801");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+            }
+        });
 
 
         //loadData1();
@@ -67,6 +96,11 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
             }
         });
 

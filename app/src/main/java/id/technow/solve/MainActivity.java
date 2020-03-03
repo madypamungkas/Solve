@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity
     private SliderView slider;
     TextView navUsername, navEmail;
     CircleImageView navImage;
-    //    User user = SharedPrefManager.getInstance(this).getUser();
-//    String token = "Bearer " + user.getToken();
     RecyclerView RVmain;
 
 
@@ -480,8 +478,9 @@ public class MainActivity extends AppCompatActivity
     public void getListCategory() {
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         String token = "Bearer " + user.getToken();
+        String school = user.getSchool_id();
 
-        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json");
+        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json", school);
         call.enqueue(new Callback<ResponseMenuHome>() {
             @Override
             public void onResponse(Call<ResponseMenuHome> call, Response<ResponseMenuHome> response) {

@@ -6,6 +6,14 @@
     <string name="something_wrong">Terjadi kesalahan, silahkan coba beberapa saat lagi</string>
     <string name="update_title">Pembaruan Tersedia</string>
     <string name="maintenance_title">Sistem Dalam Masa Perbaikan</string>
+    <string name="answer_chance_title">Kesempatan Bermain Anda Telah Habis</string>
+    <string name="rating_title">Nyaman Dengan Aplikasi Kami?</string>
+    <string name="rating_button">Siap Deh!</string>
+    <string name="rating_button_cloase">Lain Kali Ya.. </string>
+    <string name="rating_desc">Support Kami Dong, Biar Makin Sayang! Jangan Lupa Bintang 5 ya! Love You!!</string>
+    <string name="answer_chance_desc">Kesempatan bermain gratis harian Anda telah habis, Tonton iklan untuk dapatkan kesempatan bermain gratis</string>
+    <string name="answer_chance_upgrade">Upgrade ke Akun Premium</string>
+    <string name="answer_chance_iklan">Tonton Iklan</string>
     <string name="maintenance_desc">Saat ini sistem dalam masa perbaikan untuk versi yang lebih stabil dan pengalaman yang lebih baik</string>
     <string name="update_desc">Perbarui aplikasi untuk versi yang lebih stabil dan pengalaman yang lebih baik</string>
     <string name="update">Perbarui</string>
@@ -77,6 +85,8 @@
     <string name="konfirmasi_keluar">Apa Anda Yakin ?</string>
     <string name="jawaban">Jawaban Anda Tidak Tersimpan.</string>
     <string name="get_ready">Persiapan</string>
+     <string name="chance">Kesempatan Bermain : </string>
+     <string name="remainTime">Gratis Kesempatan Bermain Dalam : </string>
     <string name="not_found">Tidak Ditemukan</string>
     <string name="not_found_desc">Tidak ada data yang tersedia untuk saat ini</string>
     <string name="search">Cari Quiz</string>

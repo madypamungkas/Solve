@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
+
 import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.UserModel;
 
@@ -29,17 +31,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import id.technow.solve.Storage.SharedPrefRate;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -116,7 +125,7 @@ public class Main2Activity extends AppCompatActivity
             loadFragment(new UserFragment());
             bottomNavigationView.setSelectedItemId(R.id.navigationUser);
         }
-        //getVersion();
+        checkRating();
     }
 
     @Override
@@ -221,6 +230,7 @@ public class Main2Activity extends AppCompatActivity
             }
         });
 
+
         dialog.show();
     }
 
@@ -263,10 +273,61 @@ public class Main2Activity extends AppCompatActivity
 
     }
 
+    public void checkRating() {
+        String spr = SharedPrefRate.getInstance(this).getRate();
+        int play = SharedPrefRate.getInstance(this).getTryPlaying();
+        //Toast.makeText(this, spr +" "+ play, Toast.LENGTH_SHORT).show();
+        if (spr == "no") {
+            if (play > 2) {
+                dialogRate();
+            }
+        } else {
+
+        }
+    }
+
+    private void dialogRate() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_rating);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        dialog.getWindow().setLayout((9 * width) / 10, height);
+
+        MaterialButton btnUpgrade = dialog.findViewById(R.id.btnUpgrade);
+        btnUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                SharedPrefRate.getInstance(Main2Activity.this).saveRate("yes");
+                 final String appPackageName = getPackageName();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+
+            }
+        });
+
+        TextView showIklan = dialog.findViewById(R.id.showAd);
+        showIklan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                                  dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 }
