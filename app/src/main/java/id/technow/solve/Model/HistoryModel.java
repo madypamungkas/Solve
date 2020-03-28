@@ -21,7 +21,6 @@ public class HistoryModel {
     @Expose
     private String total_score;
 
-
     @SerializedName("created_at")
     @Expose
     private String created_at;

@@ -40,6 +40,10 @@ public class QuizModels {
     @Expose
     private String status;
 
+    @SerializedName("status_review")
+    @Expose
+    private String status_review;
+
     @SerializedName("start_time")
     @Expose
     private String start_time;
@@ -67,7 +71,7 @@ public class QuizModels {
     @Expose
     private QuizTypeModel quiz_type;
 
-    public QuizModels(int id, int quiz_type_id, String code, String title, String description, String pic_url, String sum_question, String tot_visible, String status, String start_time, String end_time, String time, String created_at, String updated_at, String deleted_at, QuizTypeModel quiz_type) {
+    public QuizModels(int id, int quiz_type_id, String code, String title, String description, String pic_url, String sum_question, String tot_visible, String status, String status_review, String start_time, String end_time, String time, String created_at, String updated_at, String deleted_at, QuizTypeModel quiz_type) {
         this.id = id;
         this.quiz_type_id = quiz_type_id;
         this.code = code;
@@ -77,6 +81,7 @@ public class QuizModels {
         this.sum_question = sum_question;
         this.tot_visible = tot_visible;
         this.status = status;
+        this.status_review = status_review;
         this.start_time = start_time;
         this.end_time = end_time;
         this.time = time;
@@ -120,6 +125,10 @@ public class QuizModels {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getStatus_review() {
+        return status_review;
     }
 
     public String getStart_time() {

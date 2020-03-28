@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.OptionModel;
 import id.technow.solve.Model.QuestionModel;
@@ -106,7 +107,7 @@ public class QuizActivity extends AppCompatActivity {
     TextInputEditText inputAnswer;
     String namaQuiz, codeQuiz;
     private RewardedAd rewardedad;
-    public int answerChance;
+ //   public int answerChance;
     ProgressDialog loading;
     boolean isRunning = false;
 
@@ -145,16 +146,16 @@ public class QuizActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         fab2 = findViewById(R.id.fab2);
         gameName = findViewById(R.id.gameName);
-        answerChance = SharedPrefManager.getInstance(this).getChance();
-        if (answerChance == 0) {
+     //   answerChance = SharedPrefManager.getInstance(this).getChance();
+       /* if (answerChance == 0) {
             if(isRunning == false){
                 timeRemainChance();
             }
             else {
 
             }
-        }
-        txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+        }*/
+   //     txtChance.setText("Kesempatan Bermain : " + answerChance + "/3");
         loadSoal();
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -162,7 +163,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
         MobileAds.initialize(this, "ca-app-pub-3952453830525109~9642702833");
-        //  rewardedad = new RewardedAd(this, "ca-app-pub-3952453830525109~9642702833");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,6 +263,7 @@ public class QuizActivity extends AppCompatActivity {
         };
         rewardedad.loadAd(new AdRequest.Builder().build(), callback);
     }
+
     private void showAd() {
         if (rewardedad.isLoaded()) {
             RewardedAdCallback callback = new RewardedAdCallback() {
@@ -271,9 +272,9 @@ public class QuizActivity extends AppCompatActivity {
                     Toast.makeText(mCtx,
                             "Tambah Kesempatan Bermain Berhasil",
                             Toast.LENGTH_LONG).show();
-                    answerChance = answerChance + 1;
-                    SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
-                    txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+                    //answerChance = answerChance + 1;
+                   // SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
+                   // txtChance.setText("Kesempatan Bermain : " + answerChance + "/3");
                     //loadAd();
                 }
 
@@ -351,15 +352,15 @@ public class QuizActivity extends AppCompatActivity {
                         /*        getCurrentTime();
                                 readyLayout.setVisibility(View.GONE);
                                 soalLayout.setVisibility(View.VISIBLE);*/
-                                if (answerChance == 0) {
+                              /*  if (answerChance == 0) {
                                     dialogAd();
-                                } else {
-                                    getCurrentTime();
-                                    answerChance = answerChance - 1;
-                                    SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
-                                    readyLayout.setVisibility(View.GONE);
-                                    soalLayout.setVisibility(View.VISIBLE);
-                                }
+                                } else {*/
+                                getCurrentTime();
+                               // answerChance = answerChance - 1;
+                               // SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
+                                readyLayout.setVisibility(View.GONE);
+                                soalLayout.setVisibility(View.VISIBLE);
+                                // }
 
                             }
                         });
@@ -1057,7 +1058,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public void timeRemainChance() {
         layaoutRemainChance.setVisibility(View.VISIBLE);
-        isRunning = true; 
+        isRunning = true;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
         Calendar et = cal;
         et.add(Calendar.MINUTE, 5);
@@ -1082,14 +1083,14 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 isRunning = false;
-                answerChance = answerChance + 1;
+              /*  answerChance = answerChance + 1;
                 SharedPrefManager.getInstance(QuizActivity.this).saveAnswerChance(answerChance);
-                txtChance.setText("Kesempatan Bermain : " + answerChance +"/3");
+                txtChance.setText("Kesempatan Bermain : " + answerChance + "/3");
                 if (answerChance >= 1) {
                     layaoutRemainChance.setVisibility(View.GONE);
                 } else {
                     timeRemainChance();
-                }
+                }*/
             }
         }.start();
     }

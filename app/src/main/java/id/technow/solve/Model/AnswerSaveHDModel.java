@@ -16,6 +16,10 @@ public class AnswerSaveHDModel {
     @Expose
     private String pic_question;
 
+    @SerializedName("review")
+    @Expose
+    private String review;
+
     @SerializedName("trueAnswer")
     @Expose
     private String trueAnswer;
@@ -44,10 +48,11 @@ public class AnswerSaveHDModel {
     @Expose
     private String user_answer_pic;
 
-    public AnswerSaveHDModel(String question_id, String question, String pic_question, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_true, String user_answer, String user_answer_content, String user_answer_pic) {
+    public AnswerSaveHDModel(String question_id, String question, String pic_question, String review, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_true, String user_answer, String user_answer_content, String user_answer_pic) {
         this.question_id = question_id;
         this.question = question;
         this.pic_question = pic_question;
+        this.review = review;
         this.trueAnswer = trueAnswer;
         this.trueAnswerContent = trueAnswerContent;
         this.trueAnswerPic = trueAnswerPic;
@@ -67,6 +72,10 @@ public class AnswerSaveHDModel {
 
     public String getPic_question() {
         return pic_question;
+    }
+
+    public String getReview() {
+        return review;
     }
 
     public String getTrueAnswer() {

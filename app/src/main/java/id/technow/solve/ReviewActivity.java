@@ -48,7 +48,8 @@ public class ReviewActivity extends AppCompatActivity {
     ReviewAdapter adapter;
     Context mCtx = ReviewActivity.this;
     ProgressDialog progress;
-    String namaSoal;
+    String namaSoal, status;
+
     int idSoal;
 
     @Override
@@ -125,6 +126,7 @@ public class ReviewActivity extends AppCompatActivity {
         ResponseQuestion responseQuestion = gson.fromJson(json, type);
         ArrayList<QuestionModel> questionModels = responseQuestion.getQuestion();
 
+        status = responseQuestion.getStatus_review();
 
         progress = ProgressDialog.show(mCtx, null, "Loading ...", true, false);
         UserModel user = SharedPrefManager.getInstance(this).getUser();
@@ -156,6 +158,7 @@ public class ReviewActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("idsoal", response.body().getResult().getQuiz_id());
                     intent.putExtra("namaSoal", namaSoal);
+                    intent.putExtra("status", status);
                     editorList.commit();
                     playingCount();
                     startActivity(intent);

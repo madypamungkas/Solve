@@ -1,6 +1,7 @@
 package id.technow.solve.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import id.technow.solve.MateriPembahasanActivity;
 import id.technow.solve.Model.AnswerSaveHDModel;
 import id.technow.solve.Model.QuestionModel;
 import id.technow.solve.R;
@@ -41,7 +44,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         final AnswerSaveHDModel answer = answerSaveHDModels.get(position);
 
         int num = position+1;
-        holder.typeGame.setText(typeGame+" ");
+        holder.typeGame.setText("Solve");
 
         holder.num.setText(num+" ");
         holder.desc.setText(answer.getQuestion());
@@ -71,6 +74,17 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
                 holder.status.setText("Salah");
             }*/
         }
+        holder.cardGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mCtx, MateriPembahasanActivity.class);
+            //    intent.putExtra("title",);
+                intent.putExtra("soal",answer.getQuestion());
+                intent.putExtra("pembahasan", answer.getReview());
+                mCtx.startActivity(intent);
+            }
+        });
 
     }
 

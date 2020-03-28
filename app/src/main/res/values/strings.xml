@@ -51,6 +51,7 @@
     <string name="action_settings">Pengaturan</string>
     <string name="profile">Profil</string>
     <string name="review_answer">Review Jawaban</string>
+    <string name="pembahasan_answer">Materi Pembahasan</string>
     <string name="choose_quiz">Pilih Quiz</string>
     <string name="discussion">Pembahasan</string>
     <string name="navigation_quiz">Navigasi Soal</string>

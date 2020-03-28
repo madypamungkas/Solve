@@ -10,6 +10,11 @@ public class ResponseQuestion {
     @Expose
     private String status;
 
+    @SerializedName("status_review")
+    @Expose
+    private String status_review;
+
+
     @SerializedName("quiz")
     @Expose
     private TypeListModel quiz;
@@ -18,8 +23,9 @@ public class ResponseQuestion {
     @Expose
     private ArrayList<QuestionModel> question = null;
 
-    public ResponseQuestion(String status, TypeListModel quiz, ArrayList<QuestionModel> question) {
+    public ResponseQuestion(String status, String status_review, TypeListModel quiz, ArrayList<QuestionModel> question) {
         this.status = status;
+        this.status_review = status_review;
         this.quiz = quiz;
         this.question = question;
     }
@@ -28,20 +34,28 @@ public class ResponseQuestion {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getStatus_review() {
+        return status_review;
     }
 
     public TypeListModel getQuiz() {
         return quiz;
     }
 
-    public void setQuiz(TypeListModel quiz) {
-        this.quiz = quiz;
-    }
-
     public ArrayList<QuestionModel> getQuestion() {
         return question;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setStatus_review(String status_review) {
+        this.status_review = status_review;
+    }
+
+    public void setQuiz(TypeListModel quiz) {
+        this.quiz = quiz;
     }
 
     public void setQuestion(ArrayList<QuestionModel> question) {

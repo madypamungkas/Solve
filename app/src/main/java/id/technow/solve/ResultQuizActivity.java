@@ -1,6 +1,7 @@
 package id.technow.solve;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import id.technow.solve.Model.UserModel;
 
 import android.app.Dialog;
@@ -40,7 +41,7 @@ public class ResultQuizActivity extends AppCompatActivity {
     MaterialButton play, btn_home, btn_pembahasan;
     UserModel user = SharedPrefManager.getInstance(this).getUser();
     int total_score, idquiz, idhistory;
-    String namaSoal, category;
+    String namaSoal, category, status;
     private InterstitialAd mInterstitialAd;
 
     @Override
@@ -50,6 +51,7 @@ public class ResultQuizActivity extends AppCompatActivity {
         // idquiz = getIntent().getIntExtra("idsoal", 1);
         point = findViewById(R.id.point);
         namaSoal = getIntent().getStringExtra("namaSoal");
+        status = getIntent().getStringExtra("status");
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ResultQuizActivity.this);
         Gson gson = new Gson();
@@ -91,20 +93,27 @@ public class ResultQuizActivity extends AppCompatActivity {
         category = getIntent().getStringExtra("category");
         textSumQues.setText(responseAnswer.getResult().getAnswer_save().size() + " Pertanyaan");
         btn_pembahasan = findViewById(R.id.btn_pembahasan);
+
         btn_pembahasan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ResultQuizActivity.this, PembahasanQuizActivity.class);
-                intent.putExtra("idsoal", idquiz);
-                intent.putExtra("idHistory", idhistory);
-                intent.putExtra("namaSoal", namaSoal);
-                intent.putExtra("gameName", namaSoal);
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                if(status.equals("active")){
+                    Intent intent = new Intent(ResultQuizActivity.this, PembahasanQuizActivity.class);
+                    intent.putExtra("idsoal", idquiz);
+                    intent.putExtra("idHistory", idhistory);
+                    intent.putExtra("namaSoal", namaSoal);
+                    intent.putExtra("gameName", namaSoal);
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.");
+                    }
+                    startActivity(intent);
                 }
-                startActivity(intent);
+                else{
+                    Toast.makeText(ResultQuizActivity.this, "Pembahasan Tidak Tersedia Untuk Quiz Ini", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

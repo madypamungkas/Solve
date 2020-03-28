@@ -40,12 +40,23 @@ public class TypeListModel {
     @Expose
     private String status;
 
+    @SerializedName("status_review")
+    @Expose
+    private String status_review;
+
+    @SerializedName("start_time")
+    @Expose
+    private String start_time;
+
+    @SerializedName("end_time")
+    @Expose
+    private String end_time;
+
     @SerializedName("time")
     @Expose
     private String time;
 
-
-    public TypeListModel(int id, String type, String title, String code, String description, String sum_question, String tot_visible, String pic_url, String status, String time) {
+    public TypeListModel(int id, String type, String title, String code, String description, String sum_question, String tot_visible, String pic_url, String status, String status_review, String start_time, String end_time, String time) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -55,6 +66,9 @@ public class TypeListModel {
         this.tot_visible = tot_visible;
         this.pic_url = pic_url;
         this.status = status;
+        this.status_review = status_review;
+        this.start_time = start_time;
+        this.end_time = end_time;
         this.time = time;
     }
 
@@ -92,6 +106,18 @@ public class TypeListModel {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getStatus_review() {
+        return status_review;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
     }
 
     public String getTime() {

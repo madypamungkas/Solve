@@ -70,6 +70,7 @@ public class PembahasanQuizActivity extends AppCompatActivity {
     }*/
         idHistory = getIntent().getIntExtra("idHistory", 0);
         type = getIntent().getStringExtra("gameName");
+        type = getIntent().getStringExtra("gameName");
 
         load();
 

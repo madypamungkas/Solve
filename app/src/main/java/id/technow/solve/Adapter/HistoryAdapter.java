@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import id.technow.solve.HistoryDetailActivity;
@@ -53,10 +54,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.cardHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mCtx, HistoryDetailActivity.class);
-                i.putExtra("idHistory", holder.idHistory);
-                i.putExtra("gameName", holder.gameName);
-                mCtx.startActivity(i);
+                if(history.getQuiz().getStatus_review().equals("active")){
+                    Intent i = new Intent(mCtx, HistoryDetailActivity.class);
+                    i.putExtra("idHistory", holder.idHistory);
+                    i.putExtra("gameName", holder.gameName);
+                    mCtx.startActivity(i);
+                }else{
+                    Toast.makeText(mCtx, "Detail Pembahasan Tidak Tersedia Untuk Quiz Ini", Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

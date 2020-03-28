@@ -28,6 +28,7 @@ import id.technow.solve.Api.RetrofitClient;
 import id.technow.solve.Model.BannerModel;
 import id.technow.solve.Model.MenuHomeModel;
 import id.technow.solve.Model.ResponseBanner;
+import id.technow.solve.Model.ResponseDetails;
 import id.technow.solve.Model.ResponseMenuHome;
 import id.technow.solve.Model.UserModel;
 
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment {
     private SliderView slider;
     private RecyclerView listCategory;
     private LinearLayout layoutData;
-
+    String IdSchool;
     public HomeFragment() {
 
     }
@@ -108,10 +109,9 @@ public class HomeFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
         layoutData.setVisibility(View.GONE);
         UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
-        String school = user.getSchool_id();
-        String token = "Bearer " + user.getToken();
+       String token = "Bearer " + user.getToken();
 
-        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json", school);
+        Call<ResponseMenuHome> call = RetrofitClient.getInstance().getApi().category(token, "application/json", IdSchool);
         call.enqueue(new Callback<ResponseMenuHome>() {
             @Override
             public void onResponse(Call<ResponseMenuHome> call, Response<ResponseMenuHome> response) {
@@ -147,7 +147,8 @@ public class HomeFragment extends Fragment {
 
     private void checkConnection() {
         if (isNetworkAvailable()) {
-            getListCategory();
+            loadData();
+
         } else {
             final Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -287,5 +288,28 @@ public class HomeFragment extends Fragment {
         });
         dialog.show();
     }
+    public void loadData() {
+        UserModel user = SharedPrefManager.getInstance(getActivity()).getUser();
+
+        String token = "Bearer " + user.getToken();
+        Call<ResponseDetails> call = RetrofitClient.getInstance().getApi().detail("application/json", token);
+        call.enqueue(new Callback<ResponseDetails>() {
+            @Override
+            public void onResponse(Call<ResponseDetails> call, Response<ResponseDetails> response) {
+                if (response.isSuccessful()) {
+                    IdSchool = response.body().getUser().getSchool_id();
+                    getListCategory();
+
+                } else { Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDetails> call, Throwable t) {
+                Toast.makeText(mContext, R.string.something_wrong, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
 }

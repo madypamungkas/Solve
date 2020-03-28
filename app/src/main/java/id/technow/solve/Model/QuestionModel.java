@@ -13,6 +13,11 @@ public class QuestionModel {
     @SerializedName("question")
     @Expose
     private String question;
+
+    @SerializedName("review")
+    @Expose
+    private String review;
+
     @SerializedName("type")
     @Expose
     private String type;
@@ -20,6 +25,7 @@ public class QuestionModel {
     @SerializedName("pic_question")
     @Expose
     private String pic_question;
+
     @SerializedName("duration")
     @Expose
     private String duration;
@@ -39,6 +45,7 @@ public class QuestionModel {
     @SerializedName("user_answer")
     @Expose
     private String user_answer;
+
     @SerializedName("user_answer_content")
     @Expose
     private String user_answer_content;
@@ -47,9 +54,10 @@ public class QuestionModel {
     @Expose
     private List<OptionModel> option = null;
 
-    public QuestionModel(int id_soal, String question, String type, String pic_question, String duration, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_answer, String user_answer_content, List<OptionModel> option) {
+    public QuestionModel(int id_soal, String question, String review, String type, String pic_question, String duration, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_answer, String user_answer_content, List<OptionModel> option) {
         this.id_soal = id_soal;
         this.question = question;
+        this.review = review;
         this.type = type;
         this.pic_question = pic_question;
         this.duration = duration;
@@ -67,6 +75,10 @@ public class QuestionModel {
 
     public String getQuestion() {
         return question;
+    }
+
+    public String getReview() {
+        return review;
     }
 
     public String getType() {
