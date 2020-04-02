@@ -4,6 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AnswerSaveHDModel {
+
+    @SerializedName("quiz")
+    @Expose
+    private String quiz;
+
     @SerializedName("question_id")
     @Expose
     private String question_id;
@@ -48,7 +53,8 @@ public class AnswerSaveHDModel {
     @Expose
     private String user_answer_pic;
 
-    public AnswerSaveHDModel(String question_id, String question, String pic_question, String review, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_true, String user_answer, String user_answer_content, String user_answer_pic) {
+    public AnswerSaveHDModel(String quiz, String question_id, String question, String pic_question, String review, String trueAnswer, String trueAnswerContent, String trueAnswerPic, String user_true, String user_answer, String user_answer_content, String user_answer_pic) {
+        this.quiz = quiz;
         this.question_id = question_id;
         this.question = question;
         this.pic_question = pic_question;
@@ -60,6 +66,10 @@ public class AnswerSaveHDModel {
         this.user_answer = user_answer;
         this.user_answer_content = user_answer_content;
         this.user_answer_pic = user_answer_pic;
+    }
+
+    public String getQuiz() {
+        return quiz;
     }
 
     public String getQuestion_id() {

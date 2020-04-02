@@ -71,17 +71,17 @@ public class HistoryDetailActivity extends AppCompatActivity {
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                Toast.makeText(HistoryDetailActivity.this,
+                /*Toast.makeText(HistoryDetailActivity.this,
                         "Ad Failed To Load",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                Toast.makeText(HistoryDetailActivity.this,
+             /*   Toast.makeText(HistoryDetailActivity.this,
                         "Ad Load",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
             }
         });
         load();

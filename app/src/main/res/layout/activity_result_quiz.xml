@@ -100,6 +100,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/pembahasan"
             android:textColor="@color/black"
+            android:enabled="true"
             android:textSize="@dimen/_13sdp"
             app:backgroundTint="@color/white"
             app:cornerRadius="@dimen/_10sdp" />

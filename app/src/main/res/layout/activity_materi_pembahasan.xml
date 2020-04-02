@@ -37,9 +37,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="Pertanyaan :"
-            android:textStyle="italic"
-            android:textColor="@color/white_smoke"
-            android:textSize="@dimen/_18ssp"></TextView>
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="italic"></TextView>
+
+        <TextView
+            android:id="@+id/txtJawaban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="Jawaban :"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="italic"></TextView>
 
         <TextView
             android:layout_width="match_parent"
@@ -47,8 +57,9 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="Materi"
-            android:textColor="@color/white_smoke"
-            android:textSize="@dimen/_18ssp"></TextView>
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="italic"></TextView>
 
         <TextView
             android:id="@+id/txtPembahasan"

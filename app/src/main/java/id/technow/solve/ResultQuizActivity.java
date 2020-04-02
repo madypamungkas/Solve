@@ -112,6 +112,7 @@ public class ResultQuizActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(ResultQuizActivity.this, "Pembahasan Tidak Tersedia Untuk Quiz Ini", Toast.LENGTH_LONG).show();
+                    btn_pembahasan.setEnabled(false);
                 }
 
             }

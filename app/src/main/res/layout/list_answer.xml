@@ -138,6 +138,19 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp" />
 
+                <TextView
+                    android:id="@+id/txtReview"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="*Klik untuk melihat pembahasan"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorAccentDark"
+                    android:textSize="@dimen/_10ssp" />
+
             </LinearLayout>
 
             <LinearLayout
