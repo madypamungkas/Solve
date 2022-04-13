@@ -86,7 +86,7 @@ public class ChangeProfile extends AppCompatActivity {
 
         DetailUser detail = responseDetails.getUser();
 
-        Picasso.get().load("https://solve.technow.id/storage/user/" + user.getId()).error(R.drawable.ic_user).into(imgProfile);
+        Picasso.get().load("http://185.210.144.115:8080/storage/user/" + user.getId()).error(R.drawable.ic_user).into(imgProfile);
 
         etSName.setText(detail.getName());
         etSEmail.setText(detail.getEmail());

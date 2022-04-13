@@ -57,7 +57,7 @@ public class LeadChooseCategoryAdapter extends RecyclerView.Adapter<LeadChooseCa
     public void onBindViewHolder(@NonNull final LeaCategory holder, int position) {
         final MenuHomeModel type = categories.get(position);
         holder.typeGame.setText(type.getName());
-        String link = "http://solve.technow.id/storage/quiz_category2/";
+        String link = "http://185.210.144.115:8080/storage/quiz_category2/";
         Picasso.get().load(link + type.getId()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

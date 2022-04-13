@@ -101,7 +101,7 @@ public class QuizActivity extends AppCompatActivity {
     public int time;
     FloatingActionButton fab, fab2;
     public static final String TAG = "bottom_sheet";
-    String link = "https://solve.technow.id/storage/question/";
+    String link = "http://185.210.144.115:8080/storage/question/";
     TextInputLayout layoutAnswer;
     LinearLayout layoutAns;
     TextInputEditText inputAnswer;

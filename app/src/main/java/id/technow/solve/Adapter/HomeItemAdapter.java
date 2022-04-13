@@ -59,7 +59,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
             }
         });
-        String link = "https://solve.technow.id/storage/quiz_category/";
+        String link = "http://185.210.144.115:8080/storage/quiz_category/";
         Picasso.get().load(link + menu.getId()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

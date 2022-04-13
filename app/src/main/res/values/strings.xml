@@ -105,7 +105,7 @@
     <string name="play_again">Mulai Lagi</string>
     <string name="answer">Pertanyaan</string>
     <string name="question">Soal</string>
-    <string name="link">https://solve.technow.id/storage/</string>
+    <string name="link">http://185.210.144.115:8080/storage/</string>
     <string name="link2">http://192.168.43.91/master-ruko/ruko/public/storage/</string>
     <string name="descHangeul">Tebak Hangeul ini akan membantumu untuk memahami bentuk dan pelafalan huruf Korea (Hangeul). Dalam permainan ini kamu akan diajak untuk menebak 40 huruf hangeul yang terdiri dari 10 vokal dasar,  11 vokal gabungan,  14 konsonan dasar dan 5 konsonan rangkap.</string>
     <string name="descSukuKata">Tebak Suku Kata ini akan menguji kemampuan kamu dalam merangkai huruf-huruf hangeul dengan menebak gabungan huruf vokal dan konsonan. </string>

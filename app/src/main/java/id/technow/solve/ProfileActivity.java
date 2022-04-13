@@ -305,7 +305,7 @@ public class ProfileActivity extends AppCompatActivity {
         detailUser = responseDetails.getUser();
         username.setText(detailUser.getUsername());
         email.setText(detailUser.getEmail());
-        String defaultLink = "https://solve.technow.id/storage/";
+        String defaultLink = "http://185.210.144.115:8080/storage/";
         String link = defaultLink + "user/";
         Picasso.get().load(link + detailUser.getId()).error(R.drawable.ic_userprofile)
                 .into(new Target() {

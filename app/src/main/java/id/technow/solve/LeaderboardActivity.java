@@ -145,7 +145,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         model1 = leaModelPodium.get(0);
                         name1.setText(model1.getUsername());
                         score1.setText(model1.getTotal_score());
-                        String linkdefault = "https://solve.technow.id/storage/";
+                        String linkdefault = "http://185.210.144.115:8080/storage/";
                         String link1 = linkdefault + "user/" + model1.getUser_id();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
                                 .into(avatar1);
@@ -159,7 +159,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         name2.setText(model2.getUsername());
                         score1.setText(model1.getTotal_score());
                         score2.setText(model2.getTotal_score());
-                        String linkdefault = "https://solve.technow.id/storage/";
+                        String linkdefault = "http://185.210.144.115:8080/storage/";
                         String link1 = linkdefault + "user/" + model1.getUser_id();
                         String link2 = linkdefault + "user/" + model2.getUser_id();
                         Picasso.get().load(link1).error(R.drawable.ic_userprofile)
@@ -179,7 +179,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         score1.setText(model1.getTotal_score());
                         score2.setText(model2.getTotal_score());
                         score3.setText(model3.getTotal_score());
-                        String linkdefault = "https://solve.technow.id/storage/";
+                        String linkdefault = "http://185.210.144.115:8080/storage/";
                         String link1 = linkdefault + "user/" + model1.getUser_id();
                         String link2 = linkdefault + "user/" + model2.getUser_id();
                         String link3 = linkdefault + "user/" + model3.getUser_id();

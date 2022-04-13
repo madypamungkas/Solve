@@ -56,7 +56,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     Context mContext;
     ProgressDialog loading;
 
-    String link = "https://solve.technow.id/storage/user/";
+    String link = "http://185.210.144.115:8080/storage/user/";
     private ShimmerFrameLayout shimmerFrameLayout;
 
     public UserFragment() {
@@ -100,7 +100,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 checkConnection();
             }
         });
-        Picasso.get().load("https://solve.technow.id/storage/user/"+user.getId()).error(R.drawable.ic_user).into(imgProfile);
+        Picasso.get().load("http://185.210.144.115:8080/storage/user/"+user.getId()).error(R.drawable.ic_user).into(imgProfile);
 
         return view;
 

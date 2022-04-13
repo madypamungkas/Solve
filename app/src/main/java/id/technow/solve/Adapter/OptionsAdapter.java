@@ -36,7 +36,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVH
     private Context mCtx;
     private QuestionModel question;
     QuizViewPagerAdapter adapter;
-    String link = "https://solve.technow.id/storage/answer/";
+    String link = "http://185.210.144.115:8080/storage/answer/";
     String content;
     String[] strings;
     private boolean onBind;

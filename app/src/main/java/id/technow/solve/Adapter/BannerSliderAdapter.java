@@ -35,7 +35,7 @@ public class BannerSliderAdapter  extends SliderViewAdapter<BannerSliderAdapter.
     @Override
     public void onBindViewHolder(BannerVH viewHolder, int position) {
         final BannerModel banner = bannerModels.get(position);
-        String link = "http://solve.technow.id/storage/";
+        String link = "http://185.210.144.115:8080/storage/";
         Picasso.get().load(link+"banner/"+banner.getId()).error(R.color.colorPrimary)
                 .into(viewHolder.imageViewBackground);
         String linkTo = banner.getLinkTo();

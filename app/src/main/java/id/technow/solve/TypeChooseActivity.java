@@ -67,7 +67,7 @@ public class TypeChooseActivity extends AppCompatActivity {
         mCtx = this;
         idCategory = getIntent().getIntExtra("idCategory", 1);
 
-        String Link = "https://solve.technow.id/storage/quiz_category2/";
+        String Link = "http://185.210.144.115:8080/storage/quiz_category2/";
         typeRV = findViewById(R.id.typeRV);
         shimmerFrameLayout = findViewById(R.id.shimmerContainer);
         imgCategory = findViewById(R.id.imgCategory);

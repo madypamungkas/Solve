@@ -40,7 +40,7 @@ public class LeaderboardAdapter  extends RecyclerView.Adapter<LeaderboardAdapter
         holder.number.setText((position+4)+"");
         holder.score.setText(""+leader.getTotal_score());
         holder.name.setText(""+leader.getUsername());
-        String link = "https://solve.technow.id/storage/"+"user/"+ leader.getUser_id();
+        String link = "http://185.210.144.115:8080/storage/"+"user/"+ leader.getUser_id();
         Picasso.get().load(link).error(R.drawable.ic_userprofile)
                 .into(holder.avatar);
 
